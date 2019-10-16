@@ -1,0 +1,5 @@
+Book  
+https://drive.google.com/open?id=1N6H-deLz7ZPGCvvBodGrL_U15cTHutPT
+
+Book Repo
+https://github.com/maxpumperla/deep_learning_and_the_game_of_go
