@@ -1,2 +1,2 @@
--we tried to group the cod from each chapter in its own folder 
+-we tried to group the code from each chapter in its own folder 
 -any missing code will be on the book repo
