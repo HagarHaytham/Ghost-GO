@@ -1,5 +1,15 @@
+
 Book  
 https://drive.google.com/open?id=1N6H-deLz7ZPGCvvBodGrL_U15cTHutPT
 
+-----------------------------------------------------------------
+
 Book Repo
 https://github.com/maxpumperla/deep_learning_and_the_game_of_go
+
+------------------------------------------------------------------
+
+Book online (if you don't like pdfs)
+https://learning.oreilly.com/library/view/deep-learning-and/9781617295324/
+  
+just sign up for a free trial 
