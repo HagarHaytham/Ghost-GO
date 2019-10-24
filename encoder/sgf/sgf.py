@@ -8,8 +8,8 @@ import datetime
 
 import six
 
-import sgf_grammar
-import sgf_properties
+from . import sgf_grammar
+from . import sgf_properties
 
 __all__ = [
     'Node',

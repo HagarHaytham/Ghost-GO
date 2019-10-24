@@ -12,7 +12,7 @@ from math import isinf, isnan
 
 import six
 
-import sgf_grammar
+from . import sgf_grammar
 from six.moves import range
 
 # In python 2, indexing a str gives one-character strings.
