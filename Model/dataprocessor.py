@@ -8,21 +8,19 @@ from keras.utils import to_categorical
 from encoder.sgf.sgf import Sgf_game
 from encoder.gostuff.goboard_fast import Board, GameState, Move
 from encoder.gostuff.gotypes import Player, Point
-
-# from dlgo.data.index_processor import KGSIndex
 from split import Splitter
+from datagenerator import DataGenerator
 
-from encoder.oneplane import OnePlaneEncoder
 class DataProcessor:
     def __init__(self, encoder,data_directory='dataset/data'):
-        self.encoder = encoder#OnePlaneEncoder((19,19)) # to be changed if we used the other encoder
+        self.encoder = encoder
         self.data_dir = data_directory
 
-    def load_go_data(self, data_type='train',num_samples=1000):  
+    def load_go_data(self, data_type='train', num_samples=1000,use_generator=False):
         
         splitter = Splitter(data_dir=self.data_dir)
-        data = splitter.draw_data(data_type, num_samples)  
-
+        data = splitter.draw_data(data_type, num_samples)
+        # self.map_to_workers(data_type, data) 
         zip_names = set()
         indices_by_zip_name = {}
         
@@ -38,12 +36,64 @@ class DataProcessor:
             if not os.path.isfile(self.data_dir + '/' + data_file_name): 
                 # extracrt the sgf files and encode them to numpy arrays (features and labels) and save them as chunks on disk
                 self.process_zip(zip_name, data_file_name, indices_by_zip_name[zip_name])  
-        
-        features,labels = self.group_games(data_type, data)  
-        return features,labels
+    
+        if use_generator:
+            generator = DataGenerator(self.data_dir, data)
+            return generator 
+        else:
+            features_and_labels = self.group_games(data_type, data)
+            return features_and_labels
 
-        # features_and_labels = self.group_games(data_type, data)  
-        # return features_and_labels
+    # def map_to_workers(self, data_type, samples):
+    #     zip_names = set()
+    #     indices_by_zip_name = {}
+    #     for filename, index in samples:
+    #         zip_names.add(filename)
+    #         if filename not in indices_by_zip_name:
+    #             indices_by_zip_name[filename] = []
+    #         indices_by_zip_name[filename].append(index)
+
+    #     zips_to_process = []
+    #     for zip_name in zip_names:
+    #         base_name = zip_name.replace('.tar.gz', '')
+    #         data_file_name = base_name + data_type
+    #         if not os.path.isfile(self.data_dir + '/' + data_file_name):
+    #             zips_to_process.append((self.__class__, self.encoder_string, zip_name,
+    #                                     data_file_name, indices_by_zip_name[zip_name]))
+
+    #     cores = multiprocessing.cpu_count()  # Determine number of CPU cores and split work load among them
+    #     pool = multiprocessing.Pool(processes=cores)
+    #     p = pool.map_async(worker, zips_to_process)
+    #     try:
+    #         _ = p.get()
+    #     except KeyboardInterrupt:  # Caught keyboard interrupt, terminating workers
+    #         pool.terminate()
+    #         pool.join()
+    #         sys.exit(-1)
+
+    # def load_go_data(self, data_type='train',num_samples=1000):  
+        
+    #     splitter = Splitter(data_dir=self.data_dir)
+    #     data = splitter.draw_data(data_type, num_samples)  
+
+    #     zip_names = set()
+    #     indices_by_zip_name = {}
+        
+    #     for filename, index in data:
+    #         zip_names.add(filename) #collect all zip file names contained in the data in a list
+    #         if filename not in indices_by_zip_name:
+    #             indices_by_zip_name[filename] = []
+    #         indices_by_zip_name[filename].append(index) #group all sgf file indices by zip file name
+        
+    #     for zip_name in zip_names:
+    #         base_name = zip_name.replace('.tar.gz', '')
+    #         data_file_name = base_name + data_type  # train or test
+    #         if not os.path.isfile(self.data_dir + '/' + data_file_name): 
+    #             # extracrt the sgf files and encode them to numpy arrays (features and labels) and save them as chunks on disk
+    #             self.process_zip(zip_name, data_file_name, indices_by_zip_name[zip_name])  
+
+    #     features_and_labels = self.group_games(data_type, data)  
+    #     return features_and_labels
 
 
 
