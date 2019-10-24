@@ -12,10 +12,10 @@ from encoder.gostuff.gotypes import Player, Point
 # from dlgo.data.index_processor import KGSIndex
 from split import Splitter
 
-from oneplane import OnePlaneEncoder
+from encoder.oneplane import OnePlaneEncoder
 class DataProcessor:
-    def __init__(self, data_directory='data'):
-        self.encoder = OnePlaneEncoder((19,19)) # to be changed if we used the other encoder
+    def __init__(self, encoder,data_directory='dataset/data'):
+        self.encoder = encoder#OnePlaneEncoder((19,19)) # to be changed if we used the other encoder
         self.data_dir = data_directory
 
     def load_go_data(self, data_type='train',num_samples=1000):  
@@ -38,9 +38,12 @@ class DataProcessor:
             if not os.path.isfile(self.data_dir + '/' + data_file_name): 
                 # extracrt the sgf files and encode them to numpy arrays (features and labels) and save them as chunks on disk
                 self.process_zip(zip_name, data_file_name, indices_by_zip_name[zip_name])  
+        
+        features,labels = self.group_games(data_type, data)  
+        return features,labels
 
-        features_and_labels = self.get_games(data_type, data)  
-        return features_and_labels
+        # features_and_labels = self.group_games(data_type, data)  
+        # return features_and_labels
 
 
 
@@ -119,8 +122,8 @@ class DataProcessor:
             np.save(feature_file, current_features)
             np.save(label_file, current_labels)  
 
-        
-    def get_games(self, data_type, samples):
+    #group the results from each zip into one set of features and labels
+    def group_games(self, data_type, samples):
         files_needed = set(file_name for file_name, index in samples)
         file_names = []
         for zip_file_name in files_needed:
