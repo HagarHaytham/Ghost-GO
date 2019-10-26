@@ -11,6 +11,8 @@ from encoder.gostuff.gotypes import Player, Point
 from split import Splitter
 from datagenerator import DataGenerator
 
+
+
 class DataProcessor:
     def __init__(self, encoder,data_directory='dataset/data'):
         self.encoder = encoder
@@ -58,7 +60,7 @@ class DataProcessor:
     #         base_name = zip_name.replace('.tar.gz', '')
     #         data_file_name = base_name + data_type
     #         if not os.path.isfile(self.data_dir + '/' + data_file_name):
-    #             zips_to_process.append((self.__class__, self.encoder_string, zip_name,
+    #             zips_to_process.append((self.__class__, zip_name,
     #                                     data_file_name, indices_by_zip_name[zip_name]))
 
     #     cores = multiprocessing.cpu_count()  # Determine number of CPU cores and split work load among them
@@ -71,6 +73,8 @@ class DataProcessor:
     #         pool.join()
     #         sys.exit(-1)
 
+    
+            
     # def load_go_data(self, data_type='train',num_samples=1000):  
         
     #     splitter = Splitter(data_dir=self.data_dir)

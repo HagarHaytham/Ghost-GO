@@ -20,3 +20,4 @@ if color is not None and move_tuple is not None:
     encoder = OnePlaneEncoder((19,19))
     matr = encoder.encode(game_state)
     print(matr)
+    print(matr.shape)
