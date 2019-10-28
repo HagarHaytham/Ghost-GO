@@ -14,10 +14,10 @@ function  createWindow(){
     win=new BrowserWindow({
         width:1080,
         height: 720,
-        icon: path.join(__dirname, 'images/logo.jpeg')});
+        icon: path.join(__dirname, 'images/logo.png')});
         win.setMenu(null);
         win.loadURL(url.format({
-        pathname: path.join(__dirname,'start.html'),
+        pathname: path.join(__dirname,'index.html'),
         protocol: 'file',
         slashes: true
     }));
