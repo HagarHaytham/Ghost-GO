@@ -56,4 +56,4 @@ def experience_simulation(num_games, agent1, agent2):
             collector1.complete_episode(reward=-1)
         color1 = color1.other
 
-    return rl.combine_experience([collector1, collector2]);
+    return rl.combine_experience([collector1, collector2])
