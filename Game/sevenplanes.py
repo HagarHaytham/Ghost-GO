@@ -1,8 +1,8 @@
 
 import numpy as np
 
-from .gostuff.goboard_fast import Move, Point
-
+#from .gostuff.goboard_fast import Move, Point
+from dlgo.goboard_slow import Move ,Point
 
 class SevenPlaneEncoder():
     def __init__(self, board_size):
