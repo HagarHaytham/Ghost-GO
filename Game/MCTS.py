@@ -27,7 +27,7 @@ def monte_carlo_tree_search(state,color,num_rounds,captures,depth):
         leaf = traverse(root,i)  
         simulation_result , last_node = rollout(leaf,depth)
         backpropagate(root,last_node , simulation_result) 
-        print('round '+str(i+1)+' is done')
+        print('round '+str(i+1)+' ends ')
     return best_child(root) 
  
 def best_child(root):
@@ -50,7 +50,7 @@ def traverse(node,total_rollouts):
     return picked_child  
   
 def pick_child(node,total_rollouts):
-    if(total_rollouts == 0):
+    if(total_rollouts == 0 and len(node.cheldren) > 0):
         return node.children[random.randint(0,len(node.children))]
     current_value=0
     picked_child=node.children[0]
@@ -100,7 +100,7 @@ def rollout(node,depth):
             if game_state.is_valid_move(move):
                 break
        
-        new_game_state ,prisoners  = game_state.apply_move(move)
+        new_game_state , prisoners  = game_state.apply_move(move)
         if len(prisoners) > 0:
             capture = prisoners[0]
         else:

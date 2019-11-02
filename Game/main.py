@@ -19,7 +19,7 @@ def main():
         
         player = game.next_player
         
-        num_rounds = 100
+        num_rounds = 10
         
         depth =10
         game , captures = monte_carlo_tree_search( game,player,num_rounds,captures,depth)
