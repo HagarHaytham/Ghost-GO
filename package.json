@@ -1,0 +1,23 @@
+{
+  "name": "ghost-go",
+  "version": "1.0.0",
+  "description": "A trial to connect python and node.js",
+  "main": "pull.js",
+  "dependencies": {
+    "zeromq": "^5.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HagarHaytham/Ghost-GO.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HagarHaytham/Ghost-GO/issues"
+  },
+  "homepage": "https://github.com/HagarHaytham/Ghost-GO#readme"
+}

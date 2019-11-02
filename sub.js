@@ -10,4 +10,12 @@ sock.on('message', function(messagedata) {
 });
 
 var sock2 = zmq.socket('pub');
-sock2.bind('tcp://127.0.0.1:3001');
+
+sock2.bindSync("tcp://127.0.0.1:3000");
+console.log("Publisher bound to port 3000");
+
+setInterval(function() {
+  console.log("sending a multipart message envelope");
+  sock.send(["kitty cats", "meow!"]);
+}, 500);
+
