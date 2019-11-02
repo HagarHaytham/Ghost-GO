@@ -4,16 +4,17 @@ Created on Fri Oct 25 18:38:17 2019
 
 @author: reham
 """
-class MCTS_node :
-    def __init__(self, game_state, parent=None,captures):
+from dlgo.gotypes import Player
+class MCTS_node():
+    def __init__(self, game_state, parent,captures):
         self.game_state = game_state
         self.parent = parent
         self.children = []
         self.win_counts = {
-             gotypes.Player.black: 0,
-             gotypes.Player.white: 0,
+             Player.black: 0,
+             Player.white: 0,
         }
-        self.num_rollouts = 0
+        self.num_rollouts = 1
         self.captures = captures
         
         

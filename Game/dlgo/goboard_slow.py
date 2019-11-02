@@ -269,6 +269,11 @@ class GameState():
         moves.append(Move.resign())
 
         return moves
+    def semi_winner(self,captures):
+        if self.last_move.is_resign:
+            return self.next_player ,0
+        game_result,score = compute_game_result(self,captures)
+        return game_result.winner,score
 
     def winner(self,captures):
         if not self.is_over():

@@ -3,32 +3,27 @@ from dlgo import goboard_slow as goboard
 from dlgo import gotypes
 from dlgo.utils import print_board, print_move
 import time
-import MCTS
-captures = {
-    gotypes.Player.black: 0,
-    gotypes.Player.white: 0,
-}
+from  MCTS import monte_carlo_tree_search
+
 
 def main():
     board_size = 19
-    game = goboard.GameState.new_game(board_size)  
+    game = goboard.GameState.new_game(board_size) 
+    captures = {
+        gotypes.Player.black: 0,
+        gotypes.Player.white: 0,
+    } 
     while not game.is_over():
         
         print_board(game.board)
         
-        player =game.next_player
+        player = game.next_player
         
         num_rounds = 100
         
-        prisoners = captures[player] 
+        depth =10
+        game , captures = monte_carlo_tree_search( game,player,num_rounds,captures,depth)
         
-        game , prisoners= MCTS.monte_carlo_tree_search( game,player,num_rounds,prisoners )
-        
-        if len(numberOfCaptures) > 0:
-            if game.next_player == gotypes.Player.black:
-                captures[gotypes.Player.black] += numberOfCaptures[0]
-            else:
-                captures[gotypes.Player.white] += numberOfCaptures[0]
 
     winner,score = game.winner(captures)
 

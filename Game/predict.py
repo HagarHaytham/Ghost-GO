@@ -1,5 +1,5 @@
 from keras.models import load_model
-model = load_model('/content/checkpoints/SevenPlanes_smallarch_model_epoch_20.h5')
+model = load_model('SevenPlanes_smallarch_model_epoch_20.h5')
 import numpy as np
 x = np.array (
     [[[[0. , 0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ],
@@ -139,5 +139,5 @@ x = np.array (
 )
 #x = x.astype('float32')
 y= model.predict(x)
-print(y)
-print(y.shape)
+# print(y)
+# print(y.shape)
