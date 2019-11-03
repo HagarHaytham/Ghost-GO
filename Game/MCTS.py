@@ -23,11 +23,9 @@ def monte_carlo_tree_search(state,color,num_rounds,captures,depth):
     root = MCTS_node(state,None,captures)
     get_legal_moves(root)
     for i in range(num_rounds): 
-        print('round '+str(i+1)+' starts')
         leaf = traverse(root,i)  
         simulation_result , last_node = rollout(leaf,depth)
         backpropagate(root,last_node , simulation_result) 
-        print('round '+str(i+1)+' ends ')
     return best_child(root) 
  
 def best_child(root):
@@ -50,7 +48,7 @@ def traverse(node,total_rollouts):
     return picked_child  
   
 def pick_child(node,total_rollouts):
-    if(total_rollouts == 0 and len(node.cheldren) > 0):
+    if(total_rollouts == 0 and len(node.children) > 0):
         return node.children[random.randint(0,len(node.children))]
     current_value=0
     picked_child=node.children[0]
@@ -81,7 +79,6 @@ def rollout(node,depth):
     j=0
     while not game_state.is_over() and j < depth:
         j+=1
-        print(j)
         state = sevenplanes.SevenPlaneEncoder((19,19))
         state = state.encode(game_state)
         state = np.expand_dims(state,axis=0)
