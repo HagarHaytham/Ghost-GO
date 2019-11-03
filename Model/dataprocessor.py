@@ -22,7 +22,6 @@ class DataProcessor:
         
         splitter = Splitter(data_dir=self.data_dir)
         data = splitter.draw_data(data_type, num_samples)
-        # self.map_to_workers(data_type, data) 
         zip_names = set()
         indices_by_zip_name = {}
         
@@ -45,63 +44,6 @@ class DataProcessor:
         else:
             features_and_labels = self.group_games(data_type, data)
             return features_and_labels
-
-    # def map_to_workers(self, data_type, samples):
-    #     zip_names = set()
-    #     indices_by_zip_name = {}
-    #     for filename, index in samples:
-    #         zip_names.add(filename)
-    #         if filename not in indices_by_zip_name:
-    #             indices_by_zip_name[filename] = []
-    #         indices_by_zip_name[filename].append(index)
-
-    #     zips_to_process = []
-    #     for zip_name in zip_names:
-    #         base_name = zip_name.replace('.tar.gz', '')
-    #         data_file_name = base_name + data_type
-    #         if not os.path.isfile(self.data_dir + '/' + data_file_name):
-    #             zips_to_process.append((self.__class__, zip_name,
-    #                                     data_file_name, indices_by_zip_name[zip_name]))
-
-    #     cores = multiprocessing.cpu_count()  # Determine number of CPU cores and split work load among them
-    #     pool = multiprocessing.Pool(processes=cores)
-    #     p = pool.map_async(worker, zips_to_process)
-    #     try:
-    #         _ = p.get()
-    #     except KeyboardInterrupt:  # Caught keyboard interrupt, terminating workers
-    #         pool.terminate()
-    #         pool.join()
-    #         sys.exit(-1)
-
-    
-            
-    # def load_go_data(self, data_type='train',num_samples=1000):  
-        
-    #     splitter = Splitter(data_dir=self.data_dir)
-    #     data = splitter.draw_data(data_type, num_samples)  
-
-    #     zip_names = set()
-    #     indices_by_zip_name = {}
-        
-    #     for filename, index in data:
-    #         zip_names.add(filename) #collect all zip file names contained in the data in a list
-    #         if filename not in indices_by_zip_name:
-    #             indices_by_zip_name[filename] = []
-    #         indices_by_zip_name[filename].append(index) #group all sgf file indices by zip file name
-        
-    #     for zip_name in zip_names:
-    #         base_name = zip_name.replace('.tar.gz', '')
-    #         data_file_name = base_name + data_type  # train or test
-    #         if not os.path.isfile(self.data_dir + '/' + data_file_name): 
-    #             # extracrt the sgf files and encode them to numpy arrays (features and labels) and save them as chunks on disk
-    #             self.process_zip(zip_name, data_file_name, indices_by_zip_name[zip_name])  
-
-    #     features_and_labels = self.group_games(data_type, data)  
-    #     return features_and_labels
-
-
-
-    
     def unzip_data(self, zip_file_name):
         #Unpack the `gz` file into a `tar` file.
         this_gz = gzip.open(self.data_dir + '/' + zip_file_name)  

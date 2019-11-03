@@ -13,7 +13,7 @@ from keras.utils import to_categorical
 
 go_board_rows, go_board_cols = 19, 19
 num_classes = go_board_rows * go_board_cols
-num_games = 100
+num_games = 10000
 # encoder = OnePlaneEncoder((go_board_rows, go_board_cols))
 # encoder = SevenPlaneEncoder((go_board_rows, go_board_cols))
 encoder = ElevenPlaneEncoder((go_board_rows, go_board_cols))
@@ -60,7 +60,7 @@ model.compile(loss='categorical_crossentropy', optimizer='sgd',metrics=['accurac
 
 # res =model.predict(X,batch_size=128)
 # print(res)
-epochs = 5
+epochs = 100
 batch_size = 128
 model.fit_generator(
 generator=generator.generate(batch_size, num_classes), 
