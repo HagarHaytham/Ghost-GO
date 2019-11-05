@@ -4,7 +4,7 @@ from dlgo import gotypes
 from dlgo.utils import print_board, print_move
 import time
 from  MCTS import monte_carlo_tree_search
-
+import time
 
 def main():
     board_size = 19
@@ -14,7 +14,7 @@ def main():
         gotypes.Player.white: 0,
     } 
     while not game.is_over():
-        
+
         print_board(game.board)
         
         player = game.next_player
@@ -22,8 +22,13 @@ def main():
         num_rounds = 10
         
         depth =10
-        game , captures = monte_carlo_tree_search( game,player,num_rounds,captures,depth)
         
+
+        start = time.time()
+
+        game , captures = monte_carlo_tree_search( game,player,num_rounds,captures,depth)
+        end = time.time()
+        print(end - start)
 
     winner,score = game.winner(captures)
 

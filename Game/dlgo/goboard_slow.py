@@ -170,7 +170,7 @@ class Move():
     @classmethod
     def resign(cls):
         return Move(is_resign=True)
-
+import time
 # Game State Class
 class GameState():
     def __init__(self, board, next_player, previous, move):
@@ -227,22 +227,26 @@ class GameState():
     def situation(self):
         return (self.next_player, self.board)
 
-    def does_move_violate_ko(self, player, move):
+    def does_move_violate_ko(self, player, move,DeepTime=None):
         prisoners = []
         if not move.is_play:
             return False
         # Copy the next state to check whether it was played before or not
+        StartTime = time.time()
         next_board = copy.deepcopy(self.board)
+        if DeepTime is not None:
+            DeepTime['time'] += time.time() - StartTime
         next_board.place_stone(player, move.point, prisoners)
         next_situation = (player.other, next_board)
         past_state = self.previous_state
 
         # Loop over the whole previous history
-        while past_state is not None:
-            if past_state.situation == next_situation:
-                return True
-            past_state = past_state.previous_state
         return False
+        # while past_state is not None:
+        #     if past_state.situation == next_situation:
+        #         return True
+        #     past_state = past_state.previous_state
+        # return False
 
     # Prevent a move that leads to self-capture and ko
     def is_valid_move(self, move):
