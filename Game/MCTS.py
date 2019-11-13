@@ -10,7 +10,7 @@ import copy
 import math
 import random
 import numpy as np
-from dlgo import goboard_slow as goboard
+from dlgo import goboard_fast as goboard
 from dlgo import gotypes
 from dlgo.utils import print_board, print_move , point_from_coords
 from MCTS_node import MCTS_node
