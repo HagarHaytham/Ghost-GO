@@ -127,7 +127,7 @@ def experience_simulation(num_games, agent1, agent2,with_experience = True, mode
         return (agent1_wins, agent2_wins)
 
 
-def train(model_index, no_self_games = 10, no_trials = 5, wins_ratio = 0.6, learning_ratio = 0.000001, save_experience = True, save_games = True):
+def train(model_index, no_self_games = 10, no_trials = 5, wins_ratio = 0.6, epsilon = 0.5,learning_ratio = 0.000001, save_experience = True, save_games = True):
     model = load_model('models/ElevenPlanes_smallarch_model_epoch_' + str(model_index) + '.h5')
     current_model = load_model('models/ElevenPlanes_smallarch_model_epoch_' + str(model_index) + '.h5')
 
@@ -143,6 +143,9 @@ def train(model_index, no_self_games = 10, no_trials = 5, wins_ratio = 0.6, lear
 
     wave_index = 0
     while True:
+        agent1.set_temperature(epsilon)
+        agent2.set_temperature(epsilon)
+        
         no_games = no_self_games
 
         experience, _ = experience_simulation(no_games, agent1, agent2, with_experience = True, model_index = model_index if save_games else -1)
@@ -157,6 +160,9 @@ def train(model_index, no_self_games = 10, no_trials = 5, wins_ratio = 0.6, lear
 
         # check if the model improved
         old_agent = PolicyAgent(current_model, encoder)
+
+        agent1.set_temperature(0)
+        old_agent.set_temperature(0)
         
         no_games = no_trials
 
