@@ -116,8 +116,16 @@ def _collect_region(start_pos, board, visited=None):
 def compute_game_result(game_state,captures):
     territory = evaluate_territory(game_state.board)
     score = {
-        Player.black : territory.num_black_territory + territory.num_black_stones + captures[Player.black],
-        Player.white : territory.num_white_territory + territory.num_white_stones + captures[Player.white] + 6.5
+        Player.black : {
+            'territory.num_black_territory': territory.num_black_territory, 
+            'territory.num_black_stones': territory.num_black_stones, 
+            'captures': captures[Player.black]
+        },
+        Player.white : {
+            'territory.num_white_territory': territory.num_white_territory, 
+            'territory.num_white_stones': territory.num_white_stones, 
+            'captures': captures[Player.white]
+        },
     }
     return GameResult(
         territory.num_black_territory + territory.num_black_stones + captures[Player.black],

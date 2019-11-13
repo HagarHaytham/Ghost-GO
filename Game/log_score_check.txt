@@ -1,0 +1,1723 @@
+Player.black H6
+Player.white H6
+ 9  .  .  .  .  .  .  .  .  . 
+ 8  .  .  .  .  .  .  .  .  . 
+ 7  .  .  .  .  .  .  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  .  .  .  .  .  .  .  . 
+ 4  .  .  .  .  .  .  .  .  . 
+ 3  .  .  .  .  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  . 
+ 1  .  .  .  .  .  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 80, 'territory.num_black_stones': 1, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 0, 'captures': 0}}
+game_result W: 0	B: 81
+Player.white J9
+Player.black J9
+ 9  .  .  .  .  .  .  .  .  o 
+ 8  .  .  .  .  .  .  .  .  . 
+ 7  .  .  .  .  .  .  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  .  .  .  .  .  .  .  . 
+ 4  .  .  .  .  .  .  .  .  . 
+ 3  .  .  .  .  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  . 
+ 1  .  .  .  .  .  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 1, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 1, 'captures': 0}}
+game_result W: 1	B: 1
+Player.black G9
+Player.white G9
+ 9  .  .  .  .  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  .  . 
+ 7  .  .  .  .  .  .  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  .  .  .  .  .  .  .  . 
+ 4  .  .  .  .  .  .  .  .  . 
+ 3  .  .  .  .  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  . 
+ 1  .  .  .  .  .  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 2, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 1, 'captures': 0}}
+game_result W: 1	B: 2
+Player.white D9
+Player.black D9
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  .  . 
+ 7  .  .  .  .  .  .  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  .  .  .  .  .  .  .  . 
+ 4  .  .  .  .  .  .  .  .  . 
+ 3  .  .  .  .  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  . 
+ 1  .  .  .  .  .  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 2, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 2, 'captures': 0}}
+game_result W: 2	B: 2
+Player.black J2
+Player.white J2
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  .  . 
+ 7  .  .  .  .  .  .  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  .  .  .  .  .  .  .  . 
+ 4  .  .  .  .  .  .  .  .  . 
+ 3  .  .  .  .  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  x 
+ 1  .  .  .  .  .  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 3, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 2, 'captures': 0}}
+game_result W: 2	B: 3
+Player.white F7
+Player.black F7
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  .  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  .  .  .  .  .  .  .  . 
+ 4  .  .  .  .  .  .  .  .  . 
+ 3  .  .  .  .  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  x 
+ 1  .  .  .  .  .  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 3, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 3, 'captures': 0}}
+game_result W: 3	B: 3
+Player.black B5
+Player.white B5
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  .  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  .  .  .  .  .  .  . 
+ 4  .  .  .  .  .  .  .  .  . 
+ 3  .  .  .  .  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  x 
+ 1  .  .  .  .  .  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 4, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 3, 'captures': 0}}
+game_result W: 3	B: 4
+Player.white E1
+Player.black E1
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  .  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  .  .  .  .  .  .  . 
+ 4  .  .  .  .  .  .  .  .  . 
+ 3  .  .  .  .  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 4, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 4, 'captures': 0}}
+game_result W: 4	B: 4
+Player.black D4
+Player.white D4
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  .  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  .  .  .  .  .  .  . 
+ 4  .  .  .  x  .  .  .  .  . 
+ 3  .  .  .  .  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 5, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 4, 'captures': 0}}
+game_result W: 4	B: 5
+Player.white H8
+Player.black H8
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  o  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  .  .  .  .  .  .  . 
+ 4  .  .  .  x  .  .  .  .  . 
+ 3  .  .  .  .  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 5, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 5, 'captures': 0}}
+game_result W: 5	B: 5
+Player.black D3
+Player.white D3
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  o  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  .  .  .  .  .  .  . 
+ 4  .  .  .  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 6, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 5, 'captures': 0}}
+game_result W: 5	B: 6
+Player.white C5
+Player.black C5
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  o  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  o  .  .  .  .  .  . 
+ 4  .  .  .  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  .  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 6, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 6, 'captures': 0}}
+game_result W: 6	B: 6
+Player.black C2
+Player.white C2
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  .  .  .  .  .  .  o  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  o  .  .  .  .  .  . 
+ 4  .  .  .  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 7, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 6, 'captures': 0}}
+game_result W: 6	B: 7
+Player.white B8
+Player.black B8
+ 9  .  .  .  o  .  .  x  .  o 
+ 8  .  o  .  .  .  .  .  o  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  o  .  .  .  .  .  . 
+ 4  .  .  .  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 7, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 7, 'captures': 0}}
+game_result W: 7	B: 7
+Player.black F9
+Player.white F9
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  .  .  .  .  .  o  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  o  .  .  .  .  .  . 
+ 4  .  .  .  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 8, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 7, 'captures': 0}}
+game_result W: 7	B: 8
+Player.white E5
+Player.black E5
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  .  .  .  .  .  o  . 
+ 7  .  .  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  o  .  o  .  .  .  . 
+ 4  .  .  .  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 8, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 8, 'captures': 0}}
+game_result W: 8	B: 8
+Player.black B7
+Player.white B7
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  .  .  .  .  .  o  . 
+ 7  .  x  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  o  .  o  .  .  .  . 
+ 4  .  .  .  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 9, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 8, 'captures': 0}}
+game_result W: 8	B: 9
+Player.white F5
+Player.black F5
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  .  .  .  .  .  o  . 
+ 7  .  x  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  .  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 9, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 9, 'captures': 0}}
+game_result W: 9	B: 9
+Player.black C4
+Player.white C4
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  .  .  .  .  .  o  . 
+ 7  .  x  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  .  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 10, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 9, 'captures': 0}}
+game_result W: 9	B: 10
+Player.white C1
+Player.black C1
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  .  .  .  .  .  o  . 
+ 7  .  x  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  . 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  o  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 10, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 10, 'captures': 0}}
+game_result W: 10	B: 10
+Player.black J6
+Player.white J6
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  .  .  .  .  .  o  . 
+ 7  .  x  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  o  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 11, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 10, 'captures': 0}}
+game_result W: 10	B: 11
+Player.white C8
+Player.black C8
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  .  o  . 
+ 7  .  x  .  .  .  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  o  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 11, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 11, 'captures': 0}}
+game_result W: 11	B: 11
+Player.black E7
+Player.white E7
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  .  o  . 
+ 7  .  x  .  .  x  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  o  .  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 12, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 11, 'captures': 0}}
+game_result W: 11	B: 12
+Player.white D1
+Player.black D1
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  .  o  . 
+ 7  .  x  .  .  x  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  .  x  .  .  .  .  .  x 
+ 1  .  .  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 12, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 12, 'captures': 0}}
+game_result W: 12	B: 12
+Player.black B2
+Player.white B2
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  .  o  . 
+ 7  .  x  .  .  x  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  .  x 
+ 1  .  .  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 13, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 12, 'captures': 0}}
+game_result W: 12	B: 13
+Player.white G8
+Player.black G8
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  o  o  . 
+ 7  .  x  .  .  x  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  .  x 
+ 1  .  .  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 13, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 13, 'captures': 0}}
+game_result W: 13	B: 13
+Player.black B1
+Player.white B1
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  o  o  . 
+ 7  .  x  .  .  x  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  .  x 
+ 1  .  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 14, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 13, 'captures': 0}}
+game_result W: 13	B: 14
+Player.white J8
+Player.black J8
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  o  o  o 
+ 7  .  x  .  .  x  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  .  x 
+ 1  .  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 14, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 14, 'captures': 0}}
+game_result W: 14	B: 14
+Player.black C7
+Player.white C7
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  o  o  o 
+ 7  .  x  x  .  x  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  .  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  .  x 
+ 1  .  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 15, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 14, 'captures': 0}}
+game_result W: 14	B: 15
+Player.white A3
+Player.black A3
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  o  o  o 
+ 7  .  x  x  .  x  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  .  x 
+ 1  .  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 15, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 15, 'captures': 0}}
+game_result W: 15	B: 15
+Player.black D7
+Player.white D7
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  o  o  o 
+ 7  .  x  x  x  x  o  .  .  . 
+ 6  .  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  .  x 
+ 1  .  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 16, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 15, 'captures': 0}}
+game_result W: 15	B: 16
+Player.white A6
+Player.black A6
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  o  o  o 
+ 7  .  x  x  x  x  o  .  .  . 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  .  x 
+ 1  .  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 16, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 16, 'captures': 0}}
+game_result W: 16	B: 16
+Player.black H2
+Player.white H2
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  o  o  o 
+ 7  .  x  x  x  x  o  .  .  . 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  .  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 17, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 16, 'captures': 0}}
+game_result W: 16	B: 17
+Player.white G7
+Player.black G7
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  .  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  . 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  .  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 17, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 17, 'captures': 0}}
+game_result W: 17	B: 17
+Player.black E8
+Player.white E8
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  . 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  .  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 18, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 17, 'captures': 0}}
+game_result W: 17	B: 18
+Player.white A1
+Player.black A1
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  . 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  . 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 18, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 18, 'captures': 0}}
+game_result W: 18	B: 18
+Player.black J5
+Player.white J5
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  .  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  . 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  x 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 19, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 18, 'captures': 0}}
+game_result W: 18	B: 19
+Player.white D8
+Player.black D8
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  . 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  x 
+ 4  .  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 19, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 19, 'captures': 0}}
+game_result W: 19	B: 19
+Player.black A4
+Player.white A4
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  . 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  x 
+ 4  x  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 20, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 19, 'captures': 0}}
+game_result W: 19	B: 20
+Player.white A7
+Player.black A7
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  . 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  x 
+ 4  x  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 20, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 4, 'territory.num_white_stones': 20, 'captures': 0}}
+game_result W: 24	B: 20
+Player.black J7
+Player.white J7
+ 9  .  .  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  x 
+ 4  x  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 21, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 4, 'territory.num_white_stones': 20, 'captures': 0}}
+game_result W: 24	B: 21
+Player.white A9
+Player.black A9
+ 9  o  .  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  x 
+ 4  x  .  x  x  .  .  .  .  . 
+ 3  o  .  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 0, 'territory.num_black_stones': 21, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 3, 'territory.num_white_stones': 21, 'captures': 0}}
+game_result W: 24	B: 21
+Player.black B3
+Player.white B3
+ 9  o  .  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  x 
+ 4  x  .  x  x  .  .  .  .  . 
+ 3  o  x  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 22, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 3, 'territory.num_white_stones': 21, 'captures': 0}}
+game_result W: 24	B: 24
+Player.white F4
+Player.black F4
+ 9  o  .  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  x 
+ 4  x  .  x  x  .  o  .  .  . 
+ 3  o  x  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 22, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 3, 'territory.num_white_stones': 22, 'captures': 0}}
+game_result W: 25	B: 24
+Player.black E4
+Player.white E4
+ 9  o  .  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  .  x 
+ 4  x  .  x  x  x  o  .  .  . 
+ 3  o  x  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 23, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 3, 'territory.num_white_stones': 22, 'captures': 0}}
+game_result W: 25	B: 25
+Player.white H5
+Player.black H5
+ 9  o  .  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  . 
+ 3  o  x  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  .  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 23, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 3, 'territory.num_white_stones': 23, 'captures': 0}}
+game_result W: 26	B: 25
+Player.black G1
+Player.white G1
+ 9  o  .  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  . 
+ 3  o  x  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 24, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 3, 'territory.num_white_stones': 23, 'captures': 0}}
+game_result W: 26	B: 28
+Player.white B9
+Player.black B9
+ 9  o  o  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  . 
+ 3  o  x  .  x  .  .  .  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 24, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 24, 'captures': 0}}
+game_result W: 26	B: 28
+Player.black G3
+Player.white G3
+ 9  o  o  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  . 
+ 3  o  x  .  x  .  .  x  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 25, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 24, 'captures': 0}}
+game_result W: 26	B: 29
+Player.white F3
+Player.black F3
+ 9  o  o  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  .  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  . 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 25, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 25, 'captures': 0}}
+game_result W: 27	B: 29
+Player.black B6
+Player.white B6
+ 9  o  o  .  o  .  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  x  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  . 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 26, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 25, 'captures': 0}}
+game_result W: 27	B: 30
+Player.white E9
+Player.black E9
+ 9  o  o  .  o  o  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  x  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  . 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  .  .  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 26, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 26, 'captures': 0}}
+game_result W: 28	B: 30
+Player.black E2
+Player.white E2
+ 9  o  o  .  o  o  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  x  .  .  .  .  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  . 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  .  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 27, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 26, 'captures': 0}}
+game_result W: 28	B: 31
+Player.white F6
+Player.black F6
+ 9  o  o  .  o  o  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  x  .  .  .  o  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  . 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  .  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 27, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 27, 'captures': 0}}
+game_result W: 29	B: 31
+Player.black J4
+Player.white J4
+ 9  o  o  .  o  o  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  x  .  .  .  o  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  .  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 28, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 27, 'captures': 0}}
+game_result W: 29	B: 32
+Player.white F2
+Player.black F2
+ 9  o  o  .  o  o  x  x  .  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  x  .  .  .  o  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 28, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 28, 'captures': 0}}
+game_result W: 30	B: 32
+Player.black H9
+Player.white H9
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  x  .  .  .  o  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 29, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 28, 'captures': 0}}
+game_result W: 30	B: 33
+Player.white D6
+Player.black D6
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  x  .  o  .  o  .  x  x 
+ 5  .  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 29, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 29, 'captures': 0}}
+game_result W: 31	B: 33
+Player.black A5
+Player.white A5
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  x  .  o  .  o  .  x  x 
+ 5  x  x  o  .  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 30, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 29, 'captures': 0}}
+game_result W: 31	B: 34
+Player.white D5
+Player.black D5
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  .  x 
+ 6  o  x  .  o  .  o  .  x  x 
+ 5  x  x  o  o  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 30, 'captures': 0}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 30, 'captures': 0}}
+game_result W: 32	B: 34
+Player.black A8
+Player.white A8
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  x 
+ 6  .  x  .  o  .  o  .  x  x 
+ 5  x  x  o  o  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  .  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 6, 'territory.num_black_stones': 31, 'captures': 2}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 28, 'captures': 0}}
+testcaptures
+game_result W: 29	B: 39
+Player.white H4
+Player.black H4
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  x 
+ 6  .  x  .  o  .  o  .  x  x 
+ 5  x  x  o  o  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  o  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 6, 'territory.num_black_stones': 31, 'captures': 2}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 29, 'captures': 0}}
+game_result W: 30	B: 39
+Player.black C6
+Player.white C6
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  x 
+ 6  .  x  x  o  .  o  .  x  x 
+ 5  x  x  o  o  o  o  .  o  x 
+ 4  x  .  x  x  x  o  .  o  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 6, 'territory.num_black_stones': 32, 'captures': 2}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 29, 'captures': 0}}
+game_result W: 30	B: 40
+Player.white G4
+Player.black G4
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  x 
+ 6  .  x  x  o  .  o  .  x  x 
+ 5  x  x  o  o  o  o  .  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 6, 'territory.num_black_stones': 32, 'captures': 2}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 30, 'captures': 0}}
+game_result W: 31	B: 40
+Player.black G6
+Player.white G6
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  .  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  .  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 6, 'territory.num_black_stones': 33, 'captures': 2}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 30, 'captures': 0}}
+game_result W: 31	B: 41
+Player.white H7
+Player.black H7
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  .  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  .  o  x  .  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 6, 'territory.num_black_stones': 33, 'captures': 2}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 31, 'captures': 0}}
+game_result W: 32	B: 41
+Player.black H3
+Player.white H3
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  .  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  .  o  x  x  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 7, 'territory.num_black_stones': 34, 'captures': 2}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 31, 'captures': 0}}
+game_result W: 32	B: 43
+Player.white G5
+Player.black G5
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  .  o  x  x  . 
+ 2  .  x  x  .  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 7, 'territory.num_black_stones': 34, 'captures': 2}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 32, 'captures': 0}}
+game_result W: 33	B: 43
+Player.black D2
+Player.white D2
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  .  o  x  x  . 
+ 2  .  x  x  x  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 7, 'territory.num_black_stones': 35, 'captures': 2}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 32, 'captures': 0}}
+game_result W: 33	B: 44
+Player.white J1
+Player.black J1
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  .  o  x  x  . 
+ 2  .  x  x  x  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  .  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 35, 'captures': 2}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 33, 'captures': 0}}
+game_result W: 34	B: 42
+Player.black H1
+Player.white H1
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  x  o  o  o  x  .  o  o  o 
+ 7  .  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  .  o  x  x  . 
+ 2  .  x  x  x  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 6, 'territory.num_black_stones': 36, 'captures': 3}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 32, 'captures': 0}}
+testcaptures
+game_result W: 33	B: 45
+Player.white A7
+Player.black A7
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  .  o  o  o  x  .  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  .  o  x  x  . 
+ 2  .  x  x  x  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 35, 'captures': 3}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 33, 'captures': 1}}
+testcaptures
+game_result W: 36	B: 42
+Player.black F8
+Player.white F8
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  .  o  o  o  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  .  o  x  x  . 
+ 2  .  x  x  x  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 36, 'captures': 3}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 33, 'captures': 1}}
+game_result W: 36	B: 43
+Player.white E3
+Player.black E3
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  .  o  o  o  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  . 
+ 2  .  x  x  x  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 36, 'captures': 3}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 34, 'captures': 1}}
+game_result W: 37	B: 43
+Player.black J3
+Player.white J3
+ 9  o  o  .  o  o  x  x  x  o 
+ 8  .  o  o  o  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  x 
+ 2  .  x  x  x  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 37, 'captures': 3}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 34, 'captures': 1}}
+game_result W: 37	B: 43
+Player.white C9
+Player.black C9
+ 9  o  o  o  o  o  x  x  x  o 
+ 8  .  o  o  o  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  x 
+ 2  .  x  x  x  x  o  .  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 37, 'captures': 3}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 35, 'captures': 1}}
+game_result W: 37	B: 43
+Player.black G2
+Player.white G2
+ 9  o  o  o  o  o  x  x  x  o 
+ 8  .  o  o  o  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  x 
+ 2  .  x  x  x  x  o  x  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 38, 'captures': 3}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 35, 'captures': 1}}
+game_result W: 37	B: 44
+Player.white A8
+Player.black A8
+ 9  o  o  o  o  o  x  x  x  o 
+ 8  o  o  o  o  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  .  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  x 
+ 2  .  x  x  x  x  o  x  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 38, 'captures': 3}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 36, 'captures': 1}}
+game_result W: 37	B: 44
+Player.black A6
+Player.white A6
+ 9  .  .  .  .  .  x  x  x  o 
+ 8  .  .  .  .  x  x  o  o  o 
+ 7  .  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  x 
+ 2  .  x  x  x  x  o  x  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 13, 'territory.num_black_stones': 39, 'captures': 13}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 26, 'captures': 1}}
+testcaptures
+game_result W: 27	B: 65
+Player.white A7
+Player.black A7
+ 9  .  .  .  .  .  x  x  x  o 
+ 8  .  .  .  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  x 
+ 2  .  x  x  x  x  o  x  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 39, 'captures': 13}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 27, 'captures': 1}}
+game_result W: 28	B: 55
+Player.black B8
+Player.white B8
+ 9  .  .  .  .  .  x  x  x  o 
+ 8  .  x  .  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  x 
+ 2  .  x  x  x  x  o  x  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 40, 'captures': 13}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 27, 'captures': 1}}
+game_result W: 28	B: 56
+Player.white C9
+Player.black C9
+ 9  .  .  o  .  .  x  x  x  o 
+ 8  .  x  .  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  x 
+ 2  .  x  x  x  x  o  x  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 40, 'captures': 13}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 28, 'captures': 1}}
+game_result W: 29	B: 56
+Player.black B9
+Player.white B9
+ 9  .  x  o  .  .  x  x  x  o 
+ 8  .  x  .  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  x 
+ 2  .  x  x  x  x  o  x  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 41, 'captures': 13}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 28, 'captures': 1}}
+game_result W: 29	B: 57
+Player.white C8
+Player.black C8
+ 9  .  x  o  .  .  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  o  x  .  x  o  o  x  x  x 
+ 2  .  x  x  x  x  o  x  x  x 
+ 1  o  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 41, 'captures': 13}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 29, 'captures': 1}}
+game_result W: 30	B: 57
+Player.black A2
+Player.white A2
+ 9  .  x  o  .  .  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  .  x  .  x  o  o  x  x  x 
+ 2  x  x  x  x  x  o  x  x  x 
+ 1  .  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 42, 'captures': 15}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 27, 'captures': 1}}
+testcaptures
+game_result W: 28	B: 62
+Player.white A8
+Player.black A8
+ 9  .  x  o  .  .  x  x  x  o 
+ 8  o  x  o  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  .  x  .  x  o  o  x  x  x 
+ 2  x  x  x  x  x  o  x  x  x 
+ 1  .  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 42, 'captures': 15}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 28, 'captures': 1}}
+game_result W: 29	B: 62
+Player.black A3
+Player.white A3
+ 9  .  x  o  .  .  x  x  x  o 
+ 8  o  x  o  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  x  x  x 
+ 2  x  x  x  x  x  o  x  x  x 
+ 1  .  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 43, 'captures': 15}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 28, 'captures': 1}}
+game_result W: 29	B: 62
+Player.white E9
+Player.black E9
+ 9  .  x  o  .  o  x  x  x  o 
+ 8  o  x  o  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  x  x  x 
+ 2  x  x  x  x  x  o  x  x  x 
+ 1  .  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 43, 'captures': 15}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 29, 'captures': 1}}
+game_result W: 30	B: 62
+Player.black D9
+Player.white D9
+ 9  .  x  o  x  .  x  x  x  o 
+ 8  o  x  o  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  x  x  x 
+ 2  x  x  x  x  x  o  x  x  x 
+ 1  .  x  o  o  o  .  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 44, 'captures': 16}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 28, 'captures': 1}}
+testcaptures
+game_result W: 29	B: 65
+Player.white F1
+Player.black F1
+ 9  .  x  o  x  .  x  x  x  o 
+ 8  o  x  o  .  x  x  o  o  o 
+ 7  o  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  x  x  x 
+ 2  x  x  x  x  x  o  x  x  x 
+ 1  .  x  o  o  o  o  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 44, 'captures': 16}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 29, 'captures': 1}}
+game_result W: 30	B: 65
+Player.black A9
+Player.white A9
+ 9  x  x  o  x  .  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  .  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  x  x  x 
+ 2  x  x  x  x  x  o  x  x  x 
+ 1  .  x  o  o  o  o  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 7, 'territory.num_black_stones': 45, 'captures': 18}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 27, 'captures': 1}}
+testcaptures
+game_result W: 28	B: 70
+Player.white A8
+Player.black A8
+ 9  x  x  o  x  .  x  x  x  o 
+ 8  o  x  o  .  x  x  o  o  o 
+ 7  .  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  x  x  x 
+ 2  x  x  x  x  x  o  x  x  x 
+ 1  .  x  o  o  o  o  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 45, 'captures': 18}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 28, 'captures': 1}}
+game_result W: 29	B: 68
+Player.black A7
+Player.white A7
+ 9  x  x  o  x  .  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  x  x  x 
+ 5  x  x  o  o  o  o  o  o  x 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  x  x  x 
+ 2  x  x  x  x  x  o  x  x  x 
+ 1  .  x  o  o  o  o  x  x  . 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 6, 'territory.num_black_stones': 46, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 27, 'captures': 1}}
+testcaptures
+game_result W: 28	B: 71
+Player.white J1
+Player.black J1
+ 9  x  x  o  x  .  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  . 
+ 6  x  x  x  o  .  o  .  .  . 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  .  .  . 
+ 2  x  x  x  x  x  o  .  .  . 
+ 1  .  x  o  o  o  o  .  .  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 32, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 14, 'territory.num_white_stones': 28, 'captures': 15}}
+testcaptures
+game_result W: 57	B: 56
+Player.black J7
+Player.white J7
+ 9  x  x  o  x  .  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  .  .  . 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  .  .  . 
+ 2  x  x  x  x  x  o  .  .  . 
+ 1  .  x  o  o  o  o  .  .  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 33, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 28, 'captures': 15}}
+game_result W: 43	B: 57
+Player.white J3
+Player.black J3
+ 9  x  x  o  x  .  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  .  .  . 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  .  .  o 
+ 2  x  x  x  x  x  o  .  .  . 
+ 1  .  x  o  o  o  o  .  .  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 33, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 7, 'territory.num_white_stones': 29, 'captures': 15}}
+game_result W: 51	B: 57
+Player.black G2
+Player.white G2
+ 9  x  x  o  x  .  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  .  .  . 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  .  .  o 
+ 2  x  x  x  x  x  o  x  .  . 
+ 1  .  x  o  o  o  o  .  .  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 34, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 29, 'captures': 15}}
+game_result W: 44	B: 58
+Player.white J2
+Player.black J2
+ 9  x  x  o  x  .  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  .  .  . 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  .  .  o 
+ 2  x  x  x  x  x  o  x  .  o 
+ 1  .  x  o  o  o  o  .  .  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 5, 'territory.num_black_stones': 34, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 30, 'captures': 15}}
+game_result W: 45	B: 58
+Player.black E9
+Player.white E9
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  .  .  . 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  .  .  o 
+ 2  x  x  x  x  x  o  x  .  o 
+ 1  .  x  o  o  o  o  .  .  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 35, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 30, 'captures': 15}}
+game_result W: 45	B: 58
+Player.white H1
+Player.black H1
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  .  .  . 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  .  .  o 
+ 2  x  x  x  x  x  o  x  .  o 
+ 1  .  x  o  o  o  o  .  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 35, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 31, 'captures': 15}}
+game_result W: 46	B: 58
+Player.black H2
+Player.white H2
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  .  o  .  .  . 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  .  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  .  x  o  o  o  o  .  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 36, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 31, 'captures': 15}}
+game_result W: 46	B: 59
+Player.white E6
+Player.black E6
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  o  o  .  .  . 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  .  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  .  x  o  o  o  o  .  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 36, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 32, 'captures': 15}}
+game_result W: 47	B: 59
+Player.black J4
+Player.white J4
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  x 
+ 6  x  x  x  o  o  o  .  .  . 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  .  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  .  x  o  o  o  o  .  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 37, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 32, 'captures': 15}}
+game_result W: 47	B: 60
+Player.white J6
+Player.black J6
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  .  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  . 
+ 6  x  x  x  o  o  o  .  .  o 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  .  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  .  x  o  o  o  o  .  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 36, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 3, 'territory.num_white_stones': 33, 'captures': 16}}
+testcaptures
+game_result W: 52	B: 59
+Player.black A8
+Player.white A8
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  x  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  . 
+ 6  x  x  x  o  o  o  .  .  o 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  .  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  .  x  o  o  o  o  .  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 37, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 3, 'territory.num_white_stones': 33, 'captures': 16}}
+game_result W: 52	B: 59
+Player.white G3
+Player.black G3
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  x  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  . 
+ 6  x  x  x  o  o  o  .  .  o 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  o  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  .  x  o  o  o  o  .  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 37, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 3, 'territory.num_white_stones': 34, 'captures': 16}}
+game_result W: 53	B: 59
+Player.black G6
+Player.white G6
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  x  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  . 
+ 6  x  x  x  o  o  o  x  .  o 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  o  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  .  x  o  o  o  o  .  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 38, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 34, 'captures': 16}}
+game_result W: 51	B: 60
+Player.white J7
+Player.black J7
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  x  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  x  .  o 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  o  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  .  x  o  o  o  o  .  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 38, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 35, 'captures': 16}}
+game_result W: 51	B: 60
+Player.black A1
+Player.white A1
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  x  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  x  .  o 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  o  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  x  x  o  o  o  o  .  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 39, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 35, 'captures': 16}}
+game_result W: 51	B: 60
+Player.white G1
+Player.black G1
+ 9  x  x  o  x  x  x  x  x  o 
+ 8  x  x  o  .  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  x  .  o 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  o  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 39, 'captures': 19}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 36, 'captures': 16}}
+game_result W: 52	B: 60
+Player.black D8
+Player.white D8
+ 9  x  x  .  x  x  x  x  x  o 
+ 8  x  x  .  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  x  .  o 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  o  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 40, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 0, 'territory.num_white_stones': 34, 'captures': 16}}
+testcaptures
+game_result W: 50	B: 65
+Player.white H6
+Player.black H6
+ 9  x  x  .  x  x  x  x  x  o 
+ 8  x  x  .  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  o  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 4, 'territory.num_black_stones': 39, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 35, 'captures': 17}}
+testcaptures
+game_result W: 53	B: 64
+Player.black C8
+Player.white C8
+ 9  x  x  .  x  x  x  x  x  o 
+ 8  x  x  x  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  . 
+ 4  x  .  x  x  x  o  o  o  x 
+ 3  x  x  .  x  o  o  o  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 40, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 35, 'captures': 17}}
+game_result W: 53	B: 64
+Player.white J5
+Player.black J5
+ 9  x  x  .  x  x  x  x  x  o 
+ 8  x  x  x  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  o 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  o  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 3, 'territory.num_black_stones': 39, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 36, 'captures': 18}}
+testcaptures
+game_result W: 56	B: 63
+Player.black C9
+Player.white C9
+ 9  x  x  x  x  x  x  x  x  o 
+ 8  x  x  x  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  o 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  o  .  o 
+ 2  x  x  x  x  x  o  x  x  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 40, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 36, 'captures': 18}}
+game_result W: 56	B: 63
+Player.white H3
+Player.black H3
+ 9  x  x  x  x  x  x  x  x  o 
+ 8  x  x  x  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  o 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  o  o  o 
+ 2  x  x  x  x  x  o  .  .  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 38, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 4, 'territory.num_white_stones': 37, 'captures': 20}}
+testcaptures
+game_result W: 61	B: 61
+Player.black H2
+Player.white H2
+ 9  x  x  x  x  x  x  x  x  o 
+ 8  x  x  x  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  o 
+ 4  x  .  x  x  x  o  o  o  . 
+ 3  x  x  .  x  o  o  o  o  o 
+ 2  x  x  x  x  x  o  .  x  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 39, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 37, 'captures': 20}}
+game_result W: 59	B: 62
+Player.white J4
+Player.black J4
+ 9  x  x  x  x  x  x  x  x  o 
+ 8  x  x  x  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  o 
+ 4  x  .  x  x  x  o  o  o  o 
+ 3  x  x  .  x  o  o  o  o  o 
+ 2  x  x  x  x  x  o  .  x  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 39, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 38, 'captures': 20}}
+game_result W: 59	B: 62
+Player.black passes
+Player.white passes
+ 9  x  x  x  x  x  x  x  x  o 
+ 8  x  x  x  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  o 
+ 4  x  .  x  x  x  o  o  o  o 
+ 3  x  x  .  x  o  o  o  o  o 
+ 2  x  x  x  x  x  o  .  x  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 39, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 1, 'territory.num_white_stones': 38, 'captures': 20}}
+game_result W: 59	B: 62
+Player.white G2
+Player.black G2
+ 9  x  x  x  x  x  x  x  x  o 
+ 8  x  x  x  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  o 
+ 4  x  .  x  x  x  o  o  o  o 
+ 3  x  x  .  x  o  o  o  o  o 
+ 2  x  x  x  x  x  o  o  .  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 38, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 39, 'captures': 21}}
+testcaptures
+game_result W: 62	B: 61
+Player.black passes
+Player.white passes
+ 9  x  x  x  x  x  x  x  x  o 
+ 8  x  x  x  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  o 
+ 4  x  .  x  x  x  o  o  o  o 
+ 3  x  x  .  x  o  o  o  o  o 
+ 2  x  x  x  x  x  o  o  .  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 38, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 39, 'captures': 21}}
+game_result W: 62	B: 61
+Player.white passes
+Player.black passes
+ 9  x  x  x  x  x  x  x  x  o 
+ 8  x  x  x  x  x  x  o  o  o 
+ 7  x  x  x  x  x  o  o  o  o 
+ 6  x  x  x  o  o  o  .  o  o 
+ 5  x  x  o  o  o  o  o  o  o 
+ 4  x  .  x  x  x  o  o  o  o 
+ 3  x  x  .  x  o  o  o  o  o 
+ 2  x  x  x  x  x  o  o  .  o 
+ 1  x  x  o  o  o  o  o  o  o 
+    A  B  C  D  E  F  G  H  J
+{<Player.black: 1>: {'territory.num_black_territory': 2, 'territory.num_black_stones': 38, 'captures': 21}, <Player.white: 2>: {'territory.num_white_territory': 2, 'territory.num_white_stones': 39, 'captures': 21}}
+game_result W: 62	B: 61

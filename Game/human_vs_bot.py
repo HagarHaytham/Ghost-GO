@@ -32,9 +32,9 @@ def main():
 
         if len(numberOfCaptures) > 0:
             if game.next_player == gotypes.Player.black:
-                captures[gotypes.Player.black] += numberOfCaptures[0]
+                captures[gotypes.Player.black] += numberOfCaptures
             else:
-                captures[gotypes.Player.white] += numberOfCaptures[0]
+                captures[gotypes.Player.white] += numberOfCaptures
 
         # time.sleep(1)
 

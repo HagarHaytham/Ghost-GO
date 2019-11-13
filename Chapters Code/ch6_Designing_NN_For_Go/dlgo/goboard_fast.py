@@ -115,7 +115,7 @@ class Board():
     def corners(self, point):
         return self.corner_table[point]
 
-    def place_stone(self, player, point):
+    def place_stone(self, player, point, prisoners = None):
         assert self.is_on_grid(point)
         if self._grid.get(point) is not None:
             print('Illegal play on %s' % str(point))
@@ -158,6 +158,8 @@ class Board():
             if replacement.num_liberties:
                 self._replace_string(other_color_string.without_liberty(point))
             else:
+                if prisoners is not None:
+                    prisoners[0] += len(other_color_string.stones)
                 self._remove_string(other_color_string)
 
     def _replace_string(self, new_string):
@@ -320,12 +322,13 @@ class GameState():
 
     def apply_move(self, move):
         """Return the new GameState after applying the move."""
+        prisoners = [0]
         if move.is_play:
             next_board = copy.deepcopy(self.board)
-            next_board.place_stone(self.next_player, move.point)
+            next_board.place_stone(self.next_player, move.point, prisoners)
         else:
             next_board = self.board
-        return GameState(next_board, self.next_player.other, self, move)
+        return GameState(next_board, self.next_player.other, self, move), prisoners[0]
 
     @classmethod
     def new_game(cls, board_size):
