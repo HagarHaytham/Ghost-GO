@@ -25,7 +25,6 @@ def main():
         bot_move = bots[game.next_player].select_move(game)
         print_move_file(game.next_player, bot_move, file)
         game,numberOfCaptures = game.apply_move(bot_move)
-        print_move_file(game.next_player, bot_move, file)
 
         if game.next_player == gotypes.Player.white:
             captures[gotypes.Player.black] += numberOfCaptures

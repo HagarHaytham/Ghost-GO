@@ -127,9 +127,7 @@ def experience_simulation(num_games, agent1, agent2,with_experience = True, mode
         return (agent1_wins, agent2_wins)
 
 
-def train(model_index, no_self_games = 10, no_trials = 5, wins_ratio = 0.6, epsilon = 0.5,learning_ratio = 0.000001, save_experience = True, save_games = True):
-    model = load_model('models/ElevenPlanes_smallarch_model_epoch_' + str(model_index) + '.h5')
-    current_model = load_model('models/ElevenPlanes_smallarch_model_epoch_' + str(model_index) + '.h5')
+def train(model_index, model, no_self_games = 10, epsilon = 0.5,learning_ratio = 0.000001, save_experience = True, save_games = True, wave_index = 0):
 
     encoder = ElevenPlaneEncoder(board_size = (19, 19))
 
@@ -141,48 +139,38 @@ def train(model_index, no_self_games = 10, no_trials = 5, wins_ratio = 0.6, epsi
         if not os.path.exists(directory):
             os.makedirs(directory)
 
-    wave_index = 0
-    while True:
-        agent1.set_temperature(epsilon)
-        agent2.set_temperature(epsilon)
+    agent1.set_temperature(epsilon)
+    agent2.set_temperature(epsilon)
+
+    experience, _ = experience_simulation(no_self_games, agent1, agent2, with_experience = True, model_index = model_index if save_games else -1)
+    
+    if save_experience:
+        self_games_h5file = h5py.File('experiences/model_' + str(model_index) + '/self_games_experience_' + str(wave_index) + '.hdf5', 'w')
+        experience.serialize(self_games_h5file)
+        self_games_h5file.close()
+
+    agent1.train(experience, learning_ratio)
+
+
+
+def is_baba_voss(model1, model2, no_trials = 5, wins_ratio = 0.6, save_experience = False):
+    # check if the model improved
+    encoder = ElevenPlaneEncoder(board_size = (19, 19))
+    agent = PolicyAgent(model1, encoder)
+    old_agent = PolicyAgent(model2, encoder)
+
+    agent.set_temperature(0)
+    old_agent.set_temperature(0)
+
+    if save_experience:
+        experience, (agent1_wins, agent2_wins) = experience_simulation(no_trials, agent, old_agent, with_experience = True)
         
-        no_games = no_self_games
+        trials_h5file = h5py.File('experiences/model_' + str(model_index) + '/trials_experience_' + str(wave_index) + '.hdf5', 'w')
+        experience.serialize(trials_h5file)
+        trials_h5file.close()
+    else:
+        (agent1_wins, agent2_wins) = experience_simulation(no_trials, agent, old_agent, with_experience = False)
 
-        experience, _ = experience_simulation(no_games, agent1, agent2, with_experience = True, model_index = model_index if save_games else -1)
-        
-        if save_experience:
-            self_games_h5file = h5py.File('experiences/model_' + str(model_index) + '/self_games_experience_' + str(wave_index) + '.hdf5', 'w')
-            experience.serialize(self_games_h5file)
-            self_games_h5file.close()
+    assert agent1_wins + agent2_wins == no_trials
 
-        agent1.train(experience, learning_ratio)
-        # now we have a new model
-
-        # check if the model improved
-        old_agent = PolicyAgent(current_model, encoder)
-
-        agent1.set_temperature(0)
-        old_agent.set_temperature(0)
-        
-        no_games = no_trials
-
-        if save_experience:
-            experience, (agent1_wins, agent2_wins) = experience_simulation(no_games, agent1, old_agent, with_experience = True)
-            
-            trials_h5file = h5py.File('experiences/model_' + str(model_index) + '/trials_experience_' + str(wave_index) + '.hdf5', 'w')
-            experience.serialize(trials_h5file)
-            trials_h5file.close()
-        else:
-            (agent1_wins, agent2_wins) = experience_simulation(no_games, agent1, old_agent, with_experience = False)
-
-        assert agent1_wins + agent2_wins == no_games
-
-        if (agent1_wins / no_games) > wins_ratio:
-            print('Here we go :D')
-
-            agent1._model.save('models/ElevenPlanes_smallarch_model_epoch_' + str(model_index + 1) + '.h5')
-
-            return True
-        else:
-            print('Try harder')
-            wave_index += 1
+    return (agent1_wins / no_trials) > 0.6
