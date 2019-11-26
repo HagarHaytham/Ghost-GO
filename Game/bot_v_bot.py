@@ -1,7 +1,7 @@
 from dlgo.agent import naive
-from dlgo import goboard_fast as goboard
-from dlgo import gotypes, scoring
-from dlgo.utils import print_board, print_board_file, print_move, print_move_file
+from dlgo import goboard_slow as goboard
+from dlgo import gotypes
+from dlgo.utils import print_board, print_move
 import time
 
 captures = {
@@ -17,31 +17,29 @@ def main():
         gotypes.Player.white: naive.RandomBot(),
         }
     
-    file = open('log_score_check.txt', 'w')
     while not game.is_over():
         # time.sleep(1)
         
-        # print(chr(27) + "[2J")
+        print(chr(27) + "[2J")
+        print_board(game.board)
         bot_move = bots[game.next_player].select_move(game)
-        print_move_file(game.next_player, bot_move, file)
+        print_move(game.next_player, bot_move)
         game,numberOfCaptures = game.apply_move(bot_move)
 
-        if game.next_player == gotypes.Player.white:
-            captures[gotypes.Player.black] += numberOfCaptures
-        else:
-            captures[gotypes.Player.white] += numberOfCaptures
+        if len(numberOfCaptures) > 0:
+            if game.next_player == gotypes.Player.black:
+                captures[gotypes.Player.black] += numberOfCaptures[0]
+            else:
+                captures[gotypes.Player.white] += numberOfCaptures[0]
 
-        game_result, score = scoring.compute_game_result(game,captures)
-        print_board_file(game.board, file)
-        file.write(str(score));
-        file.write('\n')
-        if numberOfCaptures != 0:
-            file.write('testcaptures')
-            file.write('\n')
-        file.write('game_result ')
-        file.write('W: ' + str(game_result.w) + '\t' + 'B: ' + str(game_result.b) )
-        file.write('\n')
-    file.close()
+    winner,score = game.winner(captures)
+
+    if winner == gotypes.Player.black:
+        print("Black is the WINNER!!!!")
+    else:
+        print("White is the WINNER!!!!")
+
+    print('Black:', score[gotypes.Player.black] ,'\tWhite:', score[gotypes.Player.white])
 
 if __name__ == '__main__':
     main()
