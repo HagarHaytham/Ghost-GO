@@ -20,7 +20,7 @@ encoding_time=0
 cnn_time=0
 move_time=0
 prisoners_time=0
-def monte_carlo_tree_search(state,color,num_rounds,captures,depth): 
+def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth): 
     global player
     global encoding_time
     global move_time
@@ -33,7 +33,7 @@ def monte_carlo_tree_search(state,color,num_rounds,captures,depth):
     prisoners_time=0
     player = color
     
-    root = MCTS_node(state,None,captures)
+    root = MCTS_node(state,None,captures,point)
     get_legal_moves(root)
     for i in range(num_rounds): 
         leaf = traverse(root,i)  
@@ -54,7 +54,7 @@ def best_child(root):
         if( child_winning_frac > best_winning_frac):
             best_winning_frac = child_winning_frac
             best_pick = i
-    return root.children[best_pick].game_state , root.children[best_pick].captures
+    return root.children[best_pick].game_state , root.children[best_pick].captures,root.children[best_pick].point
     
       
 def traverse(node,total_rollouts): 
@@ -81,13 +81,13 @@ def get_legal_moves(root):
     for i in range(len(legal_moves)):
         legal_state , prisoners = root.game_state.apply_move(legal_moves[i]) 
         if(not legal_state.is_over()):
+            capture = 0
             if len(prisoners) > 0:
                 capture = prisoners[0]
-            else:
-                capture = 0
             child_captures = copy.copy(root.captures)    
             child_captures[player]+=capture
-            child = MCTS_node(legal_state,root,child_captures)  
+            dummy_point = gotypes.Point(0,0)
+            child = MCTS_node(legal_state,root,child_captures,dummy_point)  
             root.children.append(child)
 
 def rollout(node,depth):
@@ -113,30 +113,29 @@ def rollout(node,depth):
         probability_matrix = np.reshape(probability_matrix, (-1, 19))
         
         t3 = time.time()
+        new_point = 0
         while True:
             max = probability_matrix.max()
             coordinates = np.where(probability_matrix == max)
             row = coordinates[0][0]
             col = coordinates[1][0]
             probability_matrix[row][col]= 0
-            point = gotypes.Point(row=row+1, col=col+1)
-            move = goboard.Move(point)
+            new_point = gotypes.Point(row=row+1, col=col+1)
+            move = goboard.Move(new_point)
             if game_state.is_valid_move(move):
                 break
        
         new_game_state , prisoners  = game_state.apply_move(move)
         
         t4 =time.time()
-        
+        capture = 0 
         if len(prisoners) > 0:
             capture = prisoners[0]
-        else:
-            capture = 0
         child_captures = copy.copy(parent.captures)    
         child_captures[player]+=capture
         
         t5 =time.time()
-        new_node = MCTS_node(new_game_state,parent,child_captures)
+        new_node = MCTS_node(new_game_state,parent,child_captures,new_point)
         # check if game is over
         game_state = new_game_state
         parent = new_node
