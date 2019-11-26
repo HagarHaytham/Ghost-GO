@@ -6,7 +6,7 @@ Created on Fri Oct 25 18:38:17 2019
 """
 from dlgo.gotypes import Player
 class MCTS_node():
-    def __init__(self, game_state, parent,captures):
+    def __init__(self, game_state, parent,captures,point):
         self.game_state = game_state
         self.parent = parent
         self.children = []
@@ -16,6 +16,7 @@ class MCTS_node():
         }
         self.num_rollouts = 1
         self.captures = captures
+        self.point = point
         
         
     def record_win(self, winner):
