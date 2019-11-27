@@ -17,9 +17,9 @@ function  createWindow(){
         icon: path.join(__dirname, 'images/logo.png')});
         win.setMenu(null);
         win.loadURL(url.format({
-        pathname: path.join(__dirname,'html/index.html'),
+        pathname: path.join(__dirname,'html/start.html'),
         protocol: 'file',
-        slashes: true
+        slashes: true,
     }));
 
     win.webContents.openDevTools();

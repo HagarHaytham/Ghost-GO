@@ -320,3 +320,7 @@ function resize() {
 }
 
 resize();
+
+
+var color = sessionStorage.getItem('color');
+console.log("color: ", color);

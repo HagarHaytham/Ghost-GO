@@ -159,26 +159,35 @@ const distance = 1070;
 const y =  window.innerHeight / 2 + 230;
 const x = 100;
 
-const button1 = PIXI.Sprite.from('../images/blackbutton.png');
-button1.scale.set(0.2);
-button1.interactive = true;
-button1.y = y;
-button1.cursor = 'hover';
-button1.x = x;
+const blackBttn = PIXI.Sprite.from('../images/blackbutton.png');
+blackBttn.scale.set(0.2);
+blackBttn.interactive = true;
+blackBttn.y = y;
+blackBttn.cursor = 'hover';
+blackBttn.x = x;
 
-app.stage.addChild(button1);
+app.stage.addChild(blackBttn);
 
+blackBttn.on('click', function(){
+    sessionStorage.setItem("color", "black");
+    location.assign("../html/index.html"); 
+});
 
 //////////////////////////////
-const button2 = PIXI.Sprite.from('../images/whitebutton.png');
-button2.scale.set(0.2);
-button2.interactive = true;
-button2.y = y;
+const whiteBttn = PIXI.Sprite.from('../images/whitebutton.png');
+whiteBttn.scale.set(0.2);
+whiteBttn.interactive = true;
+whiteBttn.y = y;
 //button2.cursor = 'hover';
-button2.x = x + distance;
+whiteBttn.x = x + distance;
 
-app.stage.addChild(button2);
 
+whiteBttn.on('click', function(){
+    sessionStorage.setItem("color", "white");
+    location.assign("../html/index.html"); 
+});
+
+app.stage.addChild(whiteBttn);
 //////////////////////Text/////////////////////
 var fontSz = 90;
 const fontStyle = new PIXI.TextStyle({
