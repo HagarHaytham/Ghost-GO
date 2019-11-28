@@ -43,7 +43,7 @@ function draw_move(move)
 {
     console.log('Making a move.');
     // your code goes here
-    gui.drawMoves(move);
+    gui.drawMove(move);
 }
 
 function draw_moves(moves)

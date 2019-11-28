@@ -360,7 +360,7 @@ function resize() {
 
 resize();
 
-function drawMoves(move){
+function drawMove(move){
     if(color === "white" )
         var stone = PIXI.Sprite.fromImage('../images/black.png');
     else
@@ -392,6 +392,6 @@ function drawMoves(move){
     app.stage.addChild(stone);
 }
 
-module.exports = {drawMoves};
+module.exports = {drawMove};
 
 
