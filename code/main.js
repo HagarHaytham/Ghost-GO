@@ -1,4 +1,3 @@
-
 const electron = require('electron')
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow; 
@@ -12,34 +11,36 @@ function  createWindow(){
     
 
     win=new BrowserWindow({
+        webPreferences: {
+          nodeIntegration: true
+        },
         width:1080,
         height: 720,
         icon: path.join(__dirname, 'images/logo.png')});
         win.setMenu(null);
         win.loadURL(url.format({
-        pathname: path.join(__dirname,'html/start.html'),
+        pathname: path.join(__dirname,'html/mode.html'),
         protocol: 'file',
         slashes: true,
-    }));
+       }));
 
-    win.webContents.openDevTools();
+        win.webContents.openDevTools();
    
-    win.on('closed', () => { 
-        win=null
-    })
+        win.on('closed', () => { 
+          win=null
+        })
 
-    win.maximize();
-    win.setResizable(false);
-    win.show();
+        win.maximize();
+        win.setResizable(false);
+        win.show();
 
-    globalShortcut.register('f5', function() {
-		console.log('f5 is pressed')
-		win.reload()
+        globalShortcut.register('f5', function() {
+		    console.log('f5 is pressed')
+		    win.reload()
   })
   
 }
 
-app.on('ready',createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -57,3 +58,5 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+app.on('ready',createWindow);

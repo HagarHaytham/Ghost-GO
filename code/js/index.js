@@ -1,4 +1,6 @@
-
+const interface = require("../interface.js");
+const color = sessionStorage.getItem('color');
+console.log("index, color: ", color);
 
 const app = new PIXI.Application({
 	autoResize: true,
@@ -64,6 +66,10 @@ passButton.x = 1200
 passButton.y = 550
 passButton.height = 90
 passButton.width = 200 
+passButton.interactive = true;
+passButton.on('click', function(){
+    interface.send_opponent_move("2");
+});
 app.stage.addChild(passButton);
 
 
@@ -72,13 +78,33 @@ resignButton.x = 1200
 resignButton.y = 650
 resignButton.height = 90
 resignButton.width = 200 
+resignButton.interactive = true;
+resignButton.on('click', function(){
+    interface.send_opponent_move("1");
+});
 app.stage.addChild(resignButton);
 
-const soundButton = PIXI.Sprite.fromImage('../images/sound.png');
+
+const textureSound = PIXI.Texture.from("../images/sound.png");
+const textureMute = PIXI.Texture.from("../images/mute.png");
+var sound = true;
+var soundButton = PIXI.Sprite.fromImage(textureSound);
 soundButton.x = 1400
 soundButton.y = 10
 soundButton.height = 90
 soundButton.width = 90 
+soundButton.interactive = true;
+soundButton.on('click', function(){
+   if(sound == true){
+    soundButton.texture = textureSound;
+   }
+
+   else{
+    soundButton.texture = textureMute;
+   }
+
+   sound = !sound;
+});
 app.stage.addChild(soundButton);
 
 
@@ -88,6 +114,7 @@ timerBoard.y = 130
 timerBoard.height = 200
 timerBoard.width = 500 
 app.stage.addChild(timerBoard); 
+
 
 
 
@@ -152,8 +179,6 @@ const blockNum = 18;
 const x = 450;
 const y = 100;
 
-var color = "black" //modify
-
 
 const board = PIXI.Sprite.fromImage('../images/boardcartoon.png');
 board.interactive = true;
@@ -185,10 +210,24 @@ function onClick(event){
         
         clickPosX = Math.round(clickPosX / blockSz) * blockSz;
         clickPosY = Math.floor(clickPosY / blockSz) * blockSz;
+
         stone.x = clickPosX - blockSz/2;
-        stone.y = clickPosY  ;
+        stone.y = clickPosY;
         stone.height = 25;
         stone.width = 25;
+
+        col = clickPosX - x;
+        row = clickPosY - y;
+        col = col / blockSz;
+        row = row / blockSz;
+        col = Math.ceil(col);
+        row = Math.ceil(row);
+
+        var rowNum = 19-row;
+        var colChar = String.fromCharCode(65+col);
+        if(colChar >= 'I') colChar = String.fromCharCode(65+col+1);
+        var move = "0#" + colChar + '-' + rowNum;
+        interface.send_opponent_move(move); //if it's a valid move //modify
         app.stage.addChild(stone);
     }
  
@@ -321,6 +360,38 @@ function resize() {
 
 resize();
 
+function drawMoves(move){
+    if(color === "white" )
+        var stone = PIXI.Sprite.fromImage('../images/black.png');
+    else
+        var stone = PIXI.Sprite.fromImage('../images/white.png');
 
-var color = sessionStorage.getItem('color');
-console.log("color: ", color);
+    //Assume it's always 0# //modify
+    move = move.toString();
+    l = move.split('#');
+    l = l[1].split('-');
+    var colChar = l[0];
+    var rowNum = l[1];
+
+    var row = 19 - parseInt(rowNum, 10);;
+    col = colChar.charCodeAt(0)-65;
+    if(colChar >= 'I') --col;
+   
+    col = col*blockSz + x;
+    row = row*blockSz + y;
+    console.log("added stone col: ", col , " row ", row);
+
+    col = Math.round(col / blockSz) * blockSz;
+    row = Math.floor(row / blockSz) * blockSz;
+
+    stone.x = col - blockSz/2;
+    stone.y = row;
+    stone.height = 25;
+    stone.width = 25;
+
+    app.stage.addChild(stone);
+}
+
+module.exports = {drawMoves};
+
+

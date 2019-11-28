@@ -1,4 +1,4 @@
-
+const interface = require("../interface.js");
 const app = new PIXI.Application({
 	autoResize: true,
   resolution: devicePixelRatio,
@@ -20,8 +20,8 @@ var stage = new PIXI.Container();
 stage.interactive = true;
 
 ///////////////////////Background/////////////////////////
-var texture = PIXI.Texture.from("../images/10.jpg");
-var textureBlack = PIXI.Texture.from("../images/101.jpg");
+const texture = PIXI.Texture.from("../images/10.jpg");
+const textureBlack = PIXI.Texture.from("../images/101.jpg");
 var bg = PIXI.Sprite.fromImage(texture);
 bg.scale.set(0.87);
 app.stage.addChild(bg);
@@ -29,15 +29,11 @@ app.stage.addChild(bg);
 var interval = setInterval(ChangeBackground, 1000);
 var black = 0;
 function ChangeBackground(){
-    if(!black){
-        bg.texture = textureBlack;
-        black = 1;
-    }
 
-    else{
-        bg.texture = texture;
-        black = 0;
-    }
+    if(!black) bg.texture = textureBlack;
+    else bg.texture = texture;
+    
+    black = !black;
 }
 /////////////////////////Ghost//////////////////////////////////////////
 
@@ -159,35 +155,31 @@ const distance = 1070;
 const y =  window.innerHeight / 2 + 230;
 const x = 100;
 
-const blackBttn = PIXI.Sprite.from('../images/blackbutton.png');
-blackBttn.scale.set(0.2);
-blackBttn.interactive = true;
-blackBttn.y = y;
-blackBttn.cursor = 'hover';
-blackBttn.x = x;
-
-app.stage.addChild(blackBttn);
-
-blackBttn.on('click', function(){
+const blackButton = PIXI.Sprite.from('../images/blackbutton.png');
+blackButton.scale.set(0.2);
+blackButton.interactive = true;
+blackButton.y = y;
+blackButton.cursor = 'hover';
+blackButton.x = x;
+blackButton.on('click', function(){
     sessionStorage.setItem("color", "black");
+    interface.send_opponent_color('0');
     location.assign("../html/index.html"); 
 });
-
+app.stage.addChild(blackButton);
 //////////////////////////////
-const whiteBttn = PIXI.Sprite.from('../images/whitebutton.png');
-whiteBttn.scale.set(0.2);
-whiteBttn.interactive = true;
-whiteBttn.y = y;
+const whiteButton = PIXI.Sprite.from('../images/whitebutton.png');
+whiteButton.scale.set(0.2);
+whiteButton.interactive = true;
+whiteButton.y = y;
 //button2.cursor = 'hover';
-whiteBttn.x = x + distance;
-
-
-whiteBttn.on('click', function(){
+whiteButton.x = x + distance;
+whiteButton.on('click', function(){
     sessionStorage.setItem("color", "white");
+    interface.send_opponent_color('1');
     location.assign("../html/index.html"); 
 });
-
-app.stage.addChild(whiteBttn);
+app.stage.addChild(whiteButton);
 //////////////////////Text/////////////////////
 var fontSz = 90;
 const fontStyle = new PIXI.TextStyle({
@@ -218,3 +210,4 @@ function resize() {
 }
 
 resize();
+
