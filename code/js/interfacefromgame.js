@@ -1,4 +1,5 @@
-const gui = require("../js/index.js");
+const guiIndex = require("../js/index.js");
+const guiScore = require("../js/index.js");
 var zmq = require("zeromq");
 var from_game = zmq.socket("pull");
 from_game.connect("tcp://127.0.0.1:3001");
@@ -43,7 +44,7 @@ function draw_move(move)
 {
     console.log('Making a move.');
     // your code goes here
-    gui.drawMove(move);
+    guiIndex.drawMove(move);
 }
 
 function draw_moves(moves)
@@ -57,6 +58,7 @@ function show_score(score)
 {
     console.log('SCORE!');
     console.log(score);
+    guiScore.showScore(score);
     // your code goes here
 }
 

@@ -19,7 +19,7 @@ function  createWindow(){
         icon: path.join(__dirname, 'images/logo.png')});
         win.setMenu(null);
         win.loadURL(url.format({
-        pathname: path.join(__dirname,'html/mode.html'),
+        pathname: path.join(__dirname,'html/score.html'),
         protocol: 'file',
         slashes: true,
        }));

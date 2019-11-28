@@ -1,4 +1,3 @@
-const interface = require("../interface.js");
 const app = new PIXI.Application({
 	autoResize: true,
   resolution: devicePixelRatio,
@@ -20,10 +19,10 @@ var stage = new PIXI.Container();
 stage.interactive = true;
 
 ///////////////////////Background/////////////////////////
-const texture = PIXI.Texture.from("../images/10.jpg");
-const textureBlack = PIXI.Texture.from("../images/101.jpg");
-var bg = PIXI.Sprite.fromImage(texture);
-bg.scale.set(0.87);
+const texture = PIXI.Texture.from("../images/99.jpg");
+const textureBlack = PIXI.Texture.from("../images/99.jpg");
+var bg = PIXI.Sprite.from(texture);
+bg.scale.set(0.8);
 app.stage.addChild(bg);
 
 var interval = setInterval(ChangeBackground, 1000);
@@ -150,56 +149,32 @@ function cubicInterpolation(array, t, tangentFactor) {
 }
 
 
-////////////////////Button///////////////////
-const distance = 1070;
-const y =  window.innerHeight / 2 + 230;
-const x = 100;
+////////////////////Buttons///////////////////
 
-const blackButton = PIXI.Sprite.from('../images/blackbutton.png');
-blackButton.scale.set(0.2);
-blackButton.interactive = true;
-blackButton.y = y;
-blackButton.cursor = 'hover';
-blackButton.x = x;
-blackButton.on('click', function(){
-    sessionStorage.setItem("color", "black");
-    interface.send_opponent_color('0');
-    location.assign("../html/index.html"); 
-});
-app.stage.addChild(blackButton);
-//////////////////////////////
-const whiteButton = PIXI.Sprite.from('../images/whitebutton.png');
-whiteButton.scale.set(0.2);
-whiteButton.interactive = true;
-whiteButton.y = y;
-//button2.cursor = 'hover';
-whiteButton.x = x + distance;
-whiteButton.on('click', function(){
-    sessionStorage.setItem("color", "white");
-    interface.send_opponent_color('1');
-    location.assign("../html/index.html"); 
-});
-app.stage.addChild(whiteButton);
-//////////////////////Text/////////////////////
-var fontSz = 90;
-const fontStyle = new PIXI.TextStyle({
-    dropShadow: true,
-    dropShadowAlpha: 0.4,
-    dropShadowColor: "silver",
-    //fontColor : 0x452000,
-    fill: '#3e1707', 
-    fontSize: fontSz ,
-    fontFamily: "\"Comic Sans MS\", cursive, sans-serif",
-    fontStyle: "italic",
-    fontWeight: "bold",stroke: '#a4410e', strokeThickness: 9
-});
+var distance = 150;
+var y = 50;
+var x = window.innerWidth/2;
+////////////////
+var loader = new PIXI.Loader();
+loader.add(["../images/mode.png"]); //modify //add other images here
+loader.once('complete',setup);
+loader.load();
+function setup() { 
+    const scoreImg = PIXI.Sprite.from('../images/mode.png');
+    scoreImg.x = x - distance - scoreImg.width; 
+    scoreImg.y = y;
+    app.stage.addChild(scoreImg);
 
-msg = new PIXI.Text("Choose Your Color",fontStyle);
-msg.x = window.innerWidth/2-440;
-msg.y = window.innerHeight/2 + 220;
-app.stage.addChild(msg);
+    
 
-///////////sound////////
+    const opponentScoreImg = PIXI.Sprite.from('../images/mode.png');
+    opponentScoreImg.x = x + distance;
+    opponentScoreImg.y = y;
+    app.stage.addChild(opponentScoreImg);
+}
+
+
+//////////////////sound////////////////////
 const textureSound = PIXI.Texture.from("../images/sound.png");
 const textureMute = PIXI.Texture.from("../images/mute.png");
 var sound = true;
@@ -221,6 +196,10 @@ soundButton.on('click', function(){
    sound = !sound;
 });
 app.stage.addChild(soundButton);
+///////////////////////////showscore/////////////////////
+function showScore(score){
+    
+}
 ///////////////////////////////////////
 // Listen for window resize events
 window.addEventListener('resize', resize);

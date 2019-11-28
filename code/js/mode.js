@@ -204,9 +204,29 @@ function setup() {
 }
 
 
-//////////////////////////////////////
+/////////////////sound/////////////////////
 
+const textureSound = PIXI.Texture.from("../images/sound.png");
+const textureMute = PIXI.Texture.from("../images/mute.png");
+var sound = true;
+var soundButton = PIXI.Sprite.fromImage(textureSound);
+soundButton.x = 1400
+soundButton.y = 10
+soundButton.height = 90
+soundButton.width = 90 
+soundButton.interactive = true;
+soundButton.on('click', function(){
+   if(sound == true){
+    soundButton.texture = textureSound;
+   }
 
+   else{
+    soundButton.texture = textureMute;
+   }
+
+   sound = !sound;
+});
+app.stage.addChild(soundButton);
 
 
 ///////////////////////////////////////
