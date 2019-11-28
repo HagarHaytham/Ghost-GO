@@ -173,4 +173,4 @@ def is_baba_voss(model1, model2, no_trials = 5, wins_ratio = 0.6, save_experienc
 
     assert agent1_wins + agent2_wins == no_trials
 
-    return (agent1_wins / no_trials) > 0.6
+    return (agent1_wins / no_trials) > wins_ratio
