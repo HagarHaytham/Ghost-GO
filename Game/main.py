@@ -25,7 +25,6 @@ def game_mode():
         } 
     
     elif (game_mode == 1):  # trainer mode  AI VS human
-        
         pass
     elif (game_mode == 2): # trainer test mode start from a certain state
         game_board = np.zeros((board_size,board_size))
