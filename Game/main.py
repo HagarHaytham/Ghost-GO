@@ -2,19 +2,20 @@ from dlgo.agent import naive
 from dlgo import goboard_slow as goboard
 from dlgo import gotypes
 from dlgo.utils import print_board, print_move
-import time
+import interface
 from  MCTS import monte_carlo_tree_search
 import time
 import numpy as np 
 board_size = 19
 num_rounds = 10
 depth = 10
-consequitive_passes = 0
-resign = False
+opponent_consequitive_passes = 0
+player_consequitive_passes = 0
+opponont_resigns = False
 
 def game_mode():
     game_mode = 0  
-    # game_mode = get_game_mode()
+    game_mode = interface.get_game_mode()
     game = 0
     captures =0
     if(game_mode == 0 or game_mode == 1):  # PC mode  
@@ -35,7 +36,7 @@ def game_mode():
     return game , captures
 
 def get_player_color():
-    # opponent  = get_opponent_color()
+    opponent  =interface.get_opponent_color()
     opponent = 0
     if(opponent == 0):
         return gotypes.Player.white , gotypes.Player.black
@@ -43,11 +44,11 @@ def get_player_color():
 
 def get_next_state(current_state,captures,opponent):
     global consequitive_passes
-    global resign
+    global opponont_opponont_resignss
     decision=[0,'#',1,'-',4]
     new_game_state =0 
     point =0
-    # decision = get_opponent_move()
+    decision =interface.get_opponent_move()
     if decision[0] == 0 : # play  
         consequitive_passes = 0
         point =  gotypes.Point(decision[2],decision[4])
@@ -57,20 +58,22 @@ def get_next_state(current_state,captures,opponent):
         if len(prisoners) > 0:
             capture = prisoners[0]
         captures[opponent]+=capture
-    elif decision[1] == 1 :  # resign
-        resign = True
+    elif decision[1] == 1 :  # opponont_opponont_resignss
+        opponont_resigns = True
     elif decision[2] == 2 : # pass
         consequitive_passes+=1
     return new_game_state , captures , point
 
 def send_move(decision,point):
+    global player_consequitive_passes
     if(decision == 0): # play
+        player_consequitive_passes = 0 
         move = '0'+'#'+str(point.X)+'-'+str(point.Y)
-    elif decision == 1: # resign 
+    elif decision == 1: # player_resigns 
         move = '1'
     elif decision == 2: # pass
         move = '2'
-    # send_ghost_move(move)
+    iterface.send_ghost_move(move)
     return  
     
 def send_valid_moves_to_gui(game_state):
@@ -80,18 +83,20 @@ def send_valid_moves_to_gui(game_state):
         move = legal_moves[k]
         moves[k][0]= move.point.X
         moves[k][1]= move.point.Y
-    # send_valid_moves(moves)
+    iterface.send_valid_moves(moves)
     return
 
 def send_score_to_gui(score):
-    # send_score(score)
+    iterface.send_score(score)
     return
 
 def main():
-
+    global opponent_consequitive_passes
+    global player_consequitive_passes
+    global opponont_resigns
     game , captures = game_mode()
     player , opponent = get_player_color() 
-    
+    old_game_score = 0
     
     while ( not game.is_over()):
 
@@ -99,10 +104,19 @@ def main():
 
         start = time.time()
         game , captures , point  =  get_next_state(game,captures,opponent)
-        if(consequitive_passes == 2 or resign == True):
+        if(opponent_consequitive_passes == 2 or opponont_resigns == True ):
             break
         game , captures , play_coords= monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
-        
+        _winner ,this_game_score = game.winner(captures)
+        decision = 0
+        point =Point(play_coords.X,play_coords.Y)
+        if(old_game_score >= this_game_score ):  #pass game
+            decision = 2
+            point = -1
+            player_consequitive_passes+=1
+        send_move(decision , point)
+        if(player_consequitive_passes == 2):
+            break
         end = time.time()
         print(end - start)
 
