@@ -34,7 +34,6 @@ def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth):
     player = color
     
     root = MCTS_node(state,None,captures,point)
-    get_legal_moves(root)
     for i in range(num_rounds): 
         leaf = traverse(root,i)  
         simulation_result , last_node = rollout(leaf,depth)
@@ -60,7 +59,7 @@ def best_child(root):
 def traverse(node,total_rollouts): 
     picked_child=None
     if(not node.game_state.is_over()):
-        get_legal_moves(node)        
+        get_best_three(node)        
         picked_child = pick_child(node,total_rollouts)  
     return picked_child  
   
@@ -73,22 +72,29 @@ def pick_child(node,total_rollouts):
     for child in node.children:
         new_value =child.win_counts[player] + temperature * math.sqrt(math.log(total_rollouts)/(child.num_rollouts))
         if(new_value > current_value ):
-            picked_child=child
+            picked_child = child
     return picked_child
 
-def get_legal_moves(root):
-    legal_moves = root.game_state.legal_moves()
-    for i in range(len(legal_moves)):
-        legal_state , prisoners = root.game_state.apply_move(legal_moves[i]) 
-        if(not legal_state.is_over()):
+def get_best_three(root):
+    probability_matrix=predict.model.predict(root)[0]
+    probability_matrix = np.reshape(probability_matrix, (-1, 19))
+    for i in range(3):
+            max = probability_matrix.max()
+            coordinates = np.where(probability_matrix == max)
+            row = coordinates[0][0]
+            col = coordinates[1][0]
+            probability_matrix[row][col]= -1
+            new_point = gotypes.Point(row=row+1, col=col+1)
+            move = goboard.Move(new_point)
+            legal_state , prisoners = root.game_state.apply_move(move) 
             capture = 0
             if len(prisoners) > 0:
                 capture = prisoners[0]
             child_captures = copy.copy(root.captures)    
             child_captures[player]+=capture
-            dummy_point = gotypes.Point(0,0)
-            child = MCTS_node(legal_state,root,child_captures,dummy_point)  
+            child = MCTS_node(legal_state,root,child_captures,new_point)
             root.children.append(child)
+    print(probability_matrix)
 
 def rollout(node,depth):
     game_state = node.game_state
@@ -98,10 +104,8 @@ def rollout(node,depth):
     global move_time
     global cnn_time
     global prisoners_time
-
     prisoners =0 
     while not game_state.is_over() and j < depth:
-        
         j+=1
         t1=time.time()
         state = sevenplanes.SevenPlaneEncoder((19,19))

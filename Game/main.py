@@ -28,7 +28,7 @@ def game_mode():
     elif (game_mode == 1):  # trainer mode  AI VS human
         pass
     elif (game_mode == 2): # trainer test mode start from a certain state
-        game_board = np.zeros((board_size,board_size))
+        # game_board = np.zeros((board_size,board_size))
         
         # fill matrix somehow
         # send_state(game_board)
@@ -44,7 +44,7 @@ def get_player_color():
 
 def get_next_state(current_state,captures,opponent):
     global consequitive_passes
-    global opponont_opponont_resignss
+    global opponont_resigns
     decision=[0,'#',1,'-',4]
     new_game_state =0 
     point =0
@@ -73,7 +73,7 @@ def send_move(decision,point):
         move = '1'
     elif decision == 2: # pass
         move = '2'
-    iterface.send_ghost_move(move)
+    interface.send_ghost_move(move)
     return  
     
 def send_valid_moves_to_gui(game_state):
@@ -83,11 +83,11 @@ def send_valid_moves_to_gui(game_state):
         move = legal_moves[k]
         moves[k][0]= move.point.X
         moves[k][1]= move.point.Y
-    iterface.send_valid_moves(moves)
+    interface.send_valid_moves(moves)
     return
 
 def send_score_to_gui(score):
-    iterface.send_score(score)
+    interface.send_score(score)
     return
 
 def main():
@@ -109,7 +109,7 @@ def main():
         game , captures , play_coords= monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
         _winner ,this_game_score = game.winner(captures)
         decision = 0
-        point =Point(play_coords.X,play_coords.Y)
+        point =gotypes.Point(play_coords.X,play_coords.Y)
         if(old_game_score >= this_game_score ):  #pass game
             decision = 2
             point = -1
