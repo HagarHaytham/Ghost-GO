@@ -41,11 +41,21 @@ def send_moves(v):
     print("thread starts with v = ",v)
     push_socket.send_string(v)
 
-def send_ghost_move(move):
+def send_move(move, color):  #renamed insead of send_ghost_move
     m = 'MOVE,' + move
     push_socket.send_string(m)
 
-def send_score(score):
-    s = 'SCORE#' + score
+def send_score(game_mode, score1, score2=0): #score2 for AI mode
+    s = 'SCORE#' + score1
+    if game_mode == '0': #AI Mode
+        s += '-' + score2
     push_socket.send_string(s)
     print("score was sent", s)
+
+def send_recommended_move(move):
+    m = 'REC_MOVE,' + move
+    push_socket.send_string(m)
+
+def send_congrate(msg): 
+    m = 'CONGRATE,' + msg
+    push_socket.send_string(m)
