@@ -14,17 +14,18 @@ function  createWindow(){
         webPreferences: {
           nodeIntegration: true
         },
-        width:1080,
-        height: 720,
+        //width:1080,
+        //height: 720,
         icon: path.join(__dirname, 'images/logo.png')});
         win.setMenu(null);
         win.loadURL(url.format({
-        pathname: path.join(__dirname,'html/score.html'),
+        pathname: path.join(__dirname,'html/mode.html'),
         protocol: 'file',
         slashes: true,
        }));
 
-        win.webContents.openDevTools();
+       //cursorlog
+       //win.webContents.openDevTools();
    
         win.on('closed', () => { 
           win=null
