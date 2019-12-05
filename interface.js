@@ -16,7 +16,7 @@ from_game.on("message", function(msg) {
     l = result.split(',');
     
     switch(l[0]){
-        case 'STATE':
+            case 'STATE':
             draw_state(l[1]);
             break;
         case 'VALID':
@@ -28,6 +28,11 @@ from_game.on("message", function(msg) {
         case 'SCORE':
             show_score(l[1]);
             break;
+        case 'CONGRATULATE':
+            congratulate(l[1]);
+
+        case 'REC_MOVE':
+            show_recommend_move(l[1]);
         default:
             console.log("invalid message code from implementation side.")
     }
@@ -42,13 +47,13 @@ function send_mode(mode){
 function draw_state(state)
 {
     console.log('Drawing a state.');
-    // your code goes here
+    console.log(state)
 }
 
 function draw_move(move)
 {
     console.log('Making a move.');
-    // your code goes here
+    console.log(move)
 }
 
 function draw_moves(moves)
@@ -62,6 +67,15 @@ function show_score(score)
     console.log('SCORE!');
     console.log(score);
     // your code goes here
+}
+
+function congratulate(msg)
+{
+    console.log(msg);
+}
+function show_recommended_move(msg)
+{
+    console.log(msg);
 }
 
 // white : 1 , black : 0

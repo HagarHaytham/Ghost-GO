@@ -57,5 +57,5 @@ def send_recommended_move(move):
     push_socket.send_string(m)
 
 def send_congrate(msg): 
-    m = 'CONGRATE,' + msg
+    m = 'CONGRATULATE,' + msg
     push_socket.send_string(m)
