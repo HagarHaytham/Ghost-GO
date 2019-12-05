@@ -43,7 +43,14 @@ function draw_move(move)
 {
     console.log('Making a move.');
     // your code goes here
-    gui.drawMove(move);
+    var color = "black"; //dummy value
+    gui.drawMove(move, color);
+}
+
+function draw_move_color(move,color)
+{
+    console.log('AI MOVE: '+move+' '+color);
+    gui.drawMove(move, color);
 }
 
 function draw_moves(moves)
@@ -54,13 +61,24 @@ function draw_moves(moves)
     
 }
 
-function show_score(score)
+function show_score(O_score,G_score,reason)
 {
     console.log('SCORE!');
     console.log(score);
-    gui.showScore(score);
-    // your code goes here
+    gui.showScore(O_score,G_score,reason);
 }
 
+function congratulate(msg)
+{
+    console.log('CONGRATS:');
+    console.log(msg)
+    gui.congratulate(msg);
+}
+
+function show_recommended_move(move) // in addition to valid moves, There can be a specific recommended move.
+{
+    console.log('Recommended Moves:'+ move);
+    gui.showRecommendedMove(move);
+}
 
 

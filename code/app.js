@@ -19,12 +19,12 @@ function  createWindow(){
         icon: path.join(__dirname, 'images/logo.png')});
         win.setMenu(null);
         win.loadURL(url.format({
-        pathname: path.join(__dirname,'html/mode.html'),
+        pathname: path.join(__dirname,'html/main.html'),
         protocol: 'file',
         slashes: true,
        }));
 
-       //cursorlog
+       //cursorlog //comment //modify
        //win.webContents.openDevTools();
    
         win.on('closed', () => { 

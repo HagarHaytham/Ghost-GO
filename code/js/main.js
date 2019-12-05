@@ -7,7 +7,7 @@ var valid_moves = "all";
 var ghost_animate = true;
 const blockSz = 30;
 const blockNum = 18;
-const x = 450;
+const x = window.innerWidth/2 - (blockSz*blockNum)/2;
 const y = 100;
 var blurFilter = new PIXI.filters.BlurFilter();
 blurFilter.blur = 0;
@@ -150,6 +150,7 @@ function setup(){
     utilities.addSoundButton(app);
     addTimer();
     drawBoard();
+    //showScore("2500","56100","TimeOut"); //modify //removetest
 }
 
 function addTimer(){
@@ -396,16 +397,16 @@ function validMoves(moves){
     valid_moves = moves;
 }
 
-function drawMove(move){
-    my_turn = true;
+function drawMove(move, AIColor){
+    if(mode == "AIVSHuman") my_turn = true;
     
     move = move.toString();
     if(move[0] != '0') return;
-
-    if(color === "white" )
-        var stone = PIXI.Sprite.fromImage('../images/black.png');
-    else
-        var stone = PIXI.Sprite.fromImage('../images/white.png');
+    if(mode == "AIVSHuman"){
+        if(color === "white" ) var stone = PIXI.Sprite.fromImage('../images/black.png');
+        else var stone = PIXI.Sprite.fromImage('../images/white.png');
+    }
+    else color = AIColor;
         
     l = move.split('#');
     l = l[1].split('-');
@@ -431,7 +432,8 @@ function drawMove(move){
     app.stage.addChild(stone);
 }
 
-function showScore(score){
+
+function showScore(O_score,G_score,reason){
     my_turn = false;
     ghost_animate = false;
     blurFilter.blur = 5;
@@ -461,32 +463,75 @@ function showScore(score){
         fontWeight: "bold",stroke: '#a4410e', strokeThickness: 9
     });
 
-    scoreTxt = new PIXI.Text("Score",fontStyle1);
-    scoreTxt.x = 90
-    scoreTxt.y = 200
-    app.stage.addChild(scoreTxt);
-
     const myScoreBoard = PIXI.Sprite.fromImage('../images/score.png');
-    myScoreBoard.x = 90
-    myScoreBoard.y = 350
+    myScoreBoard.x = 110
+    myScoreBoard.y = 300
     myScoreBoard.height = 90
     myScoreBoard.width = 200 
     app.stage.addChild(myScoreBoard);
 
-    myScoreTxt = new PIXI.Text(myScore,fontStyle2);
-    myScoreTxt.x = 90
-    myScoreTxt.y = 350
+    var myScoreTxt = new PIXI.Text(G_score,fontStyle2);
+    myScoreTxt.x = myScoreBoard.x + myScoreBoard.width /2 - myScoreTxt.width/2;
+    myScoreTxt.y = 300
     app.stage.addChild(myScoreTxt);
 
+    GScoreStr = new PIXI.Text("Ghost Score",fontStyle2);
+    GScoreStr.x = myScoreBoard.x + myScoreBoard.width/2 - GScoreStr.width/2;
+    GScoreStr.y = 200
+    app.stage.addChild(GScoreStr);
+
+
     const opponentScoreBoard = PIXI.Sprite.fromImage('../images/score.png');
-    opponentScoreBoard.x = 90
-    opponentScoreBoard.y = 450
+    opponentScoreBoard.x = 110
+    opponentScoreBoard.y = 500
     opponentScoreBoard.height = 90
     opponentScoreBoard.width = 200 
     app.stage.addChild(opponentScoreBoard);
 
+    var opponentScoreTxt = new PIXI.Text(O_score,fontStyle2);
+    opponentScoreTxt.x = opponentScoreBoard.x + opponentScoreBoard.width /2 - opponentScoreTxt.width/2;
+    opponentScoreTxt.y = 500
+    app.stage.addChild(opponentScoreTxt);
+
+    if(mode == "AIVSHuman") OScore = "Your Score"
+    else OScore = "Opponent Score"
+    OScoreStr = new PIXI.Text(OScore, fontStyle2);
+    OScoreStr.x = opponentScoreBoard.x + opponentScoreBoard.width/2 - OScoreStr.width/2;
+    OScoreStr.y = 400
+    app.stage.addChild(OScoreStr);
+
+    msg = "Hard Luck"
+    if(G_score < O_score){
+        // //modify //add image//z3lan
+        if(mode == "AIVSHuman") msg = "Congratulations"
+    } 
+    else if (G_score > O_score){
+        // //modify //add image//fr7an
+        if(mode != "AIVSHuman") msg = "Congratulations"
+    }
+    else if(G_score == O_score){
+        // //modify //add image
+        msg = "Tie"
+    } 
+
+    GScoreStr = new PIXI.Text(msg,fontStyle1);
+    GScoreStr.x = window.innerWidth/2 - GScoreStr.width/2;
+    GScoreStr.y = y
+    app.stage.addChild(GScoreStr);
+
+    reasonStr = new PIXI.Text(reason,fontStyle2);
+    reasonStr.x = window.innerWidth/2 - reasonStr.width/2;
+    reasonStr.y = y + blockSz*blockNum + 30
+    app.stage.addChild(reasonStr);
 }
 
+function congratulate(msg){
+    
+}
+
+function showRecommendedMove(move){
+
+}
 
 // Listen for window resize events
 window.addEventListener('resize', resize);
@@ -497,6 +542,6 @@ function resize() {
 }
 resize();
 
-module.exports = {drawMove, validMoves, showScore};
+module.exports = {drawMove, validMoves, showScore, congratulate, showRecommendedMove};
 
 
