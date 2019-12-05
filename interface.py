@@ -65,8 +65,8 @@ def send_valid_moves(vaild_moves):
         f.write(str(vaild_moves[i][1])+',')
     push_socket.send_string(v)
 
-def send_score(winner, O_score, G_score, reason):
-    s = 'SCORE,' + winner + ',' + O_score + ',' + G_score + ',' + reason
+def send_score(O_score, G_score, reason):
+    s = 'SCORE,' + O_score + '#' + G_score + '#' + reason
     push_socket.send_string(s)
 
 def send_recommended_move(move):
