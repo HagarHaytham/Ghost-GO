@@ -162,16 +162,22 @@ function congratulate(msg)
 
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b0ed9890f46b9ee11fff81cd65a1f44b4754102f
 function show_recommended_move(move) // in addition to valid moves, There can be a specific recommended move.
 {
 
     console.log('Recommended Moves:'+ move);
+<<<<<<< HEAD
     var tmp_move = move.split('#');
     //tmp_move[0] : move_type.
     // tmp_move[1] : move_position.
     var coord = tmp_move.split('-');
     //coord[0] : x , coord[1] :y . should be parsed as integers before used.
+=======
+>>>>>>> b0ed9890f46b9ee11fff81cd65a1f44b4754102f
 }
 
 // white : '1' , black : '0'
