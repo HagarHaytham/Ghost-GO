@@ -4,7 +4,7 @@
   "description": "A trial to connect python and node.js",
   "main": "pull.js",
   "dependencies": {
-    "zeromq": "^5.1.1"
+    "zeromq": "^5.2.0"
   },
   "devDependencies": {},
   "scripts": {

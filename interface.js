@@ -5,7 +5,7 @@ to_game.bindSync("tcp://127.0.0.1:3000");
 from_game.connect("tcp://127.0.0.1:3001");
 
 console.log("GUI interface started!");
-var oppo_mode = 0;
+var game_mode = 0;
 var state = 1;
 
 //TO-DO : REPLACE PLACE HOLDERS. 
@@ -30,19 +30,20 @@ from_game.on("message", function(msg) {
             break;
         case 'CONGRATULATE':
             congratulate(l[1]);
-
+            break;
+        case 'MOVE_COLOR':
+            draw_move_color(l[1],l[2]);
+            break;
         case 'REC_MOVE':
-            show_recommend_move(l[1]);
+            show_recommended_move(l[1]);
+            break;
         default:
             console.log("invalid message code from implementation side.")
+            break;
     }
 });
 
 // to start, we should know our opponent to decide on the methods used later.
-function send_mode(mode){
-    to_game.send(mode);
-    oppo_mode = mode; 
-}
 
 function draw_state(state)
 {
@@ -52,30 +53,44 @@ function draw_state(state)
 
 function draw_move(move)
 {
-    console.log('Making a move.');
+    console.log('GHOST MOVE: ');
     console.log(move)
 }
 
-function draw_moves(moves)
+function draw_move_color(move,color)
 {
-    console.log('Draw possible moves.');
-    // your code goes here
+    console.log('AI MOVE: '+move+' '+color);
 }
+
 
 function show_score(score)
 {
-    console.log('SCORE!');
-    console.log(score);
-    // your code goes here
+    console.log('SCORE: '+score);
+    /*
+    if(game_mode == '0')
+        scores = score.split('-');
+        console.log("ME: "+scores[0]",OTHER: "+scores[1]);
+    e
+    */
+    
 }
 
 function congratulate(msg)
 {
-    console.log(msg);
+    console.log('CONGRATS:');
+    console.log(msg)
+
 }
-function show_recommended_move(msg)
+function draw_moves(moves) // to draw valid moves.
 {
-    console.log(msg);
+    console.log('Draw valid moves.');
+    console.log(moves)
+}
+
+function show_recommended_move(msg) // in addition to valid moves, There can be a specific recommended move.
+{
+
+    console.log('Recommended Moves:'+ msg);
 }
 
 // white : 1 , black : 0
@@ -83,7 +98,12 @@ function send_opponent_color(color){
     to_game.send(color);
 }
 
+
 function send_opponent_move(move){
     to_game.send(move);
     return true;
+}
+function send_mode(mode){
+    to_game.send(mode);
+    oppo_mode = mode; 
 }

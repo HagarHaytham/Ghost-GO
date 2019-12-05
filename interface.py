@@ -37,20 +37,21 @@ def send_valid_moves(vaild_moves): ##
     v = 'VALID,' + vaild_moves
     t = threading.Thread(target=send_moves, args=(v,))
     t.start()
+
 def send_moves(v):
     print("thread starts with v = ",v)
     push_socket.send_string(v)
 
 def send_ghost_move(move):
-     m = 'MOVE,' + move
+    m = 'MOVE,' + move
     push_socket.send_string(m)
     
 def send_move(move, color):
-    m = 'MOVE,' + move + '#' + color
+    m = 'MOVE_COLOR,' + move + ',' + color
     push_socket.send_string(m)
 
 def send_score(game_mode, score1, score2='0'): #score2 for AI mode
-    s = 'SCORE#' + score1
+    s = 'SCORE,' + score1
     if game_mode == '0': #AI Mode
         s += '-' + score2
     push_socket.send_string(s)
@@ -63,3 +64,5 @@ def send_recommended_move(move):
 def send_congrate(msg): 
     m = 'CONGRATULATE,' + msg
     push_socket.send_string(m)
+
+send_congrate("GOOOD MOVEEEE")
