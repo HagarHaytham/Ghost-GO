@@ -32,7 +32,7 @@ def get_opponent_move(): #till now it blocks, in case computations are needed at
 
 def send_state(state): ##
     s = 'STATE,'+state
-    push_socket.send_string(s)
+    push_socket.send_string(s) #a dummy string.
 
 def send_valid_moves(vaild_moves): ##
     v = 'VALID,' + vaild_moves
@@ -66,5 +66,5 @@ def send_congrate(msg):
     m = 'CONGRATULATE,' + msg
     push_socket.send_string(m)
 
-get_opponent_move()
+#get_opponent_move()
 send_state("starting_state")
