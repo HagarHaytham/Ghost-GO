@@ -138,7 +138,7 @@ def rollout(node,depth):
         child_captures = copy.copy(parent.captures)    
         child_captures[player]+=capture
         
-        t5 =time.time()
+        t5 = time.time()
         new_node = MCTS_node(new_game_state,parent,child_captures,new_point)
         # check if game is over
         game_state = new_game_state

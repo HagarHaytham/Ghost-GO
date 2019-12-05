@@ -89,7 +89,6 @@ identify all the boundary points.
 
 # tag::scoring_collect_region[]
 def _collect_region(start_pos, board, visited=None):
-
     if visited is None:
         visited = {}
     if start_pos in visited:
