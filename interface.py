@@ -49,7 +49,7 @@ def send_move(move, color):
     m = 'MOVE,' + move + '#' + color
     push_socket.send_string(m)
 
-def send_score(game_mode, score1, score2=0): #score2 for AI mode
+def send_score(game_mode, score1, score2='0'): #score2 for AI mode
     s = 'SCORE#' + score1
     if game_mode == '0': #AI Mode
         s += '-' + score2
