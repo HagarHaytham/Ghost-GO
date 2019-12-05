@@ -87,10 +87,10 @@ function draw_moves(moves) // to draw valid moves.
     console.log(moves)
 }
 
-function show_recommended_move(msg) // in addition to valid moves, There can be a specific recommended move.
+function show_recommended_move(move) // in addition to valid moves, There can be a specific recommended move.
 {
 
-    console.log('Recommended Moves:'+ msg);
+    console.log('Recommended Moves:'+ move);
 }
 
 // white : 1 , black : 0
