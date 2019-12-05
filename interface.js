@@ -99,11 +99,12 @@ function send_opponent_color(color){
 }
 
 
-function send_opponent_move(move){
-    to_game.send(move);
-    return true;
+function send_opponent_move(move_type,position,time){
+    to_game.send(move_type+"#"+position+"#"+time);
 }
 function send_mode(mode){
     to_game.send(mode);
     oppo_mode = mode; 
 }
+
+send_opponent_move('0','B-12','1');
