@@ -41,8 +41,12 @@ def send_moves(v):
     print("thread starts with v = ",v)
     push_socket.send_string(v)
 
-def send_move(move, color):  #renamed insead of send_ghost_move
-    m = 'MOVE,' + move
+def send_ghost_move(move):
+     m = 'MOVE,' + move
+    push_socket.send_string(m)
+    
+def send_move(move, color):
+    m = 'MOVE,' + move + '#' + color
     push_socket.send_string(m)
 
 def send_score(game_mode, score1, score2=0): #score2 for AI mode
