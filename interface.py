@@ -28,8 +28,8 @@ def get_opponent_move(): #till now it blocks, in case computations are needed at
         if opponent_move != 0:
             return opponent_move
     
-def send_move(move, color, O_time, G_time):
-    m = 'MOVE,' + move + '#' + color + '#' + O_time + '#' + O_time
+def send_move(move, color, B_time, W_time):
+    m = 'MOVE,' + move + '#' + color + '#' + B_time + '#' + W_time
     push_socket.send_string(m)
 
 def send_state(state):
