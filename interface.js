@@ -32,9 +32,6 @@ from_game.on("message", function(msg) {
         case 'CONGRATULATE':
             congratulate(l[1]);
             break;
-        case 'MOVE_COLOR':
-            draw_move_color(l[1],l[2]);
-            break;
         case 'REC_MOVE':
             show_recommended_move(l[1]);
             break;
@@ -99,27 +96,18 @@ function draw_moves(moves) // to draw valid moves.
 function draw_move(move)
 {
     var tmp_move = move.split('#')
-    //tmp_move[0] = move type
-    //tmp_move[1] = coordinates.
-    //tmp_move[2] = time. is it needed?
+    //tmp_move[0] : move type
+    //tmp_move[1] : coordinates.
+    //tmp_mover[2] : color
+    //tmp_move[3] :O-time
+    //tmp_move[4] :G-time
     var tmp_coord = tmp_move[1].split('-');
-    //tmp_coord[0] = x , tmp_coord[1] = y.
+    //tmp_coord[0] : x , tmp_coord[1] = y.
     //gui_func()
     
 }
 
-function draw_move_color(move,color)
-{   
 
-    var tmp_move = move.split('#')
-    //tmp_move[0] = move type
-    //tmp_move[1] = coordinates.
-    //tmp_move[2] = time. is it needed?
-    var tmp_coord = tmp_move[1].split('-');
-    //tmp_coord[0] = x , tmp_coord[1] = y.
-    //gui_func()
-    console.log('AI MOVE: '+move+' '+color);
-}
 
 function update_board(file_name)
 {
@@ -162,22 +150,15 @@ function congratulate(msg)
 
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b0ed9890f46b9ee11fff81cd65a1f44b4754102f
 function show_recommended_move(move) // in addition to valid moves, There can be a specific recommended move.
 {
 
     console.log('Recommended Moves:'+ move);
-<<<<<<< HEAD
     var tmp_move = move.split('#');
     //tmp_move[0] : move_type.
     // tmp_move[1] : move_position.
     var coord = tmp_move.split('-');
     //coord[0] : x , coord[1] :y . should be parsed as integers before used.
-=======
->>>>>>> b0ed9890f46b9ee11fff81cd65a1f44b4754102f
 }
 
 // white : '1' , black : '0'
@@ -186,8 +167,8 @@ function send_opponent_color(color){
 }
 
 
-function send_opponent_move(move_type,position,time){
-    to_game.send(move_type+"#"+position+"#"+time);
+function send_opponent_move(move_type,position){
+    to_game.send(move_type+"#"+position);
 }
 function send_mode(mode){
     to_game.send(mode);
