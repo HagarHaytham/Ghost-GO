@@ -84,7 +84,24 @@ function addSoundButton(app){
     app.stage.addChild(soundButtonRect);
 }
 
+function removeChildByName(name, app){
+    var child = app.stage.getChildByName(name);
+    if(child != null)  app.stage.removeChild(child); //check //modify
+}
 
+function getFontStyle(fontSz){
+   return new PIXI.TextStyle({
+        dropShadow: true,
+        dropShadowAlpha: 0.4,
+        dropShadowColor: "silver",
+        //fontColor : 0x452000,
+        fill: '#3e1707', 
+        fontSize: fontSz ,
+        fontFamily: "\"Comic Sans MS\", cursive, sans-serif",
+        fontStyle: "italic",
+        fontWeight: "bold",stroke: '#a4410e', strokeThickness: 9
+    });
+}
 
 function clipInput(k, arr) {
     if (k < 0) k = 0;
@@ -109,4 +126,4 @@ function cubicInterpolation(array, t, tangentFactor) {
 }
 
 
-module.exports = {addMouseTail, addSoundButton};
+module.exports = {addMouseTail, addSoundButton, removeChildByName, getFontStyle};

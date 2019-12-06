@@ -1,13 +1,14 @@
 const interface = require("../interface.js");
 const utilities = require("../js/utilities.js");
-const color = sessionStorage.getItem('color');
+var color = sessionStorage.getItem('color');
 const mode = sessionStorage.getItem('mode');
 var my_turn = false;
 var valid_moves = "all";
 var ghost_animate = true;
 const blockSz = 30;
 const blockNum = 18;
-const x = window.innerWidth/2 - (blockSz*blockNum)/2;
+//const x = (window.innerWidth+1)/2 - (blockSz*blockNum+1)/2; //modify
+const x = 450;
 const y = 100;
 var blurFilter = new PIXI.filters.BlurFilter();
 blurFilter.blur = 0;
@@ -112,7 +113,11 @@ function setup(){
         passButtonRect.on('click', function(){
             if(!my_turn) return;
             var red_stone = app.stage.getChildByName("red");
-            if(red_stone != null)  app.stage.removeChild(red_stone);
+            if(red_stone != null)  app.stage.removeChild(red_stone); //check //modify
+
+            var congratulateStr = app.stage.getChildByName("congratulate");
+            if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
+
             my_turn = false;
             interface.send_opponent_move("2");
         });
@@ -137,8 +142,13 @@ function setup(){
     if(mode == "AIVSHuman"){
         resignButtonRect.on('click', function(){
             if(!my_turn) return;
+
             var red_stone = app.stage.getChildByName("red");
             if(red_stone != null)  app.stage.removeChild(red_stone);
+
+            var congratulateStr = app.stage.getChildByName("congratulate");
+            if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
+
             my_turn = false;
             interface.send_opponent_move("1");
         });
@@ -150,7 +160,10 @@ function setup(){
     utilities.addSoundButton(app);
     addTimer();
     drawBoard();
+    //congratulate("Congratulation")
     //showScore("2500","56100","TimeOut"); //modify //removetest
+    drawMove("0#A-11", "white");
+    showRecommendedMove("0#B-12");
 }
 
 function addTimer(){
@@ -271,6 +284,10 @@ function onClick(event){
             //modify //Assume return null if not found
             var red_stone = app.stage.getChildByName("red");
             if(red_stone != null)  app.stage.removeChild(red_stone);
+
+            var congratulateStr = app.stage.getChildByName("congratulate");
+            if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
+
             if(color === "black" ) stone.texture = texture_back_stone;
             move = "0"+move;
             my_turn = false;
@@ -281,7 +298,7 @@ function onClick(event){
         
         else{
             stone.texture = texture_red_stone;
-            stone.name("red");
+            stone.name = "red";
             stone.filters = [blurFilter];
             app.stage.addChild(stone);
             app.removeChild()
@@ -399,14 +416,19 @@ function validMoves(moves){
 
 function drawMove(move, AIColor){
     if(mode == "AIVSHuman") my_turn = true;
-    
+
+    var red_stone = app.stage.getChildByName("red");
+    if(red_stone != null)  app.stage.removeChild(red_stone); //check //modify
+
+    var congratulateStr = app.stage.getChildByName("congratulate");
+    if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
+
     move = move.toString();
-    if(move[0] != '0') return;
-    if(mode == "AIVSHuman"){
-        if(color === "white" ) var stone = PIXI.Sprite.fromImage('../images/black.png');
-        else var stone = PIXI.Sprite.fromImage('../images/white.png');
-    }
-    else color = AIColor;
+    if(move[0] != '0') return; //modify //display if passed
+    if(mode != "AIVSHuman") color = AIColor
+    if(color === "white" ) var stone = PIXI.Sprite.fromImage('../images/black.png');
+    else var stone = PIXI.Sprite.fromImage('../images/white.png');
+   
         
     l = move.split('#');
     l = l[1].split('-');
@@ -525,12 +547,88 @@ function showScore(O_score,G_score,reason){
     app.stage.addChild(reasonStr);
 }
 
+
 function congratulate(msg){
-    
+    console.log("cong")
+    const fontStyle2 = new PIXI.TextStyle({
+        dropShadow: true,
+        dropShadowAlpha: 0.4,
+        dropShadowColor: "silver",
+        //fontColor : 0x452000,
+        fill: '#3e1707', 
+        fontSize: 50 ,
+        fontFamily: "\"Comic Sans MS\", cursive, sans-serif",
+        fontStyle: "italic",
+        fontWeight: "bold",stroke: '#a4410e', strokeThickness: 9
+    });
+
+    msgTxt = new PIXI.Text(msg,fontStyle2);
+    msgTxt.x = x/2 - msgTxt.width/2;
+    msgTxt.y = 200
+    msgTxt.name = "congratulate";
+    app.stage.addChild(msgTxt);
 }
 
-function showRecommendedMove(move){
 
+//Assume lsa mb3tsh l AI move //modify 
+//Asssume not my turn so no clicks
+function showRecommendedMove(move){
+    var alerted = 0;
+    blurFilter.blur = 5;
+    var lastMove = app.stage.getChildAt(app.stage.children.length-1);
+    app.stage.removeChildAt(app.stage.children.length-1); 
+    
+    fontStyle2 = utilities.getFontStyle(30);
+    msg1Txt = new PIXI.Text("Recommended Move",fontStyle2);
+    msg1Txt.x = x/2 - msg1Txt.width/2;
+    msg1Txt.y = 200
+    msg1Txt.name = "alert1";
+    app.stage.addChild(msg1Txt);
+
+    msg2Txt = new PIXI.Text("Click here to Continue",fontStyle2);
+    msg2Txt.x = x/2 - msg2Txt.width/2;
+    msg2Txt.y = 300
+    msg2Txt.name = "alert2";
+    msg2Txt.interactive = true;
+    msg2Txt.buttonMode = true;
+    app.stage.addChild(msg2Txt);
+
+    msg2Txt.on("click",function(){
+        alerted = 1;
+        blurFilter.blur = 0;
+        utilities.removeChildByName("alert1",app);
+        utilities.removeChildByName("alert2",app);
+        utilities.removeChildByName("green",app);
+        app.stage.addChild(lastMove);
+    });
+
+    const stone = PIXI.Sprite.fromImage('../images/green.png');
+    l = move.split('#');
+    l = l[1].split('-');
+    var colChar = l[0];
+    var rowNum = l[1];
+
+    var row = 19 - parseInt(rowNum, 10);;
+    col = colChar.charCodeAt(0)-65;
+    if(colChar >= 'I') --col;
+   
+    col = col*blockSz + x;
+    row = row*blockSz + y;
+    console.log("added stone col: ", col , " row ", row);
+
+    col = Math.round(col / blockSz) * blockSz;
+    row = Math.floor(row / blockSz) * blockSz;
+
+    stone.x = col - blockSz/2;
+    stone.y = row;
+    stone.height = 25;
+    stone.width = 25;
+    stone.name = "green"
+    app.stage.addChild(stone);
+}
+
+function drawState(state){
+    
 }
 
 // Listen for window resize events
