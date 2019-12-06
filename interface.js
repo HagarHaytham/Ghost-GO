@@ -99,8 +99,8 @@ function draw_move(move)
     //tmp_move[0] : move type
     //tmp_move[1] : coordinates.
     //tmp_mover[2] : color
-    //tmp_move[3] :O-time
-    //tmp_move[4] :G-time
+    //tmp_move[3] :B-time  -- black time.
+    //tmp_move[4] :W-time  -- white time.
     var tmp_coord = tmp_move[1].split('-');
     //tmp_coord[0] : x , tmp_coord[1] = y.
     //gui_func()
