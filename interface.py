@@ -22,7 +22,7 @@ def get_opponent_color():
             return opponent_color
 
 def get_opponent_move(): #till now it blocks, in case computations are needed at this time, open a thread
-    while(True):
+    while(True):moves
         opponent_move = pull_socket.recv()
         print(opponent_move)
         if opponent_move != 0:
