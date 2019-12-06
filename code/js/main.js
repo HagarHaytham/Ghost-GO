@@ -24,13 +24,44 @@ document.body.appendChild(app.view);
 var stage = new PIXI.Container();
 app.stage.interactive = true;
 
+//------------yourTurn-----------------
+fontStyle2 = utilities.getFontStyle(50);
+yourTurnStr = new PIXI.Text("your turn!",fontStyle2);
+yourTurnStr.x = window.innerWidth/2 - yourTurnStr.width/2;
+yourTurnStr.y = y + blockSz*blockNum + 30
+yourTurnStr.name = "yourturn";
+if(!my_turn) yourTurnStr.visible = false;
+app.stage.addChild(yourTurnStr);
+//--------------Timer-------------------
+const timerStyle = new PIXI.TextStyle({
+    fontFamily: "\"Comic Sans MS\", cursive, sans-serif",
+    dropShadow: true,
+    dropShadowAlpha: 0.4,
+    dropShadowColor: "silver",
+    fill: '#3e1707', 
+    fontSize : 50,
+    align: 'center', 
+    stroke: '#a4410e', strokeThickness: 7 
+});
+
+var remainTime = "15 : 00"
+var GCountingTxt = new PIXI.Text(remainTime,timerStyle);
+GCountingTxt.x = 1200;
+GCountingTxt.y = 175;
+GCountingTxt.filters = [blurFilter];
+
+var OCountingTxt = new PIXI.Text(remainTime,timerStyle);
+OCountingTxt.x = 1200;
+OCountingTxt.y = 385;
+OCountingTxt.filters = [blurFilter];
+//////////////////////////////////////////////
 
 var loader = new PIXI.Loader();
 //Add all images
 loader.add(['../images/mainbg.jpg','../images/Ghost Matter.jpg', '../images/ooh.png',
             "../images/sound.png", "../images/mute.png", '../images/pass.png',
             '../images/resign.png', '../images/timer.png', '../images/boardcartoon.png',
-            "../images/white.png", "../images/black.png", "../images/red.png", '../images/score.png', ]);
+            "../images/white.png", "../images/black.png", "../images/red.png", '../images/score.png', '../images/dab.png']);
 loader.once('complete',setup);
 loader.load();
 
@@ -112,13 +143,12 @@ function setup(){
     if(mode == "AIVSHuman"){
         passButtonRect.on('click', function(){
             if(!my_turn) return;
-            var red_stone = app.stage.getChildByName("red");
-            if(red_stone != null)  app.stage.removeChild(red_stone); //check //modify
-
+            utilities.removeChildByName("red");
             var congratulateStr = app.stage.getChildByName("congratulate");
             if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
 
             my_turn = false;
+            yourTurnStr.visible = false;
             interface.send_opponent_move("2");
         });
     }
@@ -143,13 +173,13 @@ function setup(){
         resignButtonRect.on('click', function(){
             if(!my_turn) return;
 
-            var red_stone = app.stage.getChildByName("red");
-            if(red_stone != null)  app.stage.removeChild(red_stone);
+            utilities.removeChildByName("red");
 
             var congratulateStr = app.stage.getChildByName("congratulate");
             if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
 
             my_turn = false;
+            yourTurnStr.visible = false;
             interface.send_opponent_move("1");
         });
     }
@@ -162,13 +192,11 @@ function setup(){
     drawBoard();
     //congratulate("Congratulation")
     //showScore("2500","56100","TimeOut"); //modify //removetest
-    drawMove("0#A-11", "white");
-    showRecommendedMove("0#B-12");
+    //drawMove("0#A-11", "white");
+    //showRecommendedMove("0#B-12");
 }
 
 function addTimer(){
-    if(mode != "AIVSHuman") return;
-
     const timerBoard = PIXI.Sprite.fromImage('../images/timer.png');
     timerBoard.x = 1010
     timerBoard.y = 130
@@ -177,17 +205,34 @@ function addTimer(){
     timerBoard.filters = [blurFilter];
     app.stage.addChild(timerBoard); 
 
+    if(mode != "AIVSHuman"){
+        const fontStyle = utilities.getFontStyle(50);
+        const timerBoardTxt = new PIXI.Text("Ghost",fontStyle);
+        timerBoardTxt.x = timerBoard.x + timerBoard.width/2 - timerBoardTxt.width/2 + 20
+        timerBoardTxt.y = 70
+        timerBoardTxt.filters = [blurFilter];
+        app.stage.addChild(timerBoardTxt); 
+
+        const timerBoardTxt2 = new PIXI.Text("opponent",fontStyle);
+        timerBoardTxt2.x = timerBoard.x + timerBoard.width/2 - timerBoardTxt2.width/2 + 20
+        timerBoardTxt2.y = 280
+        timerBoardTxt2.filters = [blurFilter];
+        app.stage.addChild(timerBoardTxt2); 
+
+        const timerBoard2 = PIXI.Sprite.fromImage('../images/timer.png');
+        timerBoard2.x = 1010
+        timerBoard2.y = 340
+        timerBoard2.height = 200
+        timerBoard2.width = 500 
+        timerBoard2.filters = [blurFilter];
+        app.stage.addChild(timerBoard2); 
+
+        app.stage.addChild(GCountingTxt);
+        app.stage.addChild(OCountingTxt);
+        return;
+    }
+
 //--------------------------------TIMER-------------------------------------
-    const timerStyle = new PIXI.TextStyle({
-        fontFamily: "\"Comic Sans MS\", cursive, sans-serif",
-        dropShadow: true,
-        dropShadowAlpha: 0.4,
-        dropShadowColor: "silver",
-        fill: '#3e1707', 
-        fontSize : 50,
-        align: 'center', 
-        stroke: '#a4410e', strokeThickness: 7 
-    });
     var seconds = 899;
     var remainTime = "15 : 00";
     var countingText = new PIXI.Text(remainTime,timerStyle);
@@ -282,8 +327,7 @@ function onClick(event){
         //if valid move
         if(valid_moves == "all" || valid_moves.includes(move)){
             //modify //Assume return null if not found
-            var red_stone = app.stage.getChildByName("red");
-            if(red_stone != null)  app.stage.removeChild(red_stone);
+            utilities.removeChildByName("red")
 
             var congratulateStr = app.stage.getChildByName("congratulate");
             if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
@@ -291,8 +335,10 @@ function onClick(event){
             if(color === "black" ) stone.texture = texture_back_stone;
             move = "0"+move;
             my_turn = false;
+            yourTurnStr.visible = false;
             interface.send_opponent_move(move); 
             stone.filters = [blurFilter];
+            stone.name = "stone"
             app.stage.addChild(stone);
         }
         
@@ -301,7 +347,7 @@ function onClick(event){
             stone.name = "red";
             stone.filters = [blurFilter];
             app.stage.addChild(stone);
-            app.removeChild()
+            //app.removeChild() //?? modify//I don't  know what I wanted to do
         }
     }
  
@@ -409,16 +455,22 @@ function drawGrid(){
     app.stage.addChild(grid);
 }
 
-
 function validMoves(moves){
     valid_moves = moves;
 }
 
-function drawMove(move, AIColor){
-    if(mode == "AIVSHuman") my_turn = true;
+function drawMove(board, move, AIColor){
+    if(mode == "AIVSHuman"){
+        my_turn = true;
+        yourTurnStr.visible = true;
+    } 
 
-    var red_stone = app.stage.getChildByName("red");
-    if(red_stone != null)  app.stage.removeChild(red_stone); //check //modify
+    if(board.length != 0){
+        drawState(board);
+        return;
+    }
+
+    utilities.removeChildByName("red")
 
     var congratulateStr = app.stage.getChildByName("congratulate");
     if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
@@ -451,12 +503,14 @@ function drawMove(move, AIColor){
     stone.height = 25;
     stone.width = 25;
     stone.filters = [blurFilter]; 
+    stone.name = "stone"
     app.stage.addChild(stone);
 }
 
 
 function showScore(O_score,G_score,reason){
     my_turn = false;
+    yourTurnStr.visible = false;
     ghost_animate = false;
     blurFilter.blur = 5;
 
@@ -528,7 +582,13 @@ function showScore(O_score,G_score,reason){
         if(mode == "AIVSHuman") msg = "Congratulations"
     } 
     else if (G_score > O_score){
-        // //modify //add image//fr7an
+        
+        const logo = PIXI.Sprite.fromImage('../images/dab.png');
+        logo.x =  window.innerWidth/2 - GScoreStr.width/2;;
+        logo.y = y + 150;
+        logo.scale.set(0.5);
+        app.stage.addChild(logo);
+
         if(mode != "AIVSHuman") msg = "Congratulations"
     }
     else if(G_score == O_score){
@@ -537,7 +597,7 @@ function showScore(O_score,G_score,reason){
     } 
 
     GScoreStr = new PIXI.Text(msg,fontStyle1);
-    GScoreStr.x = window.innerWidth/2 - GScoreStr.width/2;
+    GScoreStr.x = window.innerWidth/2 - GScoreStr.width/2 - 50;
     GScoreStr.y = y
     app.stage.addChild(GScoreStr);
 
@@ -628,7 +688,21 @@ function showRecommendedMove(move){
 }
 
 function drawState(state){
-    
+    for(i = 0; i<state.length; ++i) drawMove([],state[i])
+}
+
+function updateBoard(state){
+    //remove all stones
+    utilites.removeChildByName("stone", app);
+    drawState(state)
+}
+
+function updateGhostTime(remainingtime){
+    GCountingTxt.text = remainingtime;
+}
+
+function opponentTime(remainingtime){
+    OCountingTxt.text = remainingtime;
 }
 
 // Listen for window resize events
@@ -640,6 +714,6 @@ function resize() {
 }
 resize();
 
-module.exports = {drawMove, validMoves, showScore, congratulate, showRecommendedMove};
+module.exports = {drawMove, validMoves, showScore, congratulate, showRecommendedMove, drawState};
 
 

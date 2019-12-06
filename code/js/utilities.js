@@ -86,7 +86,10 @@ function addSoundButton(app){
 
 function removeChildByName(name, app){
     var child = app.stage.getChildByName(name);
-    if(child != null)  app.stage.removeChild(child); //check //modify
+    while(child != null){
+        app.stage.removeChild(child); //check //modify
+        child = app.stage.getChildByName(name);
+    }
 }
 
 function getFontStyle(fontSz){

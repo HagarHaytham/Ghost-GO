@@ -12,7 +12,7 @@ app.stage.interactive = true;
 var loader = new PIXI.Loader();
 //Add all images
 loader.add(["../images/AIVSAI.png", "../images/AIVSHUMAN.png", "../images/TRAINING.png",
-            "../images/trail.png", "../images/sound.png", "../images/mute.png"]);
+            "../images/trail.png", "../images/sound.png", "../images/mute.png", '../images/dab.png']);
 loader.once('complete',setup);
 loader.load();
 
@@ -30,16 +30,15 @@ function setup(){
 
     var ghost = "Ghost";
     var logoText = new PIXI.Text(ghost,style);
-    logoText.x = window.innerWidth/2 - logoText.width/2;
-    logoText.y = window.innerHeight/2 - logoText.height/2;
-    console.log("x, y" , logoText.x, " y ", logoText.y);
+    logoText . x = 550;
+    logoText.y = 120;
     app.stage.addChild(logoText);
 
-    /*const logo = PIXI.Sprite.fromImage('../images/dab.png');
+    const logo = PIXI.Sprite.fromImage('../images/dab.png');
     logo.x = 300;
     logo.y = 100;
     logo.scale.set(0.5);
-    app.stage.addChild(logo);*/
+    app.stage.addChild(logo);
 
     const aiVsaiButton = PIXI.Sprite.from('../images/AIVSAI.png');
     aiVsaiButton.x = 80

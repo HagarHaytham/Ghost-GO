@@ -36,7 +36,8 @@ from_game.on("message", function(msg) {
 function draw_state(state)
 {
     console.log('Drawing a state.');
-    // your code goes here
+    console.log(state)
+    gui.drawState(state);
 }
 
 function draw_move(move)
