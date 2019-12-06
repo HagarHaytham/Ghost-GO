@@ -38,6 +38,9 @@ from_game.on("message", function(msg) {
         case 'UPDATE':
             update_board('update_board.txt');
             break;
+        case 'COLOR':
+            get_ghost_color(l[1]);
+            break;
         default:
             console.log("invalid message code from implementation side.")
             break;
@@ -99,8 +102,8 @@ function draw_move(move)
     //tmp_move[0] : move type
     //tmp_move[1] : coordinates.
     //tmp_mover[2] : color
-    //tmp_move[3] :B-time  -- black time.
-    //tmp_move[4] :W-time  -- white time.
+    //tmp_move[3] :O-time  -- black time.
+    //tmp_move[4] :G-time  -- white time.
     var tmp_coord = tmp_move[1].split('-');
     //tmp_coord[0] : x , tmp_coord[1] = y.
     //gui_func()
@@ -138,8 +141,8 @@ function show_score(score)
 {
     console.log('SCORE: '+score);
     var tmp_score = score.split('#');
-    //tmp_score[1] : Score.
-    //tmp_score[2] : Opponent Score.
+    //tmp_score[1] : O_Score.
+    //tmp_score[2] : G_Score.
     //tmo_score[3] : Reason.
     
 }
@@ -149,7 +152,10 @@ function congratulate(msg)
     console.log("CONGRATULATING:"+msg)
 
 }
-
+function get_ghost_color(color)
+{
+    console.log(color)   
+}
 function show_recommended_move(move) // in addition to valid moves, There can be a specific recommended move.
 {
 

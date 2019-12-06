@@ -22,7 +22,7 @@ def get_opponent_color():
             return opponent_color
 
 def get_opponent_move(): #till now it blocks, in case computations are needed at this time, open a thread
-    while(True):moves
+    while(True):#moves NOTE: this wasn't commented but it caused errors :'D.
         opponent_move = pull_socket.recv()
         print(opponent_move)
         if opponent_move != 0:
@@ -32,8 +32,8 @@ def send_ghost_color(color):
     c = 'COLOR,' + color
     push_socket.send_string(c)
 
-def send_move(move, color, B_time, W_time):
-    m = 'MOVE,' + move + '#' + color + '#' + B_time + '#' + W_time
+def send_move(move, color, O_time, G_time):
+    m = 'MOVE,' + move + '#' + color + '#' + O_time + '#' + G_time
     push_socket.send_string(m)
 
 def send_state(state):
