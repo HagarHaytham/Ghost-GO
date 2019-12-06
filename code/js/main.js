@@ -200,7 +200,7 @@ function setup(){
     //showScore("2500","56100","TimeOut"); //modify //removetest
     //drawMove("0#A-11", "white");
     //showRecommendedMove("0#B-12");
-    getGhostColor("kk");
+    //getGhostColor("kk");
 }
 
 function addTimer(){
