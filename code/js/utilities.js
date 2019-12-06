@@ -106,6 +106,13 @@ function getFontStyle(fontSz){
     });
 }
 
+function isItemInArray(array, item) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i][0] == item[0] && array[i][1] == item[1]) return true;  
+    }
+    return false; 
+}
+
 function clipInput(k, arr) {
     if (k < 0) k = 0;
     if (k > arr.length - 1) k = arr.length - 1;
@@ -129,4 +136,4 @@ function cubicInterpolation(array, t, tangentFactor) {
 }
 
 
-module.exports = {addMouseTail, addSoundButton, removeChildByName, getFontStyle};
+module.exports = {addMouseTail, addSoundButton, removeChildByName, getFontStyle, isItemInArray};

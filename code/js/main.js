@@ -3,7 +3,7 @@ const utilities = require("../js/utilities.js");
 var color = sessionStorage.getItem('color');
 const mode = sessionStorage.getItem('mode');
 var my_turn = false;
-var valid_moves = "all";
+var valid_moves = [[-1,-1]];
 var ghost_animate = true;
 const blockSz = 30;
 const blockNum = 18;
@@ -31,7 +31,6 @@ yourTurnStr.x = window.innerWidth/2 - yourTurnStr.width/2;
 yourTurnStr.y = y + blockSz*blockNum + 30
 yourTurnStr.name = "yourturn";
 if(!my_turn) yourTurnStr.visible = false;
-app.stage.addChild(yourTurnStr);
 //--------------Timer-------------------
 const timerStyle = new PIXI.TextStyle({
     fontFamily: "\"Comic Sans MS\", cursive, sans-serif",
@@ -143,13 +142,13 @@ function setup(){
     if(mode == "AIVSHuman"){
         passButtonRect.on('click', function(){
             if(!my_turn) return;
-            utilities.removeChildByName("red");
+            utilities.removeChildByName("red", app);
             var congratulateStr = app.stage.getChildByName("congratulate");
             if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
 
             my_turn = false;
             yourTurnStr.visible = false;
-            interface.send_opponent_move("2");
+            interface.send_opponent_move("2", []);
         });
     }
     passButton.filters = [blurFilter];
@@ -173,19 +172,26 @@ function setup(){
         resignButtonRect.on('click', function(){
             if(!my_turn) return;
 
-            utilities.removeChildByName("red");
+            utilities.removeChildByName("red", app);
 
             var congratulateStr = app.stage.getChildByName("congratulate");
             if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
 
             my_turn = false;
             yourTurnStr.visible = false;
-            interface.send_opponent_move("1");
+            interface.send_opponent_move("1", []);
         });
+    }
+    else{
+        passButtonRect.visible = false;
+        passButton.visible = false;
+        resignButtonRect.visible = false;
+        resignButton.visible = false;
     }
     resignButton.filters = [blurFilter];
     app.stage.addChild(resignButton);
     app.stage.addChild(resignButtonRect);
+    app.stage.addChild(yourTurnStr);
 
     utilities.addSoundButton(app);
     addTimer();
@@ -194,6 +200,7 @@ function setup(){
     //showScore("2500","56100","TimeOut"); //modify //removetest
     //drawMove("0#A-11", "white");
     //showRecommendedMove("0#B-12");
+    getGhostColor("kk");
 }
 
 function addTimer(){
@@ -319,24 +326,23 @@ function onClick(event){
         col = Math.ceil(col);
         row = Math.ceil(row);
 
-        var rowNum = 19-row;
-        var colChar = String.fromCharCode(65+col);
-        if(colChar >= 'I') colChar = String.fromCharCode(65+col+1);
-        var move = "#" + colChar + '-' + rowNum;
+        ++col;
+        ++row;
+        var move = [col.toString(), row.toString()];
         //check it //modify//indexOf != -1
-        //if valid move
-        if(valid_moves == "all" || valid_moves.includes(move)){
+        console.log("valid_moves ", valid_moves)
+        console.log("valid_moves ", valid_moves == [[-1,-1]])
+        if(utilities.isItemInArray(valid_moves, [-1,-1]) || utilities.isItemInArray(valid_moves, move)){
             //modify //Assume return null if not found
-            utilities.removeChildByName("red")
+            utilities.removeChildByName("red", app)
 
             var congratulateStr = app.stage.getChildByName("congratulate");
             if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
 
             if(color === "black" ) stone.texture = texture_back_stone;
-            move = "0"+move;
             my_turn = false;
             yourTurnStr.visible = false;
-            interface.send_opponent_move(move); 
+            interface.send_opponent_move("0", move); 
             stone.filters = [blurFilter];
             stone.name = "stone"
             app.stage.addChild(stone);
@@ -459,38 +465,31 @@ function validMoves(moves){
     valid_moves = moves;
 }
 
-function drawMove(board, move, AIColor){
+function drawMove(move, AIColor, GTime, OTime){
     if(mode == "AIVSHuman"){
         my_turn = true;
         yourTurnStr.visible = true;
     } 
-
-    if(board.length != 0){
-        drawState(board);
-        return;
+    else if(GTime != '-1'){
+        updateGhostTime = GTime;
+        updateopponentTime = OTime;
+        if(AIColor == '0') color = 'black'
+        else color = 'white'
     }
 
-    utilities.removeChildByName("red")
+    utilities.removeChildByName("red", app)
 
     var congratulateStr = app.stage.getChildByName("congratulate");
     if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
 
-    move = move.toString();
-    if(move[0] != '0') return; //modify //display if passed
-    if(mode != "AIVSHuman") color = AIColor
-    if(color === "white" ) var stone = PIXI.Sprite.fromImage('../images/black.png');
+    if(move.length == 0) return; //modify //display if passed
+    if(color == "white" ) var stone = PIXI.Sprite.fromImage('../images/black.png');
     else var stone = PIXI.Sprite.fromImage('../images/white.png');
    
-        
-    l = move.split('#');
-    l = l[1].split('-');
-    var colChar = l[0];
-    var rowNum = l[1];
-
-    var row = 19 - parseInt(rowNum, 10);;
-    col = colChar.charCodeAt(0)-65;
-    if(colChar >= 'I') --col;
-   
+    var row = parseInt(move[1], 10);
+    var col = parseInt(move[0], 10);
+    --row;
+    --col;
     col = col*blockSz + x;
     row = row*blockSz + y;
     console.log("added stone col: ", col , " row ", row);
@@ -632,7 +631,7 @@ function congratulate(msg){
 
 //Assume lsa mb3tsh l AI move //modify 
 //Asssume not my turn so no clicks
-function showRecommendedMove(move){
+function showRecommendedMove(moveType, move){
     var alerted = 0;
     blurFilter.blur = 5;
     var lastMove = app.stage.getChildAt(app.stage.children.length-1);
@@ -662,33 +661,42 @@ function showRecommendedMove(move){
         app.stage.addChild(lastMove);
     });
 
-    const stone = PIXI.Sprite.fromImage('../images/green.png');
-    l = move.split('#');
-    l = l[1].split('-');
-    var colChar = l[0];
-    var rowNum = l[1];
+    if (moveType != '0'){
+        const stone = PIXI.Sprite.fromImage('../images/green.png');
 
-    var row = 19 - parseInt(rowNum, 10);;
-    col = colChar.charCodeAt(0)-65;
-    if(colChar >= 'I') --col;
-   
-    col = col*blockSz + x;
-    row = row*blockSz + y;
-    console.log("added stone col: ", col , " row ", row);
+        var row = parseInt(move[1], 10);
+        var col = parseInt(move[0], 10);
+        --row;
+        --col;
 
-    col = Math.round(col / blockSz) * blockSz;
-    row = Math.floor(row / blockSz) * blockSz;
+        col = col*blockSz + x;
+        row = row*blockSz + y;
+        console.log("added stone col: ", col , " row ", row);
 
-    stone.x = col - blockSz/2;
-    stone.y = row;
-    stone.height = 25;
-    stone.width = 25;
-    stone.name = "green"
-    app.stage.addChild(stone);
+        col = Math.round(col / blockSz) * blockSz;
+        row = Math.floor(row / blockSz) * blockSz;
+
+        stone.x = col - blockSz/2;
+        stone.y = row;
+        stone.height = 25;
+        stone.width = 25;
+        stone.name = "green"
+        app.stage.addChild(stone);
+    }
+    else{
+        if(moveType == '1') msg = "Resign"
+        else msg = "Pass"
+        fontStyle2 = utilities.getFontStyle(30);
+        msg3Txt = new PIXI.Text(msg,fontStyle2);
+        msg3Txt.x = x + (blockNum*blockSz)/2 - msg3Txt.width/2;
+        msg3Txt.y = 200
+        msg3Txt.name = "green"
+        app.stage.addChild(msg3Txt);    
+    }
 }
 
 function drawState(state){
-    for(i = 0; i<state.length; ++i) drawMove([],state[i])
+    for(i = 0; i<state.length; ++i) drawMove([state[0],state[1]], state[2], "-1", "-1")
 }
 
 function updateBoard(state){
@@ -701,8 +709,18 @@ function updateGhostTime(remainingtime){
     GCountingTxt.text = remainingtime;
 }
 
-function opponentTime(remainingtime){
+function updateopponentTime(remainingtime){
     OCountingTxt.text = remainingtime;
+}
+
+function getGhostColor(AIColor){
+    color = AIColor
+    fontStyle2 = utilities.getFontStyle(30);
+    var msg = "Ghost Color is " + AIColor
+    msg3Txt = new PIXI.Text(msg, fontStyle2);
+    msg3Txt.x = x + (blockNum*blockSz)/2 - msg3Txt.width/2;
+    msg3Txt.y = y - 80
+    app.stage.addChild(msg3Txt);    
 }
 
 // Listen for window resize events
@@ -714,6 +732,7 @@ function resize() {
 }
 resize();
 
-module.exports = {drawMove, validMoves, showScore, congratulate, showRecommendedMove, drawState};
+module.exports = {drawMove, validMoves, showScore, congratulate, showRecommendedMove,
+                  drawState, updateBoard, getGhostColor};
 
 
