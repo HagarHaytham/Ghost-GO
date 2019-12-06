@@ -27,7 +27,11 @@ def get_opponent_move(): #till now it blocks, in case computations are needed at
         print(opponent_move)
         if opponent_move != 0:
             return opponent_move
-    
+
+def send_ghost_color(color):
+    c = 'COLOR,' + color
+    push_socket.send_string(c)
+
 def send_move(move, color, B_time, W_time):
     m = 'MOVE,' + move + '#' + color + '#' + B_time + '#' + W_time
     push_socket.send_string(m)
