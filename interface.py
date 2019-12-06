@@ -27,13 +27,9 @@ def get_opponent_move(): #till now it blocks, in case computations are needed at
         print(opponent_move)
         if opponent_move != 0:
             return opponent_move
-
-def send_ghost_move(move):
-    m = 'MOVE,' + move
-    push_socket.send_string(m)
     
-def send_move(move, color):
-    m = 'MOVE_COLOR,' + move + ',' + color
+def send_move(move, color, O_time, G_time):
+    m = 'MOVE,' + move + '#' + color + '#' + O_time + '#' + O_time
     push_socket.send_string(m)
 
 def send_state(state):
@@ -51,9 +47,9 @@ def update_board(state):
     #write state in file
     f = open("update_board.txt",'w')
     for i in range (len(state)):
-        f.write(str(state[i][0])+',')
-        f.write(str(state[i][1])+',')
-        f.write(str(state[i][2])+',')
+        f.write(str(state[i][0])+',')  #x
+        f.write(str(state[i][1])+',')   #y
+        f.write(str(state[i][2])+',')   #color
     push_socket.send_string(s)
 
 def send_valid_moves(vaild_moves):
@@ -61,8 +57,8 @@ def send_valid_moves(vaild_moves):
     f = open("valid_moves.txt",'w')
     for i in range (len(vaild_moves)):
         print(vaild_moves[i][0],vaild_moves[i][1])
-        f.write(str(vaild_moves[i][0])+',')
-        f.write(str(vaild_moves[i][1])+',')
+        f.write(str(vaild_moves[i][0])+',') #x
+        f.write(str(vaild_moves[i][1])+',') #y
     push_socket.send_string(v)
 
 def send_score(O_score, G_score, reason):
