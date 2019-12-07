@@ -89,7 +89,7 @@ function draw_moves(moves) // to draw valid moves.
                 }
             }
             //call gui function here. each row contains x,y.
-            gui.validMoves(moves);
+            gui.validMoves(valid);
         } else {
             console.log(err);
         }
