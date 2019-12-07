@@ -130,7 +130,7 @@ function update_board(file_name)
                 }
             }
             //call gui function here. each row contains x,y,color.
-            gui.updateBoard(board)
+            gui.updateBoard(state)
         } else {
             console.log(err);
         }
