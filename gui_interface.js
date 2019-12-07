@@ -1,51 +1,48 @@
+const gui = require("../js/main.js");
 var zmq = require("zeromq");
 var fs = require('fs');
-to_game = zmq.socket("push");
-from_game = zmq.socket("pull");
-to_game.bindSync("tcp://127.0.0.1:3000");
+var from_game = zmq.socket("pull");
 from_game.connect("tcp://127.0.0.1:3001");
+console.log("GUI from game interface started!");
+var state = 1;
 
-console.log("GUI interface started!");
-var game_mode = 0;
 
 
 //TO-DO : REPLACE PLACE HOLDERS. 
 from_game.on("message", function(msg) {
-
-    // console.log("work from pull: %s", msg.toString());
-    result = msg.toString();
-    l = result.split(',');
     
-    switch(l[0]){
-            case 'STATE':
-            draw_state('send_state.txt');
-            break;
-        case 'VALID':
-            draw_moves('valid_moves.txt');
-            break;
-        case 'MOVE':
-            draw_move(l[1]);
-            break;
-        case 'SCORE':
-            show_score(l[1]);
-            break;
-        case 'CONGRATULATE':
-            congratulate(l[1]);
-            break;
-        case 'REC_MOVE':
-            show_recommended_move(l[1]);
-            break;
-        case 'UPDATE':
-            update_board('update_board.txt');
-            break;
-        case 'COLOR':
-            get_ghost_color(l[1]);
-            break;
-        default:
-            console.log("invalid message code from implementation side.")
-            break;
-    }
-});
+        // console.log("work from pull: %s", msg.toString());
+        result = msg.toString();
+        l = result.split(',');
+        
+        switch(l[0]){
+                case 'STATE':
+                draw_state('send_state.txt');
+                break;
+            case 'VALID':
+                draw_moves('valid_moves.txt');
+                break;
+            case 'MOVE':
+                draw_move(l[1]);
+                break;
+            case 'SCORE':
+                show_score(l[1]);
+                break;
+            case 'CONGRATULATE':
+                congratulate(l[1]);
+                break;
+            case 'REC_MOVE':
+                show_recommended_move(l[1]);
+                break;
+            case 'UPDATE':
+                update_board('update_board.txt');
+                break;
+            default:
+                console.log("invalid message code from implementation side.")
+                break;
+        }
+    });
+
 
 // to start, we should know our opponent to decide on the methods used later.
 
@@ -67,11 +64,13 @@ function draw_state(file_name)
                 }
             }
             //call gui function here. each row contains x,y,color.
+            gui.drawState(state)
         } else {
             console.log(err);
         }
     })    
 }
+
 function draw_moves(moves) // to draw valid moves.
 {
     fs.readFile(file_name, {encoding: 'utf-8'}, function(err,data){
@@ -90,28 +89,28 @@ function draw_moves(moves) // to draw valid moves.
                 }
             }
             //call gui function here. each row contains x,y.
+            gui.validMoves(valid);
         } else {
             console.log(err);
         }
     })
     
 }
+
 function draw_move(move)
 {
     var tmp_move = move.split('#')
     //tmp_move[0] : move type
-    //tmp_move[1] : coordinates.
-    //tmp_mover[2] : color
-    //tmp_move[3] :O-time  -- black time.
-    //tmp_move[4] :G-time  -- white time.
-    var tmp_coord = tmp_move[1].split('-');
-    //tmp_coord[0] : x , tmp_coord[1] = y.
-    
     //gui_func()
+    var move = tmp_move[1].split('-');
+    if(move[0] != '0')
+    {
+        move = "";
+    }
+    
+    gui.drawMove(move,tmp_move[2], tmp_move[4], tmp_move[3]);//gui.drawMove(move, color, G_time, O_time);
     
 }
-
-
 
 function update_board(file_name)
 {
@@ -131,32 +130,27 @@ function update_board(file_name)
                 }
             }
             //call gui function here. each row contains x,y,color.
+            gui.updateBoard(state)
         } else {
             console.log(err);
         }
     })    
 }
 
-
 function show_score(score)
 {
     console.log('SCORE: '+score);
     var tmp_score = score.split('#');
-    //tmp_score[1] : O_Score.
-    //tmp_score[2] : G_Score.
-    //tmo_score[3] : Reason.
-    
+    gui.showScore(tmp_score[0],tmp_score[1],tmp_score[2]);//gui.showScore(O_score,G_score,reason);
 }
+
 
 function congratulate(msg)
 {
-    console.log("CONGRATULATING:"+msg);
+    console.log("CONGRATULATING:"+msg)
+    gui.congratulate(msg);
+}
 
-}
-function get_ghost_color(color)
-{
-    console.log(color);  
-}
 function show_recommended_move(move) // in addition to valid moves, There can be a specific recommended move.
 {
 
@@ -164,11 +158,8 @@ function show_recommended_move(move) // in addition to valid moves, There can be
     var tmp_move = move.split('#');
     //tmp_move[0] : move_type.
     // tmp_move[1] : move_position.
-    var coord = tmp_move.split('-');
-    //coord[0] : x , coord[1] :y . should be parsed as integers before used.
+    gui.showRecommendedMove(tmp_move[0],tmp_move[1].split('-'));//gui.showRecommendedMove(moveType,move);
 }
-
-// white : '1' , black : '0'
 function send_opponent_color(color){
     to_game.send(color);
 }
@@ -182,5 +173,3 @@ function send_mode(mode){
     to_game.send(mode);
     oppo_mode = mode; 
 }
-
-
