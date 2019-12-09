@@ -12,21 +12,23 @@ pull_socket.connect("tcp://127.0.0.1:3000")
 def get_game_mode():
     while(True):
         game_mode = pull_socket.recv()
-        if game_mode != 0:
-            return game_mode
+        # if game_mode != 0:
+        return game_mode #.decode('utf-8')
     
 def get_opponent_color():
     while(True):
         opponent_color = pull_socket.recv()
-        if opponent_color != 0:
-            return opponent_color
+        # if opponent_color != 0:
+        opponent_color = opponent_color.decode('utf-8')
+        return opponent_color
 
 def get_opponent_move(): #till now it blocks, in case computations are needed at this time, open a thread
     while(True):#moves NOTE: this wasn't commented but it caused errors :'D.
         opponent_move = pull_socket.recv()
         print(opponent_move)
-        if opponent_move != 0:
-            return opponent_move
+        # if opponent_move != 0:
+        opponent_move = opponent_move.decode('utf-8')
+        return opponent_move
 
 def send_ghost_color(color):
     c = 'COLOR,' + color
@@ -79,7 +81,7 @@ def send_congrate(msg):
     m = 'CONGRATULATE,' + msg
     push_socket.send_string(m)
 
-state = [[1,2,'1'],[3,4,'0'],[5,6,'1']]
-send_state(state)
+# state = [[1,2,'1'],[3,4,'0'],[5,6,'1']]
+# send_state(state)
 # get_opponent_move()
 # send_state("starting_state")

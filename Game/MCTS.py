@@ -152,8 +152,8 @@ def rollout(node,depth):
 
     last_captures=copy.copy(parent.captures)
     game_captures ={
-        player.black : last_captures[0],
-        player.white : last_captures[1]
+        player.black : last_captures['0'],
+        player.white : last_captures['1']
     }
     winner,_ = game_state.semi_winner(game_captures)
     return winner , parent
