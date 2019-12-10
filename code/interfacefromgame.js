@@ -4,7 +4,7 @@ var fs = require('fs');
 var from_game = zmq.socket("pull");
 from_game.connect("tcp://127.0.0.1:3001");
 console.log("GUI from game interface started!");
-var state = 1;
+
 
 
 
@@ -37,6 +37,8 @@ from_game.on("message", function(msg) {
             case 'UPDATE':
                 update_board('update_board.txt');
                 break;
+            case 'COLOR':
+                get_ghost_color(l[1]);
             default:
                 console.log("invalid message code from implementation side.")
                 break;
@@ -59,7 +61,7 @@ function draw_state(file_name)
                 state[i] = new Array(3);
                 for(j = 3*i ; j<3*i+3; j++)
                 {
-                    state[i][j%3] = parseInt(tmp[j], 10);  
+                    state[i][j%3] = tmp[j];  
                     console.log(tmp[j]);
                 }
             }
@@ -70,6 +72,8 @@ function draw_state(file_name)
         }
     })    
 }
+
+
 
 function draw_moves(moves) // to draw valid moves.
 {
@@ -84,12 +88,12 @@ function draw_moves(moves) // to draw valid moves.
                 valid[i] = new Array(2);
                 for(j = 2*i ; j<2*i+2; j++)
                 {
-                    state[i][j%2] = parseInt(tmp[j], 10);  
+                    valid[i][j%2] = tmp[j];  
                     console.log(tmp[j]);
                 }
             }
-            //call gui function here. each row contains x,y.
             gui.validMoves(valid);
+            //call gui function here. each row contains x,y.
         } else {
             console.log(err);
         }
@@ -97,20 +101,25 @@ function draw_moves(moves) // to draw valid moves.
     
 }
 
+
 function draw_move(move)
 {
     var tmp_move = move.split('#')
     //tmp_move[0] : move type
     //tmp_move[1] : coordinates.
     //tmp_mover[2] : color
-    //tmp_move[3] :B-time  -- black time.
-    //tmp_move[4] :W-time  -- white time.
+    //tmp_move[3] :O-time  -- black time.
+    //tmp_move[4] :G-time  -- white time.
     var tmp_coord = tmp_move[1].split('-');
     //tmp_coord[0] : x , tmp_coord[1] = y.
     //gui_func()
-    gui.drawMove(move, color, G_time, O_time);
+    move = tmp_move.split('-');
+    gui.drawMove(move, tmp_mover[2], tmp_move[3], tmp_move[4]);
     
 }
+
+
+
 
 function update_board(file_name)
 {
@@ -125,7 +134,7 @@ function update_board(file_name)
                 state[i] = new Array(3);
                 for(j = 3*i ; j<3*i+3; j++)
                 {
-                    state[i][j%3] = parseInt(tmp[j], 10);  
+                    state[i][j%3] = tmp[j];  
                     console.log(tmp[j]);
                 }
             }
@@ -141,19 +150,18 @@ function show_score(score)
 {
     console.log('SCORE: '+score);
     var tmp_score = score.split('#');
-    //tmp_score[1] : Score.
-    //tmp_score[2] : Opponent Score.
-    //tmo_score[3] : Reason.
-    gui.showScore(O_score,G_score,reason);
+    //tmp_score[0] : O_Score.
+    //tmp_score[1] : G_ Score.
+    //tmo_score[2] : Reason.
+    gui.showScore(tmp_score[0], tmp_score[1], tmo_score[2]);
 }
-
+s
 
 function congratulate(msg)
 {
     console.log("CONGRATULATING:"+msg)
     gui.congratulate(msg);
 }
-
 function show_recommended_move(move) // in addition to valid moves, There can be a specific recommended move.
 {
 
@@ -161,9 +169,11 @@ function show_recommended_move(move) // in addition to valid moves, There can be
     var tmp_move = move.split('#');
     //tmp_move[0] : move_type.
     // tmp_move[1] : move_position.
-    var coord = tmp_move.split('-');
+    var coord = tmp_move[1].split('-');
     //coord[0] : x , coord[1] :y . should be parsed as integers before used.
-    gui.showRecommendedMove(moveType,move);
+    gui.showRecommendedMove(tmp_move[0], coord);
 }
-
-
+function get_ghost_color(color)
+{
+    gui.get_ghost_color(color);
+}
