@@ -53,7 +53,7 @@ function draw_state(file_name)
 {
     fs.readFile(file_name, {encoding: 'utf-8'}, function(err,data){
         if (!err) {
-            console.log('received data: ' + data);
+            console.log('Game State was received');
             var tmp = data.split(',');
             var stone_count = (tmp.length-1)/3;
             var state = new Array(stone_count);
@@ -74,9 +74,9 @@ function draw_state(file_name)
 }
 function draw_moves(moves) // to draw valid moves.
 {
-    fs.readFile(file_name, {encoding: 'utf-8'}, function(err,data){
+    fs.readFile(moves, {encoding: 'utf-8'}, function(err,data){
         if (!err) {
-            console.log('received data: ' + data);
+            console.log('valid moves received ');
             var tmp = data.split(',');
             var stone_count = (tmp.length-1)/2;
             var valid = new Array(stone_count);
@@ -86,7 +86,7 @@ function draw_moves(moves) // to draw valid moves.
                 for(j = 2*i ; j<2*i+2; j++)
                 {
                     valid[i][j%2] = parseInt(tmp[j], 10);  
-                    console.log(tmp[j]);
+                    // console.log(tmp[j]);
                 }
             }
             //call gui function here. each row contains x,y.
@@ -98,6 +98,7 @@ function draw_moves(moves) // to draw valid moves.
 }
 function draw_move(move)
 {
+    console.log("move receivd is" + move);
     var tmp_move = move.split('#')
     //tmp_move[0] : move type
     //tmp_move[1] : coordinates.
@@ -117,7 +118,7 @@ function update_board(file_name)
 {
     fs.readFile(file_name, {encoding: 'utf-8'}, function(err,data){
         if (!err) {
-            console.log('received data: ' + data);
+            console.log('updated board was received');
             var tmp = data.split(',');
             var stone_count = (tmp.length-1)/3;
             var state = new Array(stone_count);
@@ -183,3 +184,9 @@ function send_mode(mode){
     oppo_mode = mode; 
 }
 
+send_mode('0');
+send_opponent_color('0');
+for(var i =1 ;i<10;i++)
+{
+    send_opponent_move(0,[i,'5'])
+}

@@ -38,10 +38,10 @@ def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth):
         leaf = traverse(root,i)  
         simulation_result , last_node = rollout(leaf,depth)
         backpropagate(root,last_node , simulation_result) 
-    print('encoding time ',encoding_time)
-    print('cnn time ',cnn_time)
-    print('move time ',move_time)
-    print('prisoners time ',prisoners_time)
+    # print('encoding time ',encoding_time)
+    # print('cnn time ',cnn_time)
+    # print('move time ',move_time)
+    # print('prisoners time ',prisoners_time)
     return best_child(root) 
  
 def best_child(root):
@@ -65,7 +65,10 @@ def traverse(node,total_rollouts):
   
 def pick_child(node,total_rollouts):
     if(total_rollouts == 0 and len(node.children) > 0):
-        return node.children[random.randint(0,len(node.children))]
+        # print('children = ',len(node.children))
+        index = random.randint(0,len(node.children)-1)
+        # print(index)
+        return node.children[index]
     current_value=0
     picked_child=node.children[0]
     temperature=2
@@ -76,16 +79,23 @@ def pick_child(node,total_rollouts):
     return picked_child
 
 def get_best_three(root):
-    probability_matrix=predict.model.predict(root)[0]
+    state = sevenplanes.SevenPlaneEncoder((19,19))
+    state = state.encode(root.game_state)
+    state = np.expand_dims(state,axis=0)
+    probability_matrix=predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
     for i in range(3):
-            max = probability_matrix.max()
-            coordinates = np.where(probability_matrix == max)
-            row = coordinates[0][0]
-            col = coordinates[1][0]
-            probability_matrix[row][col]= -1
-            new_point = gotypes.Point(row=row+1, col=col+1)
-            move = goboard.Move(new_point)
+            while True:
+                max = probability_matrix.max()
+                coordinates = np.where(probability_matrix == max)
+                row = coordinates[0][0]
+                col = coordinates[1][0]
+                probability_matrix[row][col]= 0
+                new_point = gotypes.Point( col=col+1,row=row+1)
+                move = goboard.Move(new_point)
+                # print(new_point)
+                if root.game_state.is_valid_move(move):
+                    break
             legal_state , prisoners = root.game_state.apply_move(move) 
             capture = 0
             if len(prisoners) > 0:
@@ -94,7 +104,7 @@ def get_best_three(root):
             child_captures[player]+=capture
             child = MCTS_node(legal_state,root,child_captures,new_point)
             root.children.append(child)
-    print(probability_matrix)
+    # print(probability_matrix)
 
 def rollout(node,depth):
     game_state = node.game_state
@@ -124,7 +134,7 @@ def rollout(node,depth):
             row = coordinates[0][0]
             col = coordinates[1][0]
             probability_matrix[row][col]= 0
-            new_point = gotypes.Point(row=row+1, col=col+1)
+            new_point = gotypes.Point( col=col+1,row=row+1)
             move = goboard.Move(new_point)
             if game_state.is_valid_move(move):
                 break
@@ -151,18 +161,23 @@ def rollout(node,depth):
 
 
     last_captures=copy.copy(parent.captures)
-    game_captures ={
-        player.black : last_captures[0],
-        player.white : last_captures[1]
+    # print(last_captures)
+    game_captures = {
+        gotypes.Player.black : last_captures['0'],
+        gotypes.Player.white : last_captures['1']
     }
     winner,_ = game_state.semi_winner(game_captures)
-    return winner , parent
+    result = '0'
+    if(winner == gotypes.Player.white):
+        result ='1'
+    return result , parent
 
     
 def backpropagate(root,node, result): 
     
     if node == root :
         return 
+    # print(result)
     node.record_win(result)  # update stats
     backpropagate(root,node.parent,result) 
 
