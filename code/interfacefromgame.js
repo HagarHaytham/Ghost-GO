@@ -17,10 +17,10 @@ from_game.on("message", function(msg) {
         
         switch(l[0]){
                 case 'STATE':
-                draw_state('send_state.txt');
+                draw_state('../Game/send_state.txt');
                 break;
             case 'VALID':
-                draw_moves('valid_moves.txt');
+                draw_moves('../Game/valid_moves.txt');
                 break;
             case 'MOVE':
                 draw_move(l[1]);
@@ -35,7 +35,7 @@ from_game.on("message", function(msg) {
                 show_recommended_move(l[1]);
                 break;
             case 'UPDATE':
-                update_board('update_board.txt');
+                update_board('../Game/update_board.txt');
                 break;
             case 'COLOR':
                 get_ghost_color(l[1]);
@@ -110,11 +110,11 @@ function draw_move(move)
     //tmp_mover[2] : color
     //tmp_move[3] :O-time  -- black time.
     //tmp_move[4] :G-time  -- white time.
-    var tmp_coord = tmp_move[1].split('-');
+    //var tmp_coord = tmp_move[1].split('-');
     //tmp_coord[0] : x , tmp_coord[1] = y.
     //gui_func()
-    move = tmp_move.split('-');
-    gui.drawMove(move, tmp_mover[2], tmp_move[3], tmp_move[4]);
+    move = tmp_move[1].split('-');
+    gui.drawMove(move, tmp_move[2], tmp_move[3], tmp_move[4]);
     
 }
 
@@ -155,7 +155,6 @@ function show_score(score)
     //tmo_score[2] : Reason.
     gui.showScore(tmp_score[0], tmp_score[1], tmo_score[2]);
 }
-s
 
 function congratulate(msg)
 {

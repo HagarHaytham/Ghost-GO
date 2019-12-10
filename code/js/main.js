@@ -701,7 +701,7 @@ function drawState(state){
 
 function updateBoard(state){
     //remove all stones
-    utilites.removeChildByName("stone", app);
+    utilities.removeChildByName("stone", app);
     drawState(state)
 }
 
