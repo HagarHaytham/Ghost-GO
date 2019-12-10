@@ -24,9 +24,7 @@ def game_mode():
             gotypes.Player.black: 0,
             gotypes.Player.white: 0,
         } 
-    
-    elif (game_mode == 1):  # trainer mode  AI VS human
-        pass
+
     elif (game_mode == 2): # trainer test mode start from a certain state
         game_board = np.zeros((board_size,board_size))
         
@@ -37,7 +35,6 @@ def game_mode():
 
 def get_player_color():
     opponent  =interface.get_opponent_color()
-    opponent = 0
     if(opponent == 0):
         return gotypes.Player.white , gotypes.Player.black
     return gotypes.Player.black , gotypes.Player.white
@@ -110,10 +107,6 @@ def main():
         _winner ,this_game_score = game.winner(captures)
         decision = 0
         point =Point(play_coords.X,play_coords.Y)
-        if(old_game_score >= this_game_score ):  #pass game
-            decision = 2
-            point = -1
-            player_consequitive_passes+=1
         send_move(decision , point)
         if(player_consequitive_passes == 2):
             break
