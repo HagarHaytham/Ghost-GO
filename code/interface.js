@@ -14,7 +14,8 @@ function send_opponent_color(color){
 }
 
 function send_opponent_move(move_type, position){
-    to_game.send(move_type+"#"+position);
+    pos = position[0]+'-'+position[1]
+    to_game.send(move_type+"#"+pos);
 }
 
 

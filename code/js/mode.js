@@ -56,7 +56,7 @@ function setup(){
     aiVsaiButtonRect.on('click', function(event){
         console.log("clicked");
         sessionStorage.setItem("mode", "AIVSAI");
-        interface.send_mode('0');
+        interface.send_mode('1');
         location.assign("../html/main.html"); 
     
     });
@@ -78,7 +78,7 @@ function setup(){
     aiVshumanButtonRect.buttonMode = true;
     aiVshumanButtonRect.on('click', function(){
         sessionStorage.setItem("mode", "AIVSHuman");
-        interface.send_mode('1');
+        interface.send_mode('0');
         location.assign("../html/start.html"); 
     });
     app.stage.addChild(aiVshumanButton);
