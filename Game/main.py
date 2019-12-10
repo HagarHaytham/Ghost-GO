@@ -1,121 +1,198 @@
 from dlgo.agent import naive
 from dlgo import goboard_slow as goboard
 from dlgo import gotypes
-from dlgo.utils import print_board, print_move
+from dlgo.utils import print_board, print_move , coords_from_point2
 import interface
+from enum import Enum
 from  MCTS import monte_carlo_tree_search
+from dlgo.scoring import compute_game_result
 import time
-import numpy as np 
+import numpy as np
+
+#intializations
 board_size = 19
 num_rounds = 10
+game_mode = 0
 depth = 10
-opponent_consequitive_passes = 0
-player_consequitive_passes = 0
+consequitive_passes = 0
 opponont_resigns = False
 
-def game_mode():
-    game_mode = 0  
-    game_mode = interface.get_game_mode()
-    game = 0
-    captures =0
-    if(game_mode == 0 or game_mode == 1):  # PC mode  
-        game = goboard.GameState.new_game(board_size) 
-        captures = {
-            gotypes.Player.black: 0,
-            gotypes.Player.white: 0,
-        } 
+class modes(Enum): #check ENUM
+   AIvsAI=0
+   AIvsHuman=1
+   
+def get_game_mode_from_gui():
+    global game_mode
+    game_mode = int(interface.get_game_mode())
+    print("game mode received --> ", game_mode)
+    game = goboard.GameState.new_game(board_size) 
+    player = '0'
+    opponent = '1'
+    captures = {
+        '0': 0,
+        '1': 0,
+    } 
+    if(game_mode == 1 ):  # PC mode  
+        #get player color from server
+        print('ai vs ai')
+        pass
+    elif( game_mode == 0 ):
+        print('ai vs human')
+        player , opponent = get_player_color_from_gui()
+    # elif (game_mode == modes.AIvsAI_test): # trainer test mode start from a certain state
+    #     # game_board = np.zeros((board_size,board_size))
+    #     # fill matrix somehow
+    #     # send_state(game_board)
+    #     # get player color from server
+    #     pass        
+    return game , captures , player , opponent
 
-    elif (game_mode == 2): # trainer test mode start from a certain state
-        game_board = np.zeros((board_size,board_size))
-        
-        # fill matrix somehow
-        # send_state(game_board)
-        pass        
-    return game , captures
+def get_player_color_from_gui():
+    player = '0'
+    opponent = '1'
+    opponent_color = interface.get_opponent_color()
+    if(opponent_color == '0'):
+        player = '1'
+    return player ,opponent
 
-def get_player_color():
-    opponent  =interface.get_opponent_color()
-    if(opponent == 0):
-        return gotypes.Player.white , gotypes.Player.black
-    return gotypes.Player.black , gotypes.Player.white
-
-def get_next_state(current_state,captures,opponent):
+def get_opponent_game_from_gui(current_state,captures,opponent):
     global consequitive_passes
-    global opponont_opponont_resignss
-    decision=[0,'#',1,'-',4]
-    new_game_state =0 
-    point =0
-    decision =interface.get_opponent_move()
-    if decision[0] == 0 : # play  
+    global opponont_resigns
+    point = 0
+    decision = interface.get_opponent_move()
+    if decision[0] == '0' : # play  
         consequitive_passes = 0
-        point =  gotypes.Point(decision[2],decision[4])
+        point =  gotypes.Point(int(decision[2]),int(decision[4]))
         move = goboard.Move(point)
         new_game_state , prisoners  = current_state.apply_move(move)
         capture = 0
         if len(prisoners) > 0:
             capture = prisoners[0]
         captures[opponent]+=capture
-    elif decision[1] == 1 :  # opponont_opponont_resignss
+    elif decision[1] == '1' :  # opponont_opponont_resignss
         opponont_resigns = True
-    elif decision[2] == 2 : # pass
+    elif decision[2] == '2' : # pass
         consequitive_passes+=1
-    return new_game_state , captures , point
+    return decision[0] , new_game_state , captures , point
 
-def send_move(decision,point):
-    global player_consequitive_passes
+def send_move_to_gui(decision,point,b_time,w_time,color):
+    global consequitive_passes
     if(decision == 0): # play
-        player_consequitive_passes = 0 
-        move = '0'+'#'+str(point.X)+'-'+str(point.Y)
+        consequitive_passes = 0 
+        move = '0'+'#'+str(point.col)+'-'+str(point.row)
     elif decision == 1: # player_resigns 
         move = '1'
     elif decision == 2: # pass
+        consequitive_passes+=1
         move = '2'
-    iterface.send_ghost_move(move)
+    interface.send_move(move,color,str(b_time),str(w_time))
     return  
-    
+def send_board_to_gui(decision,board):    
+    stone_list = []
+    if decision == '0':
+        for i in range(19):
+            for j in range(19):
+                stone = gotypes.Point(i,j)
+                color = board.get(stone)
+                if( color != None):
+                    c='0'
+                    if color == gotypes.Player.white :
+                        c ='1'
+                    stone_list.append([i,j,c])
+    interface.update_board(stone_list)
+    pass
+# def update_board():
+#     pass
 def send_valid_moves_to_gui(game_state):
     legal_moves = game_state.legal_moves()
-    moves=np.array(len(legal_moves)-2,2)
+    moves=legal_moves[0:len(legal_moves)-2]
+    list = []
     for k in range(len(moves)) : 
         move = legal_moves[k]
-        moves[k][0]= move.point.X
-        moves[k][1]= move.point.Y
-    iterface.send_valid_moves(moves)
+        col = str(move.point.col)
+        row = str(move.point.row)
+        list.append([col,row])
+    interface.send_valid_moves(list)
     return
 
-def send_score_to_gui(score):
-    iterface.send_score(score)
+def send_score_to_gui(game_result,player,reason):
+    black_score = str(game_result[0])
+    white_score = str(game_result[1])
+    O_score = black_score
+    G_Score = white_score
+    if( player == '0'):
+        O_score = white_score
+        G_Score = black_score
+    interface.send_score(O_score,G_Score,reason)
     return
-
 def main():
-    global opponent_consequitive_passes
-    global player_consequitive_passes
+    global consequitive_passes
     global opponont_resigns
-    game , captures = game_mode()
-    player , opponent = get_player_color() 
-    old_game_score = 0
-    
-    while ( not game.is_over()):
-
-        print_board(game.board)
-
-        start = time.time()
-        game , captures , point  =  get_next_state(game,captures,opponent)
-        if(opponent_consequitive_passes == 2 or opponont_resigns == True ):
-            break
-        game , captures , play_coords= monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
-        _winner ,this_game_score = game.winner(captures)
-        decision = 0
-        point =Point(play_coords.X,play_coords.Y)
-        send_move(decision , point)
-        if(player_consequitive_passes == 2):
-            break
-        end = time.time()
-        print(end - start)
-
-    winner,score = game.winner(captures)
-    
-    if winner == gotypes.Player.black:
+    game , captures ,player ,opponent = get_game_mode_from_gui()
+    first_game = False
+    if( opponent == gotypes.Player.white):
+        first_game = True
+    if(game_mode == 0 ):
+        while ( not game.is_over()):
+            print_board(game.board)
+            start = time.time()
+            point = -1
+            if(not first_game):
+                send_valid_moves_to_gui(game)
+                decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
+                send_board_to_gui(decision,game.board)
+                b_time = 0
+                w_time = 0
+                if(consequitive_passes == 2 or opponont_resigns == True ):
+                    break
+            else:
+                first_game = False
+            game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+            print('after monto carlo')
+            decision = 0
+            b_time = 0
+            w_time = 0
+            send_move_to_gui(decision,play_point,b_time,w_time,player)  
+            send_board_to_gui(decision,game.board)
+          
+            if(consequitive_passes == 2):
+                break
+            end = time.time()
+            print(end - start)
+    elif(game_mode == 1 ):  # AI vs AI
+        while ( not game.is_over()):
+            print_board(game.board)
+            start = time.time()
+            point = -1
+            if(not first_game):
+                # TODO get opponent game from server  , and remaining time for black b_time and white w_time
+                b_time = 0
+                w_time = 0
+                send_move_to_gui(decision,point,b_time,w_time,opponent)            
+                send_board_to_gui(decision,game.board)
+                if(consequitive_passes == 2 or opponont_resigns == True ):
+                    break
+            else:
+                first_game = False
+            game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+            decision = 0
+            b_time = 0
+            w_time = 0
+            # TODO send move to server 
+            send_move_to_gui(decision,play_point,b_time,w_time,player)         
+            send_board_to_gui(decision,game.board)   
+            if(consequitive_passes == 2):
+                break
+            end = time.time()
+            print(end - start)
+    game_captures ={
+        gotypes.Player.black : captures['0'],
+        gotypes.Player.white : captures['1']
+    }
+    game_result,winner,score = game.winner(game_captures)
+    reason = 'IDK !'
+    send_score_to_gui(game_result,score,reason)
+    if winner == '0':
         print("Black is the WINNER!!!!")
     else:
         print("White is the WINNER!!!!")

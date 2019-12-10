@@ -11,8 +11,8 @@ class MCTS_node():
         self.parent = parent
         self.children = []
         self.win_counts = {
-             Player.black: 0,
-             Player.white: 0,
+             '0': 0,
+             '1': 0,
         }
         self.num_rollouts = 1
         self.captures = captures

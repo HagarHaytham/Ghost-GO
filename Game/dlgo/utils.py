@@ -68,7 +68,8 @@ def coords_from_point(point):
         COLS[point.col - 1],
         point.row
     )
-
+def coords_from_point2(point):
+    return [point.col,point.row]
 
 # NOTE: MoveAge is only used in chapter 13, and doesn't make it to the main text.
 # This feature will only be implemented in goboard_fast.py so as not to confuse
