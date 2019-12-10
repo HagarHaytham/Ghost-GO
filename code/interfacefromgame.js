@@ -75,7 +75,7 @@ function draw_state(file_name)
 
 
 
-function draw_moves(moves) // to draw valid moves.
+function draw_moves(file_name) // to draw valid moves.
 {
     fs.readFile(file_name, {encoding: 'utf-8'}, function(err,data){
         if (!err) {
