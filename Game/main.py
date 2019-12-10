@@ -49,6 +49,7 @@ def get_game_mode_from_gui():
     return game , captures , player , opponent
 
 def get_player_color_from_gui():
+    print("get_player_color_from_gui")
     player = '0'
     opponent = '1'
     opponent_color = interface.get_opponent_color()
@@ -57,26 +58,31 @@ def get_player_color_from_gui():
     return player ,opponent
 
 def get_opponent_game_from_gui(current_state,captures,opponent):
+    print("get_opponent_game_from_gui")
     global consequitive_passes
     global opponont_resigns
     point = 0
-    decision = interface.get_opponent_move()
+    decision = interface.get_opponent_move().split('#')
     if decision[0] == '0' : # play  
         consequitive_passes = 0
-        point =  gotypes.Point(int(decision[2]),int(decision[4]))
+        print(decision)
+        pos = decision[1].split('-')
+        point =  gotypes.Point(int(pos[0]),int(pos[1]))
         move = goboard.Move(point)
+        print(">>>> move", move.point)
         new_game_state , prisoners  = current_state.apply_move(move)
         capture = 0
         if len(prisoners) > 0:
             capture = prisoners[0]
         captures[opponent]+=capture
-    elif decision[1] == '1' :  # opponont_opponont_resignss
+    elif decision[0] == '1' :  # opponont_opponont_resignss
         opponont_resigns = True
-    elif decision[2] == '2' : # pass
+    elif decision[0] == '2' : # pass
         consequitive_passes+=1
     return decision[0] , new_game_state , captures , point
 
 def send_move_to_gui(decision,point,b_time,w_time,color):
+    print("send_move_to_gui")
     global consequitive_passes
     if(decision == 0): # play
         consequitive_passes = 0 
@@ -88,7 +94,8 @@ def send_move_to_gui(decision,point,b_time,w_time,color):
         move = '2'
     interface.send_move(move,color,str(b_time),str(w_time))
     return  
-def send_board_to_gui(decision,board):    
+def send_board_to_gui(decision,board): 
+    print("send_board_to_gui")   
     stone_list = []
     if decision == '0':
         for i in range(19):
@@ -105,6 +112,7 @@ def send_board_to_gui(decision,board):
 # def update_board():
 #     pass
 def send_valid_moves_to_gui(game_state):
+    print("send_valid_moves_to_gui")
     legal_moves = game_state.legal_moves()
     moves=legal_moves[0:len(legal_moves)-2]
     list = []
@@ -117,6 +125,7 @@ def send_valid_moves_to_gui(game_state):
     return
 
 def send_score_to_gui(game_result,player,reason):
+    print("send_score_to_gui|")
     black_score = str(game_result[0])
     white_score = str(game_result[1])
     O_score = black_score
