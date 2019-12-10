@@ -4,7 +4,7 @@ Created on Fri Oct 25 18:39:09 2019
 
 @author: reham
 """
-import sevenplanes
+import elevenplanes
 import predict
 import copy 
 import math
@@ -79,10 +79,10 @@ def pick_child(node,total_rollouts):
     return picked_child
 
 def get_best_three(root):
-    state = sevenplanes.SevenPlaneEncoder((19,19))
+    state = elevenplanes.ElevenPlaneEncoder((19,19))
     state = state.encode(root.game_state)
     state = np.expand_dims(state,axis=0)
-    probability_matrix=predict.model.predict(state)[0]
+    probability_matrix = predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
     for i in range(3):
             while True:
@@ -91,7 +91,7 @@ def get_best_three(root):
                 row = coordinates[0][0]
                 col = coordinates[1][0]
                 probability_matrix[row][col]= 0
-                new_point = gotypes.Point( col=col+1,row=row+1)
+                new_point = gotypes.Point( row=row+1,col=col+1)
                 move = goboard.Move(new_point)
                 # print(new_point)
                 if root.game_state.is_valid_move(move):
@@ -118,7 +118,7 @@ def rollout(node,depth):
     while not game_state.is_over() and j < depth:
         j+=1
         t1=time.time()
-        state = sevenplanes.SevenPlaneEncoder((19,19))
+        state = elevenplanes.ElevenPlaneEncoder((19,19))
         state = state.encode(game_state)
         t2 =time.time()
         state = np.expand_dims(state,axis=0)
@@ -134,7 +134,7 @@ def rollout(node,depth):
             row = coordinates[0][0]
             col = coordinates[1][0]
             probability_matrix[row][col]= 0
-            new_point = gotypes.Point( col=col+1,row=row+1)
+            new_point = gotypes.Point( row=row+1,col=col+1)
             move = goboard.Move(new_point)
             if game_state.is_valid_move(move):
                 break

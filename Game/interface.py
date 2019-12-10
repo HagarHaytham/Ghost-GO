@@ -78,7 +78,7 @@ def send_recommended_move(move):
     push_socket.send_string(m)
 
 def send_congrate(msg): 
-    m = 'CONGRATULATE,' + msg
+    m = 'CONGRATULATIONS ,' + msg
     push_socket.send_string(m)
 
 # state = [[1,2,'1'],[3,4,'0'],[5,6,'1']]

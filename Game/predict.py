@@ -1,5 +1,5 @@
 from keras.models import load_model
-model = load_model('SevenPlanes_smallarch_model_epoch_20.h5')
+model = load_model('models/ElevenPlanes_smallarch_model_epoch.h5')
 import numpy as np
 x = np.array (
     [[[[0. , 0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ,  0. ],

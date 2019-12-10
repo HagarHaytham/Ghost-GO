@@ -3,6 +3,7 @@ from dlgo import goboard_slow as goboard
 from dlgo import gotypes
 from dlgo.utils import print_board, print_move , coords_from_point2
 import interface
+import copy 
 from enum import Enum
 from  MCTS import monte_carlo_tree_search
 from dlgo.scoring import compute_game_result
@@ -125,6 +126,50 @@ def send_score_to_gui(game_result,player,reason):
         G_Score = black_score
     interface.send_score(O_score,G_Score,reason)
     return
+def recommend_move(game_state):
+    state = elevenplanes.ElevenPlaneEncoder((19,19))
+    state = state.encode(game_state)
+    state = np.expand_dims(state,axis=0)
+    probability_matrix=predict.model.predict(state)[0]
+    probability_matrix = np.reshape(probability_matrix, (-1, 19))
+    new_point = -1
+    while True:
+        max = probability_matrix.max()
+        coordinates = np.where(probability_matrix == max)
+        row = coordinates[0][0]
+        col = coordinates[1][0]
+        probability_matrix[row][col]= 0
+        new_point = gotypes.Point( row=row+1,col=col+1)
+        move = goboard.Move(new_point)
+        if game_state.is_valid_move(move):
+            break
+    new_game_state , prisoners  = game_state.apply_move(move)
+    return new_game_state , new_point
+def compare_state(state1,state2):
+    game_result1 =state1.compute_game_result()
+    game_result2 =state2.compute_game_result()
+    black_score1 = str(game_result1[0])
+    white_score1 = str(game_result1[1])
+    O_score1 = black_score1
+    black_score2 = str(game_result2[0])
+    white_score2 = str(game_result2[1])
+    O_score2 = black_score2
+    if( player == '0'):
+        O_score1 = white_score1
+        O_score2 = white_score2
+    if(O_score1 > O_score2 ):
+        return True
+    return False
+def send_congrats():
+    congrats_msg ='Nice Move !!'
+    interface.send_congrats(congrats_msg)
+def send_recommended_move(decision,point):
+    msg = str(decision)
+    if(decision ==0):
+        msg = msg+'#'+str(point.col)+'-'+str(point.row)
+    else:
+        msg = msg+'#0'
+    interface.send_recommended_move(msg)
 def main():
     global consequitive_passes
     global opponont_resigns
@@ -139,8 +184,18 @@ def main():
             point = -1
             if(not first_game):
                 send_valid_moves_to_gui(game)
+                old_game = copy.deepcopy(game)
+                recommended = recommend_move(old_game)
                 decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
+                result = compare_state(recommended,game)
+                if(result == True):
+                    send_recommended_move(decision,point)
+                    pass
+                else:
+                    send_congrats()
+                    pass
                 send_board_to_gui(decision,game.board)
+                
                 b_time = 0
                 w_time = 0
                 if(consequitive_passes == 2 or opponont_resigns == True ):
@@ -189,8 +244,12 @@ def main():
         gotypes.Player.black : captures['0'],
         gotypes.Player.white : captures['1']
     }
-    game_result,winner,score = game.winner(game_captures)
-    reason = 'IDK !'
+    if(game_mode == 1):
+        game_result,winner,score = game.winner(game_captures)
+        reason = 'IDK !'
+    else:
+        # get score from server
+        pass
     send_score_to_gui(game_result,score,reason)
     if winner == '0':
         print("Black is the WINNER!!!!")
