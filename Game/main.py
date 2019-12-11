@@ -1,5 +1,5 @@
 from dlgo.agent import naive
-from dlgo import goboard_slow as goboard
+from dlgo import goboard_fast as goboard
 from dlgo import gotypes
 from dlgo.utils import print_board, print_move , coords_from_point2
 import interface
@@ -195,6 +195,7 @@ def main():
                 send_valid_moves_to_gui(game)
                 old_game = copy.deepcopy(game)
                 recommended = recommend_move(old_game)
+                old_captures = copy(captures[opponent])
                 decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
                 result = compare_state(recommended,game)
                 if(result == True):
@@ -203,22 +204,23 @@ def main():
                 else:
                     send_congrats()
                     pass
-                send_board_to_gui(decision,game.board)
-                
+                if( captures[opponent] > old_captures):
+                    send_board_to_gui(decision,game.board)      
                 b_time = 0
                 w_time = 0
                 if(consequitive_passes == 2 or opponont_resigns == True ):
                     break
             else:
                 first_game = False
+            old_captures = copy(captures[player])
             game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
             print('after monto carlo')
             decision = 0
             b_time = 0
             w_time = 0
             send_move_to_gui(decision,play_point,b_time,w_time,player)  
-            send_board_to_gui(decision,game.board)
-          
+            if(captures[player] > old_captures):
+                send_board_to_gui(decision,game.board)
             if(consequitive_passes == 2):
                 break
             end = time.time()
@@ -229,22 +231,27 @@ def main():
             start = time.time()
             point = -1
             if(not first_game):
+                old_captures = copy(captures[opponent])
+
                 # TODO get opponent game from server  , and remaining time for black b_time and white w_time
                 b_time = 0
                 w_time = 0
-                send_move_to_gui(decision,point,b_time,w_time,opponent)            
-                send_board_to_gui(decision,game.board)
+                send_move_to_gui(decision,point,b_time,w_time,opponent)
+                if(captures[opponent] > old_captures):            
+                    send_board_to_gui(decision,game.board)  
                 if(consequitive_passes == 2 or opponont_resigns == True ):
                     break
             else:
                 first_game = False
+            old_captures = copy(captures[player])
             game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
             decision = 0
             b_time = 0
             w_time = 0
             # TODO send move to server 
             send_move_to_gui(decision,play_point,b_time,w_time,player)         
-            send_board_to_gui(decision,game.board)   
+            if(captures[player] > old_captures):
+                send_board_to_gui(decision,game.board)   
             if(consequitive_passes == 2):
                 break
             end = time.time()

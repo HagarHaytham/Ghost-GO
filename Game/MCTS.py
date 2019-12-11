@@ -80,8 +80,12 @@ def pick_child(node,total_rollouts):
 
 def get_best_three(root):
     state = elevenplanes.ElevenPlaneEncoder((19,19))
+    print(state.shape)
     state = state.encode(root.game_state)
+    print(state.shape)
     state = np.expand_dims(state,axis=0)
+    print(state.shape)
+
     probability_matrix = predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
     for i in range(3):
@@ -96,8 +100,10 @@ def get_best_three(root):
                 # print(new_point)
                 if root.game_state.is_valid_move(move):
                     break
+            print('move ',move)
             legal_state , prisoners = root.game_state.apply_move(move) 
             capture = 0
+            print('prisoners',prisoners)
             if len(prisoners) > 0:
                 capture = prisoners[0]
             child_captures = copy.copy(root.captures)    
