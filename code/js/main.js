@@ -197,12 +197,12 @@ function setup(){
     addTimer();
     drawBoard();
     //-----------------------TESTING--------------------------
-    //drawMove(['5','19'],['6','19'], '0', "14:00", "13:00")
+    //drawMove(['5','19'], '0', "14:00", "13:00")
     //board = [['1','19','0'], ['2','19','1'], ['3','18','1'], ['4','17','0']]
     //updateBoard(board);
     //drawState(board);
     //congratulate("Nice Move")
-    //showScore("2500","56100","TimeOut");1
+    //showScore("2500","56100","TimeOut");
     //drawMove(['1','19'], '0', "14:00", "13:00")
     //drawMove(['2','18'], '1', "14:00", "13:00")
     //showRecommendedMove('0',['1','19']); //place
