@@ -40,7 +40,7 @@ from_game.on("message", function(msg) {
             case 'COLOR':
                 get_ghost_color(l[1]);
             default:
-                console.log("invalid message code from implementation side.")
+                console.log("invalid message code from implementation side." + l[0])
                 break;
         }
     });
@@ -149,11 +149,13 @@ function update_board(file_name)
 function show_score(score)
 {
     console.log('SCORE: '+score);
+    from_game.close();
     var tmp_score = score.split('#');
     //tmp_score[0] : O_Score.
     //tmp_score[1] : G_ Score.
     //tmo_score[2] : Reason.
-    gui.showScore(tmp_score[0], tmp_score[1], tmo_score[2]);
+    gui.showScore(tmp_score[0], tmp_score[1], tmp_score[2]);
+    
 }
 
 function congratulate(msg)

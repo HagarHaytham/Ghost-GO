@@ -271,7 +271,7 @@ def main():
     if(game_mode == 0):
         #game_result,winner,score = game.winner(game_captures)
         game_result,score = game.winner(game_captures)
-        reason = 'IDK !'
+        reason = 'IDK!'
     else:
         # get score from server
         print("///////////////")
