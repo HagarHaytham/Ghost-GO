@@ -196,11 +196,20 @@ function setup(){
     utilities.addSoundButton(app);
     addTimer();
     drawBoard();
-    //congratulate("Congratulation")
-    //showScore("2500","56100","TimeOut"); //modify //removetest
-    //drawMove("0#A-11", "white");
-    //showRecommendedMove("0#B-12");
-    //getGhostColor("kk");
+    //-----------------------TESTING--------------------------
+    //drawMove(['5','19'], '0', "14:00", "13:00")
+    //board = [['1','19','0'], ['2','19','1'], ['3','18','1'], ['4','17','0']]
+    //updateBoard(board);
+    //drawState(board);
+    //congratulate("Nice Move")
+    //showScore("2500","56100","TimeOut");
+    //drawMove(['1','19'], '0', "14:00", "13:00")
+    //drawMove(['2','18'], '1', "14:00", "13:00")
+    //showRecommendedMove('0',['1','19']); //place
+    //showRecommendedMove('1',['1','19']); //resign
+    //showRecommendedMove('2',['1','19']); //pass
+    //getGhostColor("White");
+    //validMoves([['1','19']])
 }
 
 function addTimer(){
@@ -330,8 +339,6 @@ function onClick(event){
         ++row;
         var move = [col.toString(), row.toString()];
         //check it //modify//indexOf != -1
-        console.log("valid_moves ", valid_moves)
-        console.log("valid_moves ", valid_moves == [[-1,-1]])
         if(utilities.isItemInArray(valid_moves, [-1,-1]) || utilities.isItemInArray(valid_moves, move)){
             //modify //Assume return null if not found
             utilities.removeChildByName("red", app)
@@ -471,8 +478,8 @@ function drawMove(move, AIColor, GTime, OTime){
         yourTurnStr.visible = true;
     } 
     else if(GTime != '-1'){
-        updateGhostTime = GTime;
-        updateopponentTime = OTime;
+        updateGhostTime(GTime);
+        updateopponentTime(OTime);
         if(AIColor == '0') color = 'black'
         else color = 'white'
     }
@@ -661,7 +668,7 @@ function showRecommendedMove(moveType, move){
         app.stage.addChild(lastMove);
     });
 
-    if (moveType != '0'){
+    if (moveType == '0'){
         const stone = PIXI.Sprite.fromImage('../images/green.png');
 
         var row = parseInt(move[1], 10);
@@ -696,7 +703,9 @@ function showRecommendedMove(moveType, move){
 }
 
 function drawState(state){
-    for(i = 0; i<state.length; ++i) drawMove([state[0],state[1]], state[2], "-1", "-1")
+    for(i = 0; i<state.length; ++i)
+        drawMove([state[i][0],state[i][1]], state[i][2], "-1", "-1")
+      
 }
 
 function updateBoard(state){

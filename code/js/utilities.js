@@ -108,6 +108,10 @@ function getFontStyle(fontSz){
 
 function isItemInArray(array, item) {
     for (var i = 0; i < array.length; i++) {
+        console.log(" array[i][0]  ", array[i][0])
+        console.log(" item[0] ",  item[0])
+        console.log(" array[i][1]  ",  array[i][1])
+        console.log(" item[1] ", item[1])
         if (array[i][0] == item[0] && array[i][1] == item[1]) return true;  
     }
     return false; 
