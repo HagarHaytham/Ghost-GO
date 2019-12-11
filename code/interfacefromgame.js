@@ -79,7 +79,7 @@ function draw_moves(file_name) // to draw valid moves.
 {
     fs.readFile(file_name, {encoding: 'utf-8'}, function(err,data){
         if (!err) {
-            console.log('received data: ' + data);
+            // console.log('received data: ' + data);
             var tmp = data.split(',');
             var stone_count = (tmp.length-1)/2;
             var valid = new Array(stone_count);
@@ -89,7 +89,7 @@ function draw_moves(file_name) // to draw valid moves.
                 for(j = 2*i ; j<2*i+2; j++)
                 {
                     valid[i][j%2] = tmp[j];  
-                    console.log(tmp[j]);
+                    // console.log(tmp[j]);
                 }
             }
             gui.validMoves(valid);

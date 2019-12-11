@@ -97,17 +97,15 @@ def get_best_three(root):
                 probability_matrix[row][col]= 0
                 new_point = gotypes.Point( row=row+1,col=col+1)
                 move = goboard.Move(new_point)
-                # print(new_point)
+                print(new_point)
                 if root.game_state.is_valid_move(move):
                     break
             print('move ',move)
             legal_state , prisoners = root.game_state.apply_move(move) 
             capture = 0
             print('prisoners',prisoners)
-            if len(prisoners) > 0:
-                capture = prisoners[0]
             child_captures = copy.copy(root.captures)    
-            child_captures[player]+=capture
+            child_captures[player]+=prisoners
             child = MCTS_node(legal_state,root,child_captures,new_point)
             root.children.append(child)
     # print(probability_matrix)
@@ -149,10 +147,8 @@ def rollout(node,depth):
         
         t4 =time.time()
         capture = 0 
-        if len(prisoners) > 0:
-            capture = prisoners[0]
         child_captures = copy.copy(parent.captures)    
-        child_captures[player]+=capture
+        child_captures[player]+=prisoners
         
         t5 = time.time()
         new_node = MCTS_node(new_game_state,parent,child_captures,new_point)
