@@ -70,9 +70,8 @@ def send_valid_moves(vaild_moves):
     push_socket.send_string(v)
 
 def send_score(O_score, G_score, reason):
-#     s = 'SCORE,' + O_score + '#' + G_score + '#' + reason
-#     print('interface score ',type(s))
-    s = "helllo"
+    s = 'SCORE,' + O_score + '#' + G_score + '#' + reason
+    print('interface score ',type(s))
     push_socket.send_string(s)
 
 def send_recommended_move(move):

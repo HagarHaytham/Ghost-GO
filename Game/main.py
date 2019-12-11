@@ -137,7 +137,6 @@ def send_score_to_gui(game_result,player,reason):
         G_Score = black_score
     print('scores ',O_score,G_Score)
     interface.send_score(O_score,G_Score,reason)
-    return
 def recommend_move(game_state):
     state = elevenplanes.ElevenPlaneEncoder((19,19))
     state = state.encode(game_state)
@@ -208,10 +207,8 @@ def main():
                 result = compare_state(recommended,game,captures,player)
                 if(result == True):
                     send_recommended_move(decision,point)
-                    pass
                 else:
                     send_congrats()
-                    pass
                 if( captures[opponent] > old_captures):
                     send_board_to_gui(decision,game.board)      
                 b_time = 0
