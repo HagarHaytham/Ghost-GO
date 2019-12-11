@@ -202,8 +202,7 @@ function setup(){
     //updateBoard(board);
     //drawState(board);
     //congratulate("Nice Move")
-    //showScore("2500","56100","TimeOut");
-    //drawMove("0#A-11", "white");
+    //showScore("2500","56100","TimeOut");1
     //drawMove(['1','19'], '0', "14:00", "13:00")
     //drawMove(['2','18'], '1', "14:00", "13:00")
     //showRecommendedMove('0',['1','19']); //place
