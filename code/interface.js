@@ -30,8 +30,24 @@ function send_mode(mode){
 }
 
 function send_initial_board(board){
-    console.log("send_initial_board ", board)
-}
 
+    console.log("send_initial_board ", board);
+    //converting the board to a string.
+    var l1 = board.length;
+    var board_str = "";
+    if(l1 == 0)
+        board_str ="-1"; // should send an indicator message here.
+    else
+    {
+        var l2 = board[0].length;
+        for(i = 0 ; i<l1 ;i++)
+        {
+            board_str += (board[i][0]+"-"+board[i][1]+"-"+board[i][2]+"#");
+
+        }
+    }
+    console.log(board_str);
+    to_game.send(board_str);
+}
 
 module.exports = {send_mode, send_opponent_color, send_opponent_move, send_initial_board};
