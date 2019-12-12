@@ -69,7 +69,7 @@ def get_opponent_game_from_gui(current_state,captures,opponent):
         consequitive_passes = 0
         print(decision)
         pos = decision[1].split('-')
-        point =  gotypes.Point(int(pos[0]),int(pos[1]))
+        point =  gotypes.Point(int(pos[1]),int(pos[0]))
         move = goboard.Move(point)
         # print(">>>> move", move.point)
         new_game_state , prisoners  = current_state.apply_move(move)
@@ -196,7 +196,7 @@ def main():
         first_game = True
     if(game_mode == 0 ):
         while ( not game.is_over()):
-            # print_board(game.board)
+            print_board(game.board)
             start = time.time()
             point = -1
             if(not first_game):

@@ -80,11 +80,11 @@ def pick_child(node,total_rollouts):
 
 def get_best_three(root):
     state = elevenplanes.ElevenPlaneEncoder((19,19))
-    print(state.shape)
+    print("teeeeeeeeeeeeest",state.shape)
     state = state.encode(root.game_state)
-    print(state.shape)
+    #print(state.shape)
     state = np.expand_dims(state,axis=0)
-    print(state.shape)
+    #print(state.shape)
 
     probability_matrix = predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))

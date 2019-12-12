@@ -93,6 +93,7 @@ function draw_moves(file_name) // to draw valid moves.
                 }
             }
             gui.validMoves(valid);
+            console.log(valid);
             //call gui function here. each row contains x,y.
         } else {
             console.log(err);
