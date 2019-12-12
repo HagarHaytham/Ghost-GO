@@ -53,7 +53,7 @@ const timerStyle = new PIXI.TextStyle({
     stroke: '#a4410e', strokeThickness: 7 
 });
 
-var remainTime = "15 : 00"
+var remainTime = "15 : 00" //test
 var GCountingTxt = new PIXI.Text(remainTime,timerStyle);
 GCountingTxt.x = 1200;
 GCountingTxt.y = 175;
@@ -334,7 +334,18 @@ function addTimer(){
         if(!my_turn || initialState) return;
         var min = Math.floor(seconds / 60);
         var remainSeconds = seconds % 60;
-        if(min == 0 && remainSeconds == 0) remainTime = "TIME OUT";
+        if(min == 0 && remainSeconds == 0){
+            utilities.removeChildByName("red", app);
+            
+            var congratulateStr = app.stage.getChildByName("congratulate");
+            if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
+            
+            my_turn = false;
+            yourTurnStr.visible = false;
+            interface.send_opponent_move("1", []);
+            remainTime = "TIME OUT";
+            countingText . x = 1150;
+        } 
         else{
             if(seconds < 10) remainSeconds = "0" + remainSeconds;
             if(min < 10) min = "0" + min;
@@ -424,7 +435,7 @@ function onClick(event){
             if(!utilities.isItemInArray(initialBorad, move)){
                 console.log("isn't in item")
                 initialBorad.push(move)
-                stone.name = "initial"
+                stone.name = "stone"
                 app.stage.addChild(stone);
             }
             return;
@@ -716,7 +727,7 @@ function showScore(O_score,G_score,reason){
     reasonStr = new PIXI.Text(reason,fontStyle2);
     reasonStr.x = window.innerWidth/2 - reasonStr.width/2;
     reasonStr.y = y + blockSz*blockNum + 30
-    app.stage.addChild(reasonStr);
+    if(mode != "AIVSHuman") app.stage.addChild(reasonStr);
 }
 
 
