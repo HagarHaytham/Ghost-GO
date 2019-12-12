@@ -81,7 +81,7 @@ def get_opponent_game_from_gui(current_state,captures,opponent):
     return decision[0] , new_game_state , captures , point
 
 def send_move_to_gui(decision,point,b_time,w_time,color):
-    # print("send_move_to_gui")
+    print("send_move_to_gui")
     global consequitive_passes
     if(decision == 0): # play
         consequitive_passes = 0 
@@ -106,7 +106,7 @@ def send_board_to_gui(decision,board):
                     c='0'
                     if color == gotypes.Player.white :
                         c ='1'
-                    stone_list.append([i,j,c])
+                    stone_list.append([j,i,c])
     interface.update_board(stone_list)
     pass
 # def update_board():
@@ -156,7 +156,7 @@ def recommend_move(game_state):
         if game_state.is_valid_move(move):
             break
     new_game_state , prisoners  = game_state.apply_move(move)
-    # print('in main',type(new_game_state))
+    # print('in main',new_point)
     return new_game_state , new_point
 def compare_state(state1,state2,captures,player):
     c ={ 
@@ -192,11 +192,12 @@ def main():
     global opponont_resigns
     game , captures ,player ,opponent = get_game_mode_from_gui()
     first_game = False
-    if( opponent == gotypes.Player.white):
+    if( opponent == '1'):
         first_game = True
+    print('first',first_game)
     if(game_mode == 0 ):
         while ( not game.is_over()):
-            print_board(game.board)
+            # print_board(game.board)
             start = time.time()
             point = -1
             if(not first_game):
@@ -212,23 +213,25 @@ def main():
                 else:
                     send_congrats()
                     pass
+                print("captures[opponent] old_captures : ", captures[opponent], old_captures)
                 if( captures[opponent] > old_captures):
+                    print('opponent captures')
                     send_board_to_gui(decision,game.board)      
                 b_time = 0
                 w_time = 0
                 if(consequitive_passes == 2 or opponont_resigns == True ):
                     break
-            else:
-                first_game = False
             old_captures = copy.copy(captures[player])
             game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
-            # print('after monto carlo')
+            print('after monto carlo')
             decision = 0
             b_time = 0
             w_time = 0
             send_move_to_gui(decision,play_point,b_time,w_time,player)  
             if(captures[player] > old_captures):
+                print('player captures')
                 send_board_to_gui(decision,game.board)
+            first_game = False
             if(consequitive_passes == 2):
                 break
             end = time.time()
@@ -240,7 +243,6 @@ def main():
             point = -1
             if(not first_game):
                 old_captures = copy.copy(captures[opponent])
-
                 # TODO get opponent game from server  , and remaining time for black b_time and white w_time
                 b_time = 0
                 w_time = 0
@@ -249,9 +251,10 @@ def main():
                     send_board_to_gui(decision,game.board)  
                 if(consequitive_passes == 2 or opponont_resigns == True ):
                     break
-            else:
-                first_game = False
+
             old_captures = copy.copy(captures[player])
+            first_game = False
+
             game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
             decision = 0
             b_time = 0

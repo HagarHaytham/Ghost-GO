@@ -840,6 +840,7 @@ function getGhostColor(AIColor){
 
 function sendInitialBoard(board){
     interface.send_initial_board(board)
+
 }
 
 // Listen for window resize events
