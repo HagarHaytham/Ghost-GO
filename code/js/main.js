@@ -14,7 +14,7 @@ var blurFilter = new PIXI.filters.BlurFilter();
 blurFilter.blur = 0;
 if(color == "black") my_turn = true;
 
-console.log("index, color: ", color);
+//console.log("index, color: ", color);
 
 const app = new PIXI.Application({
 	autoResize: true,
@@ -338,6 +338,8 @@ function onClick(event){
         ++row;
         var move = [col.toString(), row.toString()];
         //check it //modify//indexOf != -1
+console.log("move ", move [0], " y ", move[1])
+
         if(utilities.isItemInArray(valid_moves, [-1,-1]) || utilities.isItemInArray(valid_moves, move)){
             //modify //Assume return null if not found
             utilities.removeChildByName("red", app)
@@ -473,6 +475,7 @@ function validMoves(moves){
 }
 
 function drawMove(move, AIColor, GTime, OTime){
+    console.log("move x ", move[0], " y ", move[1])
     if(mode == "AIVSHuman"){
         my_turn = true;
         yourTurnStr.visible = true;
@@ -499,7 +502,7 @@ function drawMove(move, AIColor, GTime, OTime){
     --col;
     col = col*blockSz + x;
     row = row*blockSz + y;
-    console.log("added stone col: ", col , " row ", row);
+    //console.log("added stone col: ", col , " row ", row);
 
     col = Math.round(col / blockSz) * blockSz;
     row = Math.floor(row / blockSz) * blockSz;
@@ -615,7 +618,7 @@ function showScore(O_score,G_score,reason){
 
 
 function congratulate(msg){
-    console.log("cong")
+    //console.log("cong")
     const fontStyle2 = new PIXI.TextStyle({
         dropShadow: true,
         dropShadowAlpha: 0.4,
@@ -678,7 +681,7 @@ function showRecommendedMove(moveType, move){
 
         col = col*blockSz + x;
         row = row*blockSz + y;
-        console.log("added stone col: ", col , " row ", row);
+        //console.log("added stone col: ", col , " row ", row);
 
         col = Math.round(col / blockSz) * blockSz;
         row = Math.floor(row / blockSz) * blockSz;
@@ -709,6 +712,7 @@ function drawState(state){
 }
 
 function updateBoard(state){
+    console.log("update board func")
     //remove all stones
     utilities.removeChildByName("stone", app);
     drawState(state)

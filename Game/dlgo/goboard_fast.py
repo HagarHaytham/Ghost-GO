@@ -1,6 +1,6 @@
 import copy
 from dlgo.gotypes import Player, Point
-from dlgo.scoring import compute_game_result
+from dlgo.scoring import compute_game_result ,compute_game_result_winner
 from dlgo import zobrist
 from dlgo.utils import MoveAge
 
@@ -119,6 +119,7 @@ class Board():
         assert self.is_on_grid(point)
         if self._grid.get(point) is not None:
             print('Illegal play on %s' % str(point))
+        print(">>>>assert point: ",point)
         assert self._grid.get(point) is None
         # 0. Examine the adjacent points.
         adjacent_same_color = []
@@ -389,10 +390,15 @@ class GameState():
 
         return moves
 
-    def winner(self):
-        if not self.is_over():
-            return None
+    def winner(self,captures):
+        # if not self.is_over():
+        #     return None
+        # if self.last_move.is_resign:
+        #     return self.next_player
+        game_result,score = compute_game_result_winner(self,captures)
+        return game_result ,score
+    def semi_winner(self,captures):
         if self.last_move.is_resign:
-            return self.next_player
-        game_result = compute_game_result(self)
-        return game_result.winner
+            return self.next_player ,0
+        game_result,score = compute_game_result(self,captures)
+        return game_result.winner,score
