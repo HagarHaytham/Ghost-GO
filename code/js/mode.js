@@ -1,5 +1,6 @@
 const interface = require("../interface.js");
 const utilities = require("../js/utilities.js");
+var sound = sessionStorage.getItem('sound');
 const app = new PIXI.Application({
 	autoResize: true,
     resolution: devicePixelRatio,
@@ -106,7 +107,7 @@ function setup(){
     app.stage.addChild(trainingButton);
 
     utilities.addMouseTail(app);
-    utilities.addSoundButton(app);
+    utilities.playSound()
 }
 
 // Listen for window resize events

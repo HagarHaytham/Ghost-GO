@@ -261,7 +261,6 @@ function addTimer(){
     function countTimer()
     {
         if(!my_turn) return;
-        console.log("timer")
         var min = Math.floor(seconds / 60);
         var remainSeconds = seconds % 60;
         if(min == 0 && remainSeconds == 0) remainTime = "TIME OUT";
@@ -350,6 +349,7 @@ function onClick(event){
             my_turn = false;
             yourTurnStr.visible = false;
             interface.send_opponent_move("0", move); 
+            console.log("move x ",  move[0] , " y ", move[1]);
             stone.filters = [blurFilter];
             stone.name = "stone"
             app.stage.addChild(stone);

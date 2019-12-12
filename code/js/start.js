@@ -129,7 +129,7 @@ function setup(){
     app.stage.addChild(msg);
 
     utilities.addMouseTail(app);
-    utilities.addSoundButton(app);
+    utilities.playSound()
 }
 
 // Listen for window resize events

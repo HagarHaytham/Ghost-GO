@@ -1,3 +1,4 @@
+
 function addMouseTail(app){
     // Get the texture for rope.
     const trailTexture = PIXI.Texture.from('../images/trail.png');
@@ -68,20 +69,37 @@ function addSoundButton(app){
     soundButtonRect.hitArea = new PIXI.Circle(soundButton.x+soundButton.width/2, soundButton.y+soundButton.height/2, 30);
     soundButtonRect.interactive = true;
     soundButtonRect.buttonMode = true;
+    var soundTrack = new Howl({
+        src: ['../sound/Soundtrack4.mp3'],
+        loop: true
+    });
+    soundTrack.play()
 
     soundButtonRect.on('click', function(){
        if(sound == true){
         soundButton.texture = textureMute;
+        soundTrack.pause()
        }
     
        else{
         soundButton.texture = textureSound;
+        soundTrack.play()
        }
     
        sound = !sound;
     });
     app.stage.addChild(soundButton);
     app.stage.addChild(soundButtonRect);
+
+    
+}
+
+function playSound(){  
+    var soundTrack = new Howl({
+        src: ['../sound/Soundtrack4.mp3'],
+        loop: true
+    });
+    soundTrack.play()
 }
 
 function removeChildByName(name, app){
@@ -108,10 +126,6 @@ function getFontStyle(fontSz){
 
 function isItemInArray(array, item) {
     for (var i = 0; i < array.length; i++) {
-        console.log(" array[i][0]  ", array[i][0])
-        console.log(" item[0] ",  item[0])
-        console.log(" array[i][1]  ",  array[i][1])
-        console.log(" item[1] ", item[1])
         if (array[i][0] == item[0] && array[i][1] == item[1]) return true;  
     }
     return false; 
@@ -140,4 +154,4 @@ function cubicInterpolation(array, t, tangentFactor) {
 }
 
 
-module.exports = {addMouseTail, addSoundButton, removeChildByName, getFontStyle, isItemInArray};
+module.exports = {addMouseTail, addSoundButton, removeChildByName, getFontStyle, isItemInArray, playSound};
