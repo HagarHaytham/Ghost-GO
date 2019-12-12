@@ -58,15 +58,18 @@ def update_board(state):
         f.write(str(state[i][0])+',')  #x
         f.write(str(state[i][1])+',')   #y
         f.write(str(state[i][2])+',')   #color
+    f.close()
     push_socket.send_string(s)
 
 def send_valid_moves(vaild_moves):
+    print(len(vaild_moves))
     v = 'VALID'
     f = open("valid_moves.txt",'w')
     for i in range (len(vaild_moves)):
         # print(vaild_moves[i][0],vaild_moves[i][1])
         f.write(str(vaild_moves[i][0])+',') #x
         f.write(str(vaild_moves[i][1])+',') #y
+    f.close()
     push_socket.send_string(v)
 
 def send_score(O_score, G_score, reason):
