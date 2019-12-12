@@ -34,6 +34,7 @@ yourTurnStr.x = window.innerWidth/2 - yourTurnStr.width/2;
 yourTurnStr.y = y + blockSz*blockNum + 30
 yourTurnStr.name = "yourturn";
 if(!my_turn || initialState) yourTurnStr.visible = false;
+else yourTurnStr.visible = true;
 ///-----------------------------
 var passButton
 var passButtonRect
@@ -276,7 +277,7 @@ function addInitialState(){
             passButtonRect.visible = true
             resignButtonRect.visible = true
             resignButton.visible = true
-            yourTurnStr.visible = true
+            if(my_turn) yourTurnStr.visible = true
         } 
     });
 }
@@ -379,7 +380,7 @@ function inGrid(clickX, clickY){
 
 function onClick(event){
     console.log("board on click");
-    if(!my_turn) return;
+    if(!my_turn && !initialState) return;
     var clickPosX = event.data.global.x ;
     var clickPosY = event.data.global.y ;
     if(inGrid(clickPosX, clickPosY)){
