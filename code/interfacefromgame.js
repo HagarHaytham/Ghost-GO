@@ -40,7 +40,7 @@ from_game.on("message", function(msg) {
             case 'COLOR':
                 get_ghost_color(l[1]);
             default:
-                console.log("invalid message code from implementation side.")
+                console.log("invalid message code from implementation side." + l[0])
                 break;
         }
     });
@@ -79,7 +79,7 @@ function draw_moves(file_name) // to draw valid moves.
 {
     fs.readFile(file_name, {encoding: 'utf-8'}, function(err,data){
         if (!err) {
-            console.log('received data: ' + data);
+            // console.log('received data: ' + data);
             var tmp = data.split(',');
             var stone_count = (tmp.length-1)/2;
             var valid = new Array(stone_count);
@@ -89,10 +89,11 @@ function draw_moves(file_name) // to draw valid moves.
                 for(j = 2*i ; j<2*i+2; j++)
                 {
                     valid[i][j%2] = tmp[j];  
-                    console.log(tmp[j]);
+                    // console.log(tmp[j]);
                 }
             }
             gui.validMoves(valid);
+            console.log(valid);
             //call gui function here. each row contains x,y.
         } else {
             console.log(err);
@@ -149,11 +150,13 @@ function update_board(file_name)
 function show_score(score)
 {
     console.log('SCORE: '+score);
+    from_game.close();
     var tmp_score = score.split('#');
     //tmp_score[0] : O_Score.
     //tmp_score[1] : G_ Score.
     //tmo_score[2] : Reason.
-    gui.showScore(tmp_score[0], tmp_score[1], tmo_score[2]);
+    gui.showScore(tmp_score[0], tmp_score[1], tmp_score[2]);
+    
 }
 
 function congratulate(msg)

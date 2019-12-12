@@ -71,15 +71,20 @@ def send_valid_moves(vaild_moves):
 
 def send_score(O_score, G_score, reason):
     s = 'SCORE,' + O_score + '#' + G_score + '#' + reason
+#     print('interface score ',type(s))
+    # s = "helllo"
     push_socket.send_string(s)
+    print(">>>>>",s)
+    push_socket.close()
+    pull_socket.close()
 
 def send_recommended_move(move):
     m = 'REC_MOVE,' + move
     push_socket.send_string(m)
 
 def send_congrate(msg): 
-    m = 'CONGRATULATE,' + msg
-    push_socket.send_string(m)
+    g = 'CONGRATULATE,' + msg
+    push_socket.send_string(g)
 
 # state = [[1,2,'1'],[3,4,'0'],[5,6,'1']]
 # send_state(state)

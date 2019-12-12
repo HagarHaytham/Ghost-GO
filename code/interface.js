@@ -14,7 +14,11 @@ function send_opponent_color(color){
 }
 
 function send_opponent_move(move_type, position){
-    pos = position[0]+'-'+position[1]
+    if(move_type!=0){
+        pos= "0-0";
+    }
+    else
+        pos = position[0]+'-'+position[1]
     to_game.send(move_type+"#"+pos);
 }
 
@@ -25,5 +29,9 @@ function send_mode(mode){
     oppo_mode = mode; 
 }
 
+function send_initial_board(board){
+    console.log("send_initial_board ", board)
+}
 
-module.exports = {send_mode, send_opponent_color, send_opponent_move};
+
+module.exports = {send_mode, send_opponent_color, send_opponent_move, send_initial_board};
