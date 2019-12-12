@@ -1,5 +1,6 @@
 const interface = require("../interface.js");
 const utilities = require("../js/utilities.js");
+var sound = sessionStorage.getItem('sound');
 const app = new PIXI.Application({
 	autoResize: true,
     resolution: devicePixelRatio,
@@ -60,20 +61,21 @@ function setup(){
         location.assign("../html/main.html"); 
     
     });
-    
-    app.stage.addChild(aiVsaiButton);
+
     app.stage.addChild(aiVsaiButtonRect);
+    app.stage.addChild(aiVsaiButton);
+    
     
     const aiVshumanButton = PIXI.Sprite.fromImage('../images/AIVSHUMAN.png');
-    aiVshumanButton.x = 600
+    aiVshumanButton.x = 1200
     aiVshumanButton.y = 600
     aiVshumanButton.height = 120
     aiVshumanButton.width = 250 
 
     const aiVshumanButtonRect = new PIXI.Graphics();
     aiVshumanButtonRect.lineStyle(1, 0x000);
-    aiVshumanButtonRect.drawRect(650,630, 150, 40);
-    aiVshumanButtonRect.hitArea = new PIXI.Rectangle(650,630, 150, 40);
+    aiVshumanButtonRect.drawRect(1250,630, 150, 40);
+    aiVshumanButtonRect.hitArea = new PIXI.Rectangle(1250,630, 150, 40);
     aiVshumanButtonRect.interactive = true;
     aiVshumanButtonRect.buttonMode = true;
     aiVshumanButtonRect.on('click', function(){
@@ -81,8 +83,9 @@ function setup(){
         interface.send_mode('0');
         location.assign("../html/start.html"); 
     });
-    app.stage.addChild(aiVshumanButton);
     app.stage.addChild(aiVshumanButtonRect);
+    app.stage.addChild(aiVshumanButton);
+    
 
     const trainingButton = PIXI.Sprite.fromImage('../images/TRAINING.png');
     trainingButton.x = 1200
@@ -102,11 +105,13 @@ function setup(){
         interface.send_mode('2');
         location.assign("../html/main.html"); 
     });
-    app.stage.addChild(trainingButtonRect);
-    app.stage.addChild(trainingButton);
+    
+    //app.stage.addChild(trainingButtonRect);
+    //app.stage.addChild(trainingButton);
+    
 
     utilities.addMouseTail(app);
-    utilities.addSoundButton(app);
+    utilities.playSound()
 }
 
 // Listen for window resize events
