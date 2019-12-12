@@ -8,7 +8,7 @@ var ghost_animate = true;
 const blockSz = 30;
 const blockNum = 18;
 var initialState = false;
-if(mode == "AIVSHuman") initialState = true;
+if(mode == "AIVSHuman") initialState = true; //test
 var initialStateColor = "Black"
 var initialBorad = [];
 const x = 450;
@@ -33,6 +33,7 @@ yourTurnStr = new PIXI.Text("your turn!",fontStyle2);
 yourTurnStr.x = window.innerWidth/2 - yourTurnStr.width/2;
 yourTurnStr.y = y + blockSz*blockNum + 30
 yourTurnStr.name = "yourturn";
+yourTurnStr.filters = [blurFilter]; 
 if(!my_turn || initialState) yourTurnStr.visible = false;
 else yourTurnStr.visible = true;
 ///-----------------------------
@@ -211,7 +212,7 @@ function setup(){
     app.stage.addChild(yourTurnStr);
 
     utilities.addSoundButton(app);
-    if(initialState == true && mode == "AIVSHuman") addInitialState();
+    if(initialState == true && mode == "AIVSHuman") addInitialState(); //test
     addTimer();
     drawBoard();
     //-----------------------TESTING--------------------------
@@ -220,13 +221,13 @@ function setup(){
     //updateBoard(board);
     //drawState(board);
     //congratulate("Nice Move")
-    //showScore("2500","56100","TimeOut");
+    //showScore("2500","56100","you Resigned");
     //drawMove(['5','13'], '0', "14:00", "13:00")
     //drawMove(['6','18'], '1', "13:00", "12:00")
-    //showRecommendedMove('0',['1','19']); //place
+    //showRecommendedMove('0',['1','18']); //place
     //showRecommendedMove('1',['1','19']); //resign
     //showRecommendedMove('2',['1','19']); //pass
-   // getGhostColor("White");
+    //getGhostColor("White");
     //validMoves([['1','19']])
 }
 
@@ -320,7 +321,7 @@ function addTimer(){
 
 //--------------------------------TIMER-------------------------------------
     var seconds = 899;
-    var remainTime = "15 : 00";
+    var remainTime = "15 : 00"; //test
     var countingText = new PIXI.Text(remainTime,timerStyle);
     countingText . x = 1200;
     countingText.y = 175;
@@ -566,9 +567,9 @@ function drawMove(move, tmpColorNum, GTime, OTime){
     console.log("move x ", move[0], " y ", move[1])
     
     if(mode == "AIVSHuman"){
-        my_turn = true;
-        yourTurnStr.visible = true;
         if(GTime != "color"){
+            my_turn = true;
+            yourTurnStr.visible = true;
             if(color == "black") tmpColor = 'white'
             else tmpColor = 'black'
         }
@@ -622,7 +623,7 @@ function showScore(O_score,G_score,reason){
     ghost_animate = false;
     blurFilter.blur = 5;
 
-
+    
     const fontStyle1 = new PIXI.TextStyle({
         dropShadow: true,
         dropShadowAlpha: 0.4,
@@ -734,6 +735,7 @@ function congratulate(msg){
     msgTxt.x = x/2 - msgTxt.width/2;
     msgTxt.y = 200
     msgTxt.name = "congratulate";
+    msgTxt.filters = [blurFilter];
     app.stage.addChild(msgTxt);
 }
 
