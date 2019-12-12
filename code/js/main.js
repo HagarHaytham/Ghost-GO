@@ -7,7 +7,10 @@ var valid_moves = [[-1,-1]];
 var ghost_animate = true;
 const blockSz = 30;
 const blockNum = 18;
-//const x = (window.innerWidth+1)/2 - (blockSz*blockNum+1)/2; //modify
+var initialState = false;
+if(mode == "AIVSHuman") initialState = true;
+var initialStateColor = "Black"
+var initialBorad = [];
 const x = 450;
 const y = 100;
 var blurFilter = new PIXI.filters.BlurFilter();
@@ -30,7 +33,12 @@ yourTurnStr = new PIXI.Text("your turn!",fontStyle2);
 yourTurnStr.x = window.innerWidth/2 - yourTurnStr.width/2;
 yourTurnStr.y = y + blockSz*blockNum + 30
 yourTurnStr.name = "yourturn";
-if(!my_turn) yourTurnStr.visible = false;
+if(!my_turn || initialState) yourTurnStr.visible = false;
+///-----------------------------
+var passButton
+var passButtonRect
+var resignButtonRect
+var resignButton
 //--------------Timer-------------------
 const timerStyle = new PIXI.TextStyle({
     fontFamily: "\"Comic Sans MS\", cursive, sans-serif",
@@ -126,19 +134,18 @@ function setup(){
     });
 
     //--------------------------------BUTTONS----------------------------------
-    const passButton = PIXI.Sprite.fromImage('../images/pass.png');
+    passButton = PIXI.Sprite.fromImage('../images/pass.png');
     passButton.x = 1200
     passButton.y = 550
     passButton.height = 90
     passButton.width = 200 
 
-    const passButtonRect = new PIXI.Graphics();
+    passButtonRect = new PIXI.Graphics();
     passButtonRect.lineStyle(1, 0xffff);
     passButtonRect.drawRect(1225,570, 150, 40);
     passButtonRect.hitArea = new PIXI.Rectangle(1225,570, 150, 40);
     passButtonRect.interactive = true;
     passButtonRect.buttonMode = true;
-
     if(mode == "AIVSHuman"){
         passButtonRect.on('click', function(){
             if(!my_turn) return;
@@ -155,18 +162,25 @@ function setup(){
     app.stage.addChild(passButton);
     app.stage.addChild(passButtonRect);
     
-    const resignButton = PIXI.Sprite.fromImage('../images/resign.png');
+    resignButton = PIXI.Sprite.fromImage('../images/resign.png');
     resignButton.x = 1200
     resignButton.y = 650
     resignButton.height = 90
     resignButton.width = 200 
 
-    const resignButtonRect = new PIXI.Graphics();
+    resignButtonRect = new PIXI.Graphics();
     resignButtonRect.lineStyle(1, 0xffff);
     resignButtonRect.drawRect(1225,670, 150, 40);
     resignButtonRect.hitArea = new PIXI.Rectangle(1225,670, 150, 40);
     resignButtonRect.interactive = true;
     resignButtonRect.buttonMode = true;
+
+    if(initialState){
+        passButton.visible = false
+        passButtonRect.visible = false
+        resignButtonRect.visible = false
+        resignButton.visible = false
+    }
 
     if(mode == "AIVSHuman"){
         resignButtonRect.on('click', function(){
@@ -194,6 +208,7 @@ function setup(){
     app.stage.addChild(yourTurnStr);
 
     utilities.addSoundButton(app);
+    if(initialState == true && mode == "AIVSHuman") addInitialState();
     addTimer();
     drawBoard();
     //-----------------------TESTING--------------------------
@@ -210,6 +225,58 @@ function setup(){
     //showRecommendedMove('2',['1','19']); //pass
     //getGhostColor("White");
     //validMoves([['1','19']])
+}
+
+
+function addInitialState(){
+    fontStyle2 = utilities.getFontStyle(30);
+    msg3Txt = new PIXI.Text("Draw Initial State", fontStyle2);
+    msg3Txt.x = x + (blockNum*blockSz)/2 - msg3Txt.width/2;
+    msg3Txt.y = y - 80
+    msg3Txt.name = "initial"
+    app.stage.addChild(msg3Txt);
+
+    msg1Txt = new PIXI.Text(initialStateColor, fontStyle2);
+    msg1Txt.x = x/2 - msg1Txt.width/2;
+    msg1Txt.y = 200
+    msg1Txt.name = "initial";
+    app.stage.addChild(msg1Txt);
+
+    const doneButton = PIXI.Sprite.fromImage('../images/pass.png');
+    doneButton.x = msg1Txt.x - 50
+    doneButton.y = 300
+    doneButton.height = 90
+    doneButton.width = 200 
+    doneButton.name = "initial"
+
+    const doneButtonRect = new PIXI.Graphics();
+    doneButtonRect.lineStyle(1, 0xffff);
+    doneButtonRect.drawRect(doneButton.x+25,320, 150, 40);
+    doneButtonRect.hitArea = new PIXI.Rectangle(doneButton.x+25,320, 150, 40);
+    doneButtonRect.interactive = true;
+    doneButtonRect.buttonMode = true;
+    doneButtonRect.name = "initial"
+
+    app.stage.addChild(doneButton)
+    app.stage.addChild(doneButtonRect)
+
+    doneButtonRect.on('click', function(){
+        if(initialStateColor  == "Black"){
+            initialStateColor = "White"
+            msg1Txt.text = initialStateColor ;
+        }
+        else{
+            sendInitialBoard(initialBorad)
+            initialState = false;
+            console.log("after initial state")
+            utilities.removeChildByName("initial", app)
+            passButton.visible = true
+            passButtonRect.visible = true
+            resignButtonRect.visible = true
+            resignButton.visible = true
+            yourTurnStr.visible = true
+        } 
+    });
 }
 
 function addTimer(){
@@ -260,7 +327,7 @@ function addTimer(){
     var tik = setInterval(countTimer , 1000);
     function countTimer()
     {
-        if(!my_turn) return;
+        if(!my_turn || initialState) return;
         var min = Math.floor(seconds / 60);
         var remainSeconds = seconds % 60;
         if(min == 0 && remainSeconds == 0) remainTime = "TIME OUT";
@@ -338,8 +405,26 @@ function onClick(event){
         ++row;
         var move = [col.toString(), row.toString()];
         //check it //modify//indexOf != -1
-console.log("move ", move [0], " y ", move[1])
-
+        console.log("move ", move [0], " y ", move[1])
+        
+        if(initialState){
+            if(initialStateColor == "White" ){
+                stone.texture = texture_white_stone;
+                move.push('1');
+            } 
+            else{
+                stone.texture = texture_back_stone;
+                move.push('0')
+            } 
+            
+            if(!utilities.isItemInArray(initialBorad, move)){
+                console.log("isn't in item")
+                initialBorad.push(move)
+                stone.name = "initial"
+                app.stage.addChild(stone);
+            }
+            return;
+        }
         if(utilities.isItemInArray(valid_moves, [-1,-1]) || utilities.isItemInArray(valid_moves, move)){
             //modify //Assume return null if not found
             utilities.removeChildByName("red", app)
@@ -362,7 +447,6 @@ console.log("move ", move [0], " y ", move[1])
             stone.name = "red";
             stone.filters = [blurFilter];
             app.stage.addChild(stone);
-            //app.removeChild() //?? modify//I don't  know what I wanted to do
         }
     }
  
@@ -734,6 +818,10 @@ function getGhostColor(AIColor){
     msg3Txt.x = x + (blockNum*blockSz)/2 - msg3Txt.width/2;
     msg3Txt.y = y - 80
     app.stage.addChild(msg3Txt);    
+}
+
+function sendInitialBoard(board){
+    interface.send_initial_board(board)
 }
 
 // Listen for window resize events

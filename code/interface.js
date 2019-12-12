@@ -29,5 +29,9 @@ function send_mode(mode){
     oppo_mode = mode; 
 }
 
+function send_initial_board(board){
+    console.log("send_initial_board ", board)
+}
 
-module.exports = {send_mode, send_opponent_color, send_opponent_move};
+
+module.exports = {send_mode, send_opponent_color, send_opponent_move, send_initial_board};
