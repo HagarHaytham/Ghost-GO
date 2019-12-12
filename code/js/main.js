@@ -114,8 +114,9 @@ function setup(){
        else ghostButton.texture = textureAnimate;
        ghost_animate = !ghost_animate;
     });
-    app.stage.addChild(ghostButton);
-    app.stage.addChild(ghostButtonRect);
+    //app.stage.addChild(ghostButtonRect);
+    //app.stage.addChild(ghostButton);
+    
     
     function reset() {
         target.x = Math.floor(Math.random() * app.renderer.width);
@@ -159,8 +160,9 @@ function setup(){
         });
     }
     passButton.filters = [blurFilter];
-    app.stage.addChild(passButton);
     app.stage.addChild(passButtonRect);
+    app.stage.addChild(passButton);
+    
     
     resignButton = PIXI.Sprite.fromImage('../images/resign.png');
     resignButton.x = 1200
@@ -203,8 +205,8 @@ function setup(){
         resignButton.visible = false;
     }
     resignButton.filters = [blurFilter];
-    app.stage.addChild(resignButton);
     app.stage.addChild(resignButtonRect);
+    app.stage.addChild(resignButton);
     app.stage.addChild(yourTurnStr);
 
     utilities.addSoundButton(app);
@@ -257,8 +259,9 @@ function addInitialState(){
     doneButtonRect.buttonMode = true;
     doneButtonRect.name = "initial"
 
-    app.stage.addChild(doneButton)
     app.stage.addChild(doneButtonRect)
+    app.stage.addChild(doneButton)
+    
 
     doneButtonRect.on('click', function(){
         if(initialStateColor  == "Black"){

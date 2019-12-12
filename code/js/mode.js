@@ -61,9 +61,10 @@ function setup(){
         location.assign("../html/main.html"); 
     
     });
-    
-    app.stage.addChild(aiVsaiButton);
+
     app.stage.addChild(aiVsaiButtonRect);
+    app.stage.addChild(aiVsaiButton);
+    
     
     const aiVshumanButton = PIXI.Sprite.fromImage('../images/AIVSHUMAN.png');
     aiVshumanButton.x = 600
@@ -82,8 +83,9 @@ function setup(){
         interface.send_mode('0');
         location.assign("../html/start.html"); 
     });
-    app.stage.addChild(aiVshumanButton);
     app.stage.addChild(aiVshumanButtonRect);
+    app.stage.addChild(aiVshumanButton);
+    
 
     const trainingButton = PIXI.Sprite.fromImage('../images/TRAINING.png');
     trainingButton.x = 1200
@@ -103,8 +105,10 @@ function setup(){
         interface.send_mode('2');
         location.assign("../html/main.html"); 
     });
+    
     app.stage.addChild(trainingButtonRect);
     app.stage.addChild(trainingButton);
+    
 
     utilities.addMouseTail(app);
     utilities.playSound()

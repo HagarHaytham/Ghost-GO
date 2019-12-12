@@ -88,10 +88,9 @@ function addSoundButton(app){
     
        sound = !sound;
     });
-    app.stage.addChild(soundButton);
     app.stage.addChild(soundButtonRect);
+    app.stage.addChild(soundButton);
 
-    
 }
 
 function playSound(){  

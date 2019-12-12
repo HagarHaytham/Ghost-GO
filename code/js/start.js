@@ -86,9 +86,10 @@ function setup(){
         interface.send_opponent_color('0');
         location.assign("../html/main.html"); 
     });
-    
-    app.stage.addChild(blackButton);
+
     app.stage.addChild(blackButtonRect);
+    app.stage.addChild(blackButton);
+    
     
     const whiteButton = PIXI.Sprite.from('../images/whitebutton.png');
     whiteButton.scale.set(0.2);
@@ -107,8 +108,9 @@ function setup(){
         interface.send_opponent_color('1');
         location.assign("../html/main.html"); 
     });
-    app.stage.addChild(whiteButton);
     app.stage.addChild(whiteButtonRect);
+    app.stage.addChild(whiteButton);
+    
     //---------------------------Text---------------------------
     var fontSz = 90;
     const fontStyle = new PIXI.TextStyle({
