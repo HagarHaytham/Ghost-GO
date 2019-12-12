@@ -5,8 +5,10 @@ from dlgo.utils import print_board, print_move , coords_from_point2
 import interface
 import copy 
 from enum import Enum
-from  MCTS import monte_carlo_tree_search
-from dlgo.scoring import compute_game_result
+from  Game.MCTS import monte_carlo_tree_search
+from Game.dlgo.scoring import compute_game_result
+import Game.client_game as client_game
+import Game.client as client
 import time
 import numpy as np
 import elevenplanes
@@ -53,7 +55,7 @@ def get_player_color_from_gui():
     # print("get_player_color_from_gui")
     player = '0'
     opponent = '1'
-    opponent_color = interface.get_opponent_color()
+    opponent_color = Game.interface.get_opponent_color()
     if(opponent_color == '0'):
         player = '1'
     return player ,opponent
@@ -64,12 +66,12 @@ def get_opponent_game_from_gui(current_state,captures,opponent):
     global opponont_resigns
     new_game_state= current_state
     point = 0
-    decision = interface.get_opponent_move().split('#')
+    decision = Game.interface.get_opponent_move().split('#')
     if decision[0] == '0' : # play  
         consequitive_passes = 0
         print(decision)
         pos = decision[1].split('-')
-        point =  gotypes.Point(int(pos[0]),int(pos[1]))
+        point =  gotypes.Point(int(pos[1]),int(pos[0]))
         move = goboard.Move(point)
         # print(">>>> move", move.point)
         new_game_state , prisoners  = current_state.apply_move(move)
@@ -81,7 +83,7 @@ def get_opponent_game_from_gui(current_state,captures,opponent):
     return decision[0] , new_game_state , captures , point
 
 def send_move_to_gui(decision,point,b_time,w_time,color):
-    # print("send_move_to_gui")
+    print("send_move_to_gui")
     global consequitive_passes
     if(decision == 0): # play
         consequitive_passes = 0 
@@ -92,8 +94,9 @@ def send_move_to_gui(decision,point,b_time,w_time,color):
     elif decision == 2: # pass
         consequitive_passes+=1
         move = '2'
-    interface.send_move(move,color,str(b_time),str(w_time))
+    Game.interface.send_move(move,color,str(b_time),str(w_time))
     return  
+
 def send_board_to_gui(decision,board): 
     print("send_board_to_gui")   
     stone_list = []
@@ -106,7 +109,7 @@ def send_board_to_gui(decision,board):
                     c='0'
                     if color == gotypes.Player.white :
                         c ='1'
-                    stone_list.append([i,j,c])
+                    stone_list.append([j,i,c])
     interface.update_board(stone_list)
     pass
 # def update_board():
@@ -121,7 +124,7 @@ def send_valid_moves_to_gui(game_state):
         col = str(move.point.col)
         row = str(move.point.row)
         list.append([col,row])
-    interface.send_valid_moves(list)
+    Game.interface.send_valid_moves(list)
     return
 
 def send_score_to_gui(game_result,player,reason):
@@ -135,9 +138,103 @@ def send_score_to_gui(game_result,player,reason):
     if( player == '0'):
         O_score = white_score
         G_Score = black_score
-    print('scores ',O_score,G_Score)
-    interface.send_score(O_score,G_Score,reason)
+    Game.interface.send_score(O_score,G_Score,reason)
     return
+
+def READY_configuration(game):
+    # Game Configuration
+    parameters = client.handle_ready()
+    ''' 
+        Start Game configuration
+    '''
+    # Initial State
+    for y,row in enumerate(parameters['initailState']['board']):
+        for x,color in enumerate(row):
+            if color == '.':
+                continue
+            game.next_player = gotypes.Player.black if color == 'B' else gotypes.Player.white
+            move = goboard.Move(gotypes.Point((y+1,x+1)))
+            game,_ = game.apply_move(move)
+    
+    captures = {
+        gotypes.Player.black : parameters['initialState']['players']['B']['prisoners'],
+        gotypes.Player.white : parameters['initialState']['players']['W']['prisoners'],
+    }
+    
+    remainingTime = {
+        gotypes.Player.black : parameters['initialState']['players']['B']['remainingTime'],
+        gotypes.Player.white : parameters['initialState']['players']['W']['remainingTime'],
+    }
+
+    game.next_player = gotypes.Player.black if parameters['initailState']['turn'] == 'B' else gotypes.Player.white
+    # fill the board with move logs
+    for logEntry in parameters['moveLog']:
+        move = logEntry["move"]
+        deltaTime = move['deltaTime']
+        if move['type'] == 'pass':
+            move = goboard.Move(is_pass=True)
+        elif move['type'] == 'resign':
+            move = goboard.Move(is_resign=True)
+        else:
+            col = move['point']['column']
+            row = move['point']['row']
+            move = goboard.Move(gotypes.Point((row,col)))
+
+        remainingTime[game.next_player] -= deltaTime
+        game,numberOfCaptures = game.apply_move(move)
+        if len(numberOfCaptures) > 0:
+            if game.next_player == gotypes.Player.white:
+                captures[gotypes.Player.black] += numberOfCaptures[0]
+            else:
+                captures[gotypes.Player.white] += numberOfCaptures[0]
+
+    ourColor = gotypes.Player.black if parameters['ourColor'] == 'B' else gotypes.Player.white
+    ''' 
+        End Game configuration
+    '''
+
+    return game, captures, remainingTime, ourColor
+
+def THINKING(game):
+    print_board(game.board)
+    start = time.time()
+    point = -1
+    player = game.next_player
+    game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+    decision = 0
+    b_time = 0
+    w_time = 0
+    
+    play_move = goboard.Move(play_point)
+    client.handle_thinking()
+    client_game.get_move_from_game(play_move)
+    client_game.get_parameters_from_client_game()
+    # TODO send move to server 
+    send_move_to_gui(decision,play_point,b_time,w_time,player)         
+    send_board_to_gui(decision,game.board)   
+    if(consequitive_passes == 2):
+        break
+    end = time.time()
+    print(end - start)
+    return game
+
+def AI_vs_AI(game):
+    response = client.handle_init()
+    if client.current_state == client.states['END']:
+        # handle results
+        return
+
+    game, captures, remainingTime, ourColor = READY_configuration(game)
+    if client.current_state == client.states['END']:
+        # handle results
+        return
+
+    while not game.is_over():
+        if game.next_player == ourColor:
+            THINKING()
+        else:
+            IDLE()
+            
 def recommend_move(game_state):
     state = elevenplanes.ElevenPlaneEncoder((19,19))
     state = state.encode(game_state)
@@ -156,7 +253,7 @@ def recommend_move(game_state):
         if game_state.is_valid_move(move):
             break
     new_game_state , prisoners  = game_state.apply_move(move)
-    # print('in main',type(new_game_state))
+    # print('in main',new_point)
     return new_game_state , new_point
 def compare_state(state1,state2,captures,player):
     c ={ 
@@ -190,10 +287,12 @@ def send_recommended_move(decision,point):
 def main():
     global consequitive_passes
     global opponont_resigns
-    game , captures ,player ,opponent = get_game_mode_from_gui()
+    game, captures, player, opponent = get_game_mode_from_gui()
     first_game = False
+
     if( opponent == gotypes.Player.white):
         first_game = True
+    print('first',first_game)
     if(game_mode == 0 ):
         while ( not game.is_over()):
             # print_board(game.board)
@@ -212,35 +311,48 @@ def main():
                 else:
                     send_congrats()
                     pass
+                print("captures[opponent] old_captures : ", captures[opponent], old_captures)
                 if( captures[opponent] > old_captures):
+                    print('opponent captures')
                     send_board_to_gui(decision,game.board)      
                 b_time = 0
                 w_time = 0
                 if(consequitive_passes == 2 or opponont_resigns == True ):
                     break
-            else:
-                first_game = False
             old_captures = copy.copy(captures[player])
             game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
-            # print('after monto carlo')
+            print('after monto carlo')
             decision = 0
             b_time = 0
             w_time = 0
             send_move_to_gui(decision,play_point,b_time,w_time,player)  
             if(captures[player] > old_captures):
+                print('player captures')
                 send_board_to_gui(decision,game.board)
+            first_game = False
             if(consequitive_passes == 2):
                 break
             end = time.time()
             # print(end - start)
     elif(game_mode == 1 ):  # AI vs AI
+
+        
+            
+
+        game, captures, remainingTime, ourColor = READY_configuration(game)
+
+
+        while ( not game.is_over()):
+            if ourColor == game.next_player:
+                THINKING()
+            else:
+                IDLE()
         while ( not game.is_over()):
             # print_board(game.board)
             start = time.time()
             point = -1
             if(not first_game):
                 old_captures = copy.copy(captures[opponent])
-
                 # TODO get opponent game from server  , and remaining time for black b_time and white w_time
                 b_time = 0
                 w_time = 0
@@ -249,9 +361,10 @@ def main():
                     send_board_to_gui(decision,game.board)  
                 if(consequitive_passes == 2 or opponont_resigns == True ):
                     break
-            else:
-                first_game = False
+
             old_captures = copy.copy(captures[player])
+            first_game = False
+
             game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
             decision = 0
             b_time = 0
