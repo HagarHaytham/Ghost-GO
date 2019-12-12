@@ -435,7 +435,7 @@ function onClick(event){
             if(!utilities.isItemInArray(initialBorad, move)){
                 console.log("isn't in item")
                 initialBorad.push(move)
-                stone.name = "initial"
+                stone.name = "stone"
                 app.stage.addChild(stone);
             }
             return;
