@@ -1,8 +1,8 @@
-import main 
-import communication
+import Game.main 
+import Game.client
 
 def get_state_from_client():
-    state,parameters = communication.send_state()
+    state,parameters = client.send_state()
     if state == 1:  # Ready
         # Parameters ={
         #  "gameConfiguration": {
@@ -18,18 +18,15 @@ def get_state_from_client():
         # } 
         initialState = parameters['gameConfiguration']['initialState']
         moveLog = parameters['gameConfiguration']['moveLog']
-        idelDeltaTime = parameters['gameConfiguration']["idleDeltaTime"]
         color = parameters['color']
-        turn = parameters['turn']
+        
         parameters = {
             "initialState":initialState,
             "moveLog":moveLog,
-            "idleDeltaTime": idelDeltaTime,
-            "turn": turn
+            "ourColor":color
         }
-        main.get_game_configuration(parameters)
     elif state == 2:# Thinking
-        move = main.get_move()
+        move = main.send_move_to_client()
         if move.is_pass:
             move_str = 'passes'
         elif move.is_resign:
@@ -40,14 +37,15 @@ def get_state_from_client():
             "X":move.point.col,
             "Y":move.point.row
         }
-        communication.get_move(parameters)
+        # communication.get_move(parameters)
     elif state == 3:# Awaiting Move Response
         # parameters = {
         #     valid: Boolean,
         #     remaining_time: int,
         #     message: string
         # }
-        main.get_vaild(parameters)
+        # main.get_vaild(parameters)
+        pass
     elif state == 4:# Idel
         # Parameters = {
         #   "type" : string,
@@ -55,4 +53,23 @@ def get_state_from_client():
         #   "Y": int,
         #   "time": int
         # }
-        main.send_opponent_move(parameters)
+        # main.send_opponent_move(parameters)
+        pass
+    return parameters
+
+def get_move_from_game(move):
+    move_str = 'place'
+    if move.is_pass:
+        move_str = 'passes'
+    elif move.is_resign:
+        move_str = 'resigns'
+
+    parameters = {
+        "type":move_str,
+        "X":move.point.col if move_str == 'place' else None,
+        "Y":move.point.row  if move_str == 'place' else None
+    }
+
+def get_parameters_from_client_game():
+    parameters = get_state_from_client()
+    return parameters
