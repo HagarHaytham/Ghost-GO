@@ -8,7 +8,7 @@ var ghost_animate = true;
 const blockSz = 30;
 const blockNum = 18;
 var initialState = false;
-if(mode == "AIVSHuman") initialState = true;//modify
+if(mode == "AIVSHuman") initialState = true;
 var initialStateColor = "Black"
 var initialBorad = [];
 const x = 450;
@@ -560,14 +560,20 @@ function validMoves(moves){
     valid_moves = moves;
 }
 
-function drawMove(move, AIColor, GTime, OTime){
+function drawMove(move, tmpColorNum, GTime, OTime){
+    var tmpColor;
     console.log("move x ", move[0], " y ", move[1])
+    
     if(mode == "AIVSHuman"){
         my_turn = true;
         yourTurnStr.visible = true;
-        if(GTime == 'color'){
-            if(AIColor == '0') color = 'black'
-            else color = 'white'
+        if(GTime != "color"){
+            if(color == "black") tmpColor = 'white'
+            else tmpColor = 'black'
+        }
+        else{
+            if(tmpColorNum == '0') tmpColor = 'black'
+            else tmpColor = 'white'
         }
     } 
     else{
@@ -575,8 +581,8 @@ function drawMove(move, AIColor, GTime, OTime){
             updateGhostTime(GTime);
             updateopponentTime(OTime);
         }
-        if(AIColor == '0') color = 'black'
-        else color = 'white'
+        if(tmpColorNum == '0') tmpColor = 'black'
+        else tmpColor = 'white'
     }
 
     utilities.removeChildByName("red", app)
@@ -585,8 +591,8 @@ function drawMove(move, AIColor, GTime, OTime){
     if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
 
     if(move.length == 0) return; //modify //display if passed
-    if(color == "white" ) var stone = PIXI.Sprite.fromImage('../images/black.png');
-    else var stone = PIXI.Sprite.fromImage('../images/white.png');
+    if(tmpColor == "white" ) var stone = PIXI.Sprite.fromImage('../images/white.png');
+    else var stone = PIXI.Sprite.fromImage('../images/black.png');
    
     var row = parseInt(move[1], 10);
     var col = parseInt(move[0], 10);
@@ -799,8 +805,6 @@ function showRecommendedMove(moveType, move){
 
 function drawState(state){
     for(i = 0; i<state.length; ++i){
-        if(state[i][2] == "0") state[i][2] = "1"
-        else state[i][2] = "0"
         drawMove([state[i][0],state[i][1]], state[i][2], "color", "color")
     }
       
