@@ -123,7 +123,6 @@ def send_valid_moves_to_gui(game_state):
         list.append([col,row])
     interface.send_valid_moves(list)
     return
-
 def send_score_to_gui(game_result,player,reason):
     print("send_score_to_gui|")
     #print(game_result[0])
@@ -268,7 +267,7 @@ def main():
     if(game_mode == 0):
         #game_result,winner,score = game.winner(game_captures)
         game_result,score = game.winner(game_captures)
-        reason = 'IDK !'
+        reason = 'IDK!'
     else:
         # get score from server
         print("///////////////")
