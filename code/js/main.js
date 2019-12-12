@@ -8,7 +8,7 @@ var ghost_animate = true;
 const blockSz = 30;
 const blockNum = 18;
 var initialState = false;
-if(mode == "AIVSHuman") initialState = true;
+if(mode == "AIVSHuman") initialState = true;//modify
 var initialStateColor = "Black"
 var initialBorad = [];
 const x = 450;
@@ -220,15 +220,14 @@ function setup(){
     //drawState(board);
     //congratulate("Nice Move")
     //showScore("2500","56100","TimeOut");
-    //drawMove(['1','19'], '0', "14:00", "13:00")
-    //drawMove(['2','18'], '1', "14:00", "13:00")
+    //drawMove(['5','13'], '0', "14:00", "13:00")
+    //drawMove(['6','18'], '1', "13:00", "12:00")
     //showRecommendedMove('0',['1','19']); //place
     //showRecommendedMove('1',['1','19']); //resign
     //showRecommendedMove('2',['1','19']); //pass
-    //getGhostColor("White");
+   // getGhostColor("White");
     //validMoves([['1','19']])
 }
-
 
 function addInitialState(){
     fontStyle2 = utilities.getFontStyle(30);
@@ -566,10 +565,16 @@ function drawMove(move, AIColor, GTime, OTime){
     if(mode == "AIVSHuman"){
         my_turn = true;
         yourTurnStr.visible = true;
+        if(GTime == 'color'){
+            if(AIColor == '0') color = 'black'
+            else color = 'white'
+        }
     } 
-    else if(GTime != '-1'){
-        updateGhostTime(GTime);
-        updateopponentTime(OTime);
+    else{
+        if(GTime != 'color'){
+            updateGhostTime(GTime);
+            updateopponentTime(OTime);
+        }
         if(AIColor == '0') color = 'black'
         else color = 'white'
     }
@@ -793,8 +798,11 @@ function showRecommendedMove(moveType, move){
 }
 
 function drawState(state){
-    for(i = 0; i<state.length; ++i)
-        drawMove([state[i][0],state[i][1]], state[i][2], "-1", "-1")
+    for(i = 0; i<state.length; ++i){
+        if(state[i][2] == "0") state[i][2] = "1"
+        else state[i][2] = "0"
+        drawMove([state[i][0],state[i][1]], state[i][2], "color", "color")
+    }
       
 }
 
