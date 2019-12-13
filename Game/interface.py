@@ -24,12 +24,24 @@ def get_opponent_color():
         return opponent_color
 
 def get_opponent_move(): #till now it blocks, in case computations are needed at this time, open a thread
-    while(True):#moves NOTE: this wasn't commented but it caused errors :'D.
+    while(True):
         opponent_move = pull_socket.recv()
-        print(opponent_move)
+        print("opponent_move : ",opponent_move)
         # if opponent_move != 0:
         opponent_move = opponent_move.decode('utf-8')
         return opponent_move
+
+def get_initial_board():
+    while(True):
+        initial_board = pull_socket.recv()
+        # if initial_board != 0:
+        stones = []
+        if(initial_board.decode('utf-8') == '1'):
+            f = open("initial_state.txt",'r')
+            comp_stones = f.read().splitlines()
+            for s in comp_stones:
+                stones.append(s.split('-'))
+        return stones # 2D list each record --> col, row, color ALL are strings  /// [] if empty
 
 def send_ghost_color(color):
     c = 'COLOR,' + color
@@ -59,23 +71,23 @@ def update_board(state):
         f.write(str(state[i][0])+',')  #x
         f.write(str(state[i][1])+',')   #y
         f.write(str(state[i][2])+',')   #color
+    f.close()
     push_socket.send_string(s)
 
 def send_valid_moves(vaild_moves):
+    print(len(vaild_moves))
     v = 'VALID'
     f = open("valid_moves.txt",'w')
     for i in range (len(vaild_moves)):
         # print(vaild_moves[i][0],vaild_moves[i][1])
         f.write(str(vaild_moves[i][0])+',') #x
         f.write(str(vaild_moves[i][1])+',') #y
+    f.close()
     push_socket.send_string(v)
 
 def send_score(O_score, G_score, reason):
     s = 'SCORE,' + O_score + '#' + G_score + '#' + reason
-#     print('interface score ',type(s))
-    # s = "helllo"
     push_socket.send_string(s)
-    print(">>>>>",s)
     push_socket.close()
     pull_socket.close()
 
@@ -87,7 +99,4 @@ def send_congrate(msg):
     g = 'CONGRATULATE,' + msg
     push_socket.send_string(g)
 
-# state = [[1,2,'1'],[3,4,'0'],[5,6,'1']]
-# send_state(state)
-# get_opponent_move()
-# send_state("starting_state")
+# get_initial_board()

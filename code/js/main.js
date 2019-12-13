@@ -439,7 +439,10 @@ function onClick(event){
                 app.stage.addChild(stone);
             }
             return;
+
         }
+        console.log(utilities.isItemInArray(valid_moves, [-1,-1]));
+        console.log(utilities.isItemInArray(valid_moves, move));
         if(utilities.isItemInArray(valid_moves, [-1,-1]) || utilities.isItemInArray(valid_moves, move)){
             //modify //Assume return null if not found
             utilities.removeChildByName("red", app)
