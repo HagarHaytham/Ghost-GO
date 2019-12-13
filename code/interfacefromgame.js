@@ -180,5 +180,5 @@ function show_recommended_move(move) // in addition to valid moves, There can be
 }
 function get_ghost_color(color)
 {
-    gui.get_ghost_color(color);
+    gui.getGhostColor(color);
 }

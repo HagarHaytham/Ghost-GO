@@ -5,9 +5,10 @@ context = zmq.Context()
 push_socket = context.socket(zmq.PUSH)
 pull_socket = context.socket(zmq.PULL)
 
-push_socket.bind("tcp://127.0.0.1:3001")
-pull_socket.connect("tcp://127.0.0.1:3000")
-
+def init():    
+    global push_socket, pull_socket
+    push_socket.bind("tcp://127.0.0.1:3001")
+    pull_socket.connect("tcp://127.0.0.1:3000")
 
 def get_game_mode():
     while(True):
@@ -23,20 +24,25 @@ def get_opponent_color():
         return opponent_color
 
 def get_opponent_move(): #till now it blocks, in case computations are needed at this time, open a thread
-    while(True):#moves NOTE: this wasn't commented but it caused errors :'D.
+    while(True):
         opponent_move = pull_socket.recv()
-        print(opponent_move)
+        print("opponent_move : ",opponent_move)
         # if opponent_move != 0:
         opponent_move = opponent_move.decode('utf-8')
         return opponent_move
 
-def get_initial_state():
-    while(True):#moves NOTE: this wasn't commented but it caused errors :'D.
-        opponent_board = pull_socket.recv()
-        #print(opponent_move)
-        # if opponent_move != 0:
-        opponent_board = opponent_board.decode('utf-8')
-        return opponent_board
+def get_initial_board():
+    while(True):
+        initial_board = pull_socket.recv()
+        # if initial_board != 0:
+        stones = []
+        if(initial_board.decode('utf-8') == '1'):
+            f = open("initial_state.txt",'r')
+            comp_stones = f.read().splitlines()
+            for s in comp_stones:
+                stones.append(s.split('-'))
+        return stones # 2D list each record --> col, row, color ALL are strings  /// [] if empty
+
 def send_ghost_color(color):
     c = 'COLOR,' + color
     push_socket.send_string(c)
@@ -81,10 +87,7 @@ def send_valid_moves(vaild_moves):
 
 def send_score(O_score, G_score, reason):
     s = 'SCORE,' + O_score + '#' + G_score + '#' + reason
-#     print('interface score ',type(s))
-    # s = "helllo"
     push_socket.send_string(s)
-    print(">>>>>",s)
     push_socket.close()
     pull_socket.close()
 
@@ -97,7 +100,4 @@ def send_congrate(msg):
     g = 'CONGRATULATE,' + msg
     push_socket.send_string(g)
 
-# state = [[1,2,'1'],[3,4,'0'],[5,6,'1']]
-# send_state(state)
-# get_opponent_move()
-# send_state("starting_state")
+# get_initial_board()

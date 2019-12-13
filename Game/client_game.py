@@ -1,75 +1,68 @@
-import main 
-import client
+import zmq
+import subprocess
+import atexit
 
-def get_state_from_client():
-    state,parameters = client.send_state()
-    if state == 1:  # Ready
-        # Parameters ={
-        #  "gameConfiguration": {
-            #  "initialState": GameState,
-            #  "moveLog": [LogEntry],
-            #  "komi":number,
-            #  "ko": boolean,
-            #  "scoringMethod": string,
-            #  "prisonerScore": number,
-            #  "idleDeltaTime": Time
-        #   },
-        #   "color": Color
-        # } 
-        initialState = parameters['gameConfiguration']['initialState']
-        moveLog = parameters['gameConfiguration']['moveLog']
-        color = parameters['color']
-        
-        parameters = {
-            "initialState":initialState,
-            "moveLog":moveLog,
-            "ourColor":color
-        }
-    elif state == 2:# Thinking
-        move = main.send_move_to_client()
-        if move.is_pass:
-            move_str = 'passes'
-        elif move.is_resign:
-            move_str = 'resigns'
+context = client_socket = None
+connected = False
 
-        parameters = {
-            "type":move_str,
-            "X":move.point.col,
-            "Y":move.point.row
-        }
-        # communication.get_move(parameters)
-    elif state == 3:# Awaiting Move Response
-        # parameters = {
-        #     valid: Boolean,
-        #     remaining_time: int,
-        #     message: string
-        # }
-        # main.get_vaild(parameters)
-        pass
-    elif state == 4:# Idel
-        # Parameters = {
-        #   "type" : string,
-        #   "X" : int,
-        #   "Y": int,
-        #   "time": int
-        # }
-        # main.send_opponent_move(parameters)
-        pass
-    return parameters
+def init(port=7374, name='Ghost'):
+    global context, client_socket
 
-def get_move_from_game(move):
-    move_str = 'place'
-    if move.is_pass:
-        move_str = 'passes'
-    elif move.is_resign:
-        move_str = 'resigns'
+    context = zmq.Context()
+    #  Socket to talk to server
+    client_socket = context.socket(zmq.REQ)
+    client_socket.connect("tcp://localhost:" + str(port))
+    
+    client_process = subprocess.Popen("python client.py " + str(port) + ' ' + name)
+
+    def exit_handler():
+        client_process.kill()
+
+    atexit.register(exit_handler)
+
+def handle_init():
+    global connected
+    print("init")
+    response = send_to_client({})
+    connected = response[0]
+    return response
+
+def handle_ready():
+    print("ready")
+    return send_to_client({})
+
+def handle_thinking(move):
+    print("thinking")
+    print('thinking', move.point)
+    move_type = 'place'
+    move_type = 'pass' if move.is_pass else move_type
+    move_type = 'resign' if move.is_resign else move_type
+    
+    move_payload = {"type": move_type}
+    if move_type == 'place':
+        move_payload["point"] = {'row': int(move.point.row - 1), 'column': int(move.point.col) - 1}
 
     parameters = {
-        "type":move_str,
-        "X":move.point.col if move_str == 'place' else None,
-        "Y":move.point.row  if move_str == 'place' else None
+        'move': move_payload
     }
+    return send_to_client(parameters)
 
-def get_parameters_from_client_game():
-    parameters = get_state_from_client()
-    return parameters
+def handle_await_response():
+    print("await_response")
+    return send_to_client({})
+
+def handle_idle():
+    print("idle")
+    return send_to_client({})
+
+def send_to_client(parameters):
+    global connected
+    print('send')
+    client_socket.send_json(parameters)
+    #  Get the reply.
+    message = client_socket.recv_json()
+    print(message)
+    success = message[0]
+    connected = message[1]
+    payload = message[2]
+    return success, payload
