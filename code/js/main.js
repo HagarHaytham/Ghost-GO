@@ -227,7 +227,7 @@ function setup(){
     //showRecommendedMove('0',['1','18']); //place
     //showRecommendedMove('1',['1','19']); //resign
     //showRecommendedMove('2',['1','19']); //pass
-    //getGhostColor("White");
+    //getGhostColor("1");
     //validMoves([['1','19']])
 }
 
@@ -844,9 +844,10 @@ function updateopponentTime(remainingtime){
 }
 
 function getGhostColor(AIColor){
-    color = AIColor
+    if(AIColor == '0')  color = "Black"
+    else color = "White"
     fontStyle2 = utilities.getFontStyle(30);
-    var msg = "Ghost Color is " + AIColor
+    var msg = "Ghost Color is " + color
     msg3Txt = new PIXI.Text(msg, fontStyle2);
     msg3Txt.x = x + (blockNum*blockSz)/2 - msg3Txt.width/2;
     msg3Txt.y = y - 80
