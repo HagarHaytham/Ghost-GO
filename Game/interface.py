@@ -41,6 +41,7 @@ def get_initial_board():
             comp_stones = f.read().splitlines()
             for s in comp_stones:
                 stones.append(s.split('-'))
+            f.close()    
         return stones # 2D list each record --> col, row, color ALL are strings  /// [] if empty
 
 def send_ghost_color(color):
@@ -93,7 +94,7 @@ def send_score(O_score, G_score, reason):
 
 def send_recommended_move(move):
     m = 'REC_MOVE,' + move
-    print("Recommended Move in Interface : ",move 
+    print("Recommended Move in Interface : ",move) 
     push_socket.send_string(m)
 
 def send_congrate(msg): 

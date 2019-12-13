@@ -7,12 +7,7 @@ import copy
 from enum import Enum
 from  MCTS import monte_carlo_tree_search
 from dlgo.scoring import compute_game_result
-<<<<<<< HEAD
-#import client_game as client_game
-#import client as client
-=======
 import client_game as client
->>>>>>> 469c1f73a4b3141c89372b669853984c478bdfaa
 import time
 import numpy as np
 import elevenplanes
@@ -55,13 +50,14 @@ def get_game_mode_from_gui():
     elif( game_mode == 0 ):
         # print('ai vs human')
         player , opponent = get_player_color_from_gui()
-        initial_state= interface.get_initial_state().split(",")
-        if(initial_state== -1):
+        initial_state= interface.get_initial_board()
+        print(len(initial_state))
+        if(len(initial_state)==0):
             pass
         # for i in range(0, len(initial_state):
         #     point =  gotypes.Point(row= int(initial_state[i][1]),col= int(initial_state[i][0]))
         #     move = goboard.Move(point)
-        #     #print(">>>> move", move.point)
+        #     print(">>>> move", move.point)
         #     game , prisoners  = game.apply_move(move)
         print(opponent)
    
@@ -223,47 +219,8 @@ def READY_configuration(game):
 
     return game, captures, remainingTime, ourColor
 
-<<<<<<< HEAD
-def THINKING(game):
-    print_board(game.board)
-    start = time.time()
-    point = -1
-    player = game.next_player
-    game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
-    decision = 0
-    b_time = 0
-    w_time = 0
-    
-    play_move = goboard.Move(play_point)
-    client.handle_thinking()
-    client_game.get_move_from_game(play_move)
-    client_game.get_parameters_from_client_game()
-    # TODO send move to server 
-    send_move_to_gui(decision,play_point,b_time,w_time,player)         
-    send_board_to_gui(decision,game.board)   
-    if(consequitive_passes == 2):
-        pass
-    end = time.time()
-    print(end - start)
-    return game
-
-def AI_vs_AI(game):
-    response = client.handle_init()
-    if client.current_state == client.states['END']:
-        # handle results
-        return
-
-    game, captures, remainingTime, ourColor = READY_configuration(game)
-    if client.current_state == client.states['END']:
-        # handle results
-        return
-
-    while not game.is_over():
-        if game.next_player == ourColor:
-            THINKING()
-=======
 def THINKING(game, captures):
-
+    
     played = False
     remaining_time = None
     captures = {
@@ -278,7 +235,6 @@ def THINKING(game, captures):
 
         if moves_count == 0 or True:
             new_game , new_captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
->>>>>>> 469c1f73a4b3141c89372b669853984c478bdfaa
         else:
             # another option
             pass
