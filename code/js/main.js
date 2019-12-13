@@ -441,6 +441,7 @@ function onClick(event){
                 console.log("isn't in item")
                 initialBorad.push(move)
                 stone.name = "stone"
+                stone.filters = [blurFilter];
                 app.stage.addChild(stone);
             }
             return;
