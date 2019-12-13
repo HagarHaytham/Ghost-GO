@@ -33,13 +33,14 @@ def get_opponent_move(): #till now it blocks, in case computations are needed at
 def get_initial_board():
     while(True):
         initial_board = pull_socket.recv()
+        # if initial_board != 0:
         stones = []
-        if initial_board != 0:
-            initial_board = initial_board.decode('utf-8')
-            comp_stones = initial_board.split('#')
-            for s in comp_stones[:-1]:
+        if(initial_board.decode('utf-8') == '1'):
+            f = open("initial_state.txt",'r')
+            comp_stones = f.read().splitlines()
+            for s in comp_stones:
                 stones.append(s.split('-'))
-            return stones # 2D list each record --> col, row, color
+        return stones # 2D list each record --> col, row, color ALL are strings  /// [] if empty
 
 def send_ghost_color(color):
     c = 'COLOR,' + color
@@ -96,3 +97,5 @@ def send_recommended_move(move):
 def send_congrate(msg): 
     g = 'CONGRATULATE,' + msg
     push_socket.send_string(g)
+
+# get_initial_board()
