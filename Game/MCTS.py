@@ -80,7 +80,7 @@ def pick_child(node,total_rollouts):
 
 def get_best_three(root):
     state = elevenplanes.ElevenPlaneEncoder((19,19))
-    print("teeeeeeeeeeeeest",state.shape)
+    #print("teeeeeeeeeeeeest",state.shape)
     state = state.encode(root.game_state)
     #print(state.shape)
     state = np.expand_dims(state,axis=0)
@@ -97,13 +97,13 @@ def get_best_three(root):
                 probability_matrix[row][col]= 0
                 new_point = gotypes.Point( row=row+1,col=col+1)
                 move = goboard.Move(new_point)
-                print(new_point)
+                #print(new_point)
                 if root.game_state.is_valid_move(move):
                     break
-            print('move ',move)
+            #print('move ',move)
             legal_state , prisoners = root.game_state.apply_move(move) 
             capture = 0
-            print('prisoners',prisoners)
+            #print('prisoners',prisoners)
             child_captures = copy.copy(root.captures)    
             child_captures[player]+=prisoners
             child = MCTS_node(legal_state,root,child_captures,new_point)

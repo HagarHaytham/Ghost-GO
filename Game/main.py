@@ -409,7 +409,7 @@ def main():
         game_mode = 1
     
     if(game_mode == 0 ):
-        pass
+        
         while ( not game.is_over()):
             # print_board(game.board)
             start = time.time()
@@ -423,6 +423,7 @@ def main():
                 result = compare_state(recommended,game,captures,player)
                 print("Recommended Move is : ",recommended_move)
                 if(result == "gt"):
+                    print("Send Recommended move condition in main")
                     send_recommended_move(decision,recommended_move)
                     pass
                 else: 

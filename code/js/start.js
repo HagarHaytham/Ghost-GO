@@ -1,4 +1,4 @@
-const interface = require("../interface.js");
+//const interface = require("../interface.js");
 const utilities = require("../js/utilities.js");
 const app = new PIXI.Application({
 	autoResize: true,
@@ -83,7 +83,7 @@ function setup(){
 
     blackButtonRect.on('click', function(){
         sessionStorage.setItem("color", "black");
-        interface.send_opponent_color('0');
+     //   interface.send_opponent_color('0');
         location.assign("../html/main.html"); 
     });
 
@@ -105,7 +105,7 @@ function setup(){
     whiteButtonRect.on('click', function(){
         console.log("click white")
         sessionStorage.setItem("color", "white");
-        interface.send_opponent_color('1');
+      //  interface.send_opponent_color('1');
         location.assign("../html/main.html"); 
     });
     app.stage.addChild(whiteButtonRect);
