@@ -402,7 +402,7 @@ def main():
         game, captures, player, opponent = get_game_mode_from_gui()
         first_game = False
 
-        if( opponent == gotypes.Player.white):
+        if( opponent == "1"):
             first_game = True
         print('first',first_game)
     else:
