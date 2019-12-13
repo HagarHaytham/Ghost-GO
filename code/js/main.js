@@ -2,6 +2,11 @@ const interface = require("../interface.js");
 const utilities = require("../js/utilities.js");
 var color = sessionStorage.getItem('color');
 const mode = sessionStorage.getItem('mode');
+if(mode =="AIVSAI") interface.send_mode('1');
+else interface.send_mode('0');
+
+if(color == "black") interface.send_opponent_color('0');
+else interface.send_opponent_color('1');
 var my_turn = false;
 var valid_moves = [[-1,-1]];
 var ghost_animate = true;
