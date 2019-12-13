@@ -13,6 +13,8 @@ import numpy as np
 import elevenplanes
 import predict
 import sys
+import subprocess
+import atexit
 #intializations
 board_size = 19
 num_rounds = 10
@@ -27,6 +29,12 @@ init_gui = False if len(sys.argv) > 3 else True
 client.init(client_port, client_name)
 if init_gui:
     interface.init()
+    # gui_process = subprocess.Popen('pushd ..\\code && npm start && popd', shell=True)
+
+    # def exit_handler():
+    #     gui_process.kill()
+
+    # atexit.register(exit_handler)
 
 class modes(Enum): #check ENUM
    AIvsAI=0
@@ -106,6 +114,7 @@ def get_opponent_game_from_gui(current_state,captures,opponent):
 def send_move_to_gui(decision,point,b_time,w_time,color):
     print("send_move_to_gui")
     global consequitive_passes
+    print('send move', decision, point)
     if(decision == '0'): # play
         consequitive_passes = 0 
         move = '0'+'#'+str(point.col)+'-'+str(point.row)
@@ -242,6 +251,7 @@ def THINKING(game, captures):
 
         if moves_count == 0 or True:
             new_game , new_captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+            print(new_captures , play_point)
         else:
             # another option
             pass
@@ -254,7 +264,6 @@ def THINKING(game, captures):
         client.handle_thinking(play_move)
 
         response = client.handle_await_response()
-
         if not response[0]:
             # server END msg
             return False, response[1]
@@ -306,10 +315,10 @@ def AI_vs_AI():
         response = READY_configuration(game)
         if response is not False:
             game, captures, remainingTime, ourColor = response
-            if init_gui:
-                send_board_to_gui(0, game.board)
-                send_ghost_color_to_gui('0' if ourColor == gotypes.Player.black else '1')
             our_player = '0' if ourColor == gotypes.Player.black else '1'
+            if init_gui:
+                send_board_to_gui('0', game.board)
+                send_ghost_color_to_gui(our_player)
 
             while not game.is_over():
                 print_board(game.board)
@@ -332,11 +341,11 @@ def AI_vs_AI():
                 # update the gui
                 if init_gui:
                     if captures[game.next_player.other] != old_captures[game.next_player.other]:
-                        send_board_to_gui(0, game.board)
+                        send_board_to_gui('0', game.board)
                     else:
-                        decision = 0
-                        decision = 1 if play_move.is_resign else decision
-                        decision = 2 if play_move.is_pass else decision
+                        decision = '0'
+                        decision = '1' if play_move.is_resign else decision
+                        decision = '2' if play_move.is_pass else decision
                         player = '0' if game.next_player.other == gotypes.Player.black else '1'
                         send_move_to_gui(decision, play_move.point, remainingTime['B'], remainingTime['W'], player)
 
@@ -344,7 +353,8 @@ def AI_vs_AI():
         print(result)
         game_result,score = game.winner(captures)
         print(game_result, score)
-        game_result = (result['B_score'], result['B_score'])
+        print('r', result)
+        game_result = (result['B_score'], result['W_score'])
         reason = result['reason']
         if init_gui:
             send_score_to_gui(game_result,our_player,reason)
