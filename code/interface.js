@@ -42,12 +42,18 @@ function send_initial_board(board){
         var l2 = board[0].length;
         for(i = 0 ; i<l1 ;i++)
         {
-            board_str += (board[i][0]+"-"+board[i][1]+"-"+board[i][2]+"#");
+            board_str += (board[i][0]+"-"+board[i][1]+"-"+board[i][2]+"\n");
 
         }
     }
+    fs.writeFile("../Game/initial_state.txt",board_str,(err)=>{
+        if(err) console.log(err);
+        console.log("successfully written into file.");
+
+    });
     console.log(board_str);
     to_game.send(board_str);
 }
+
 
 module.exports = {send_mode, send_opponent_color, send_opponent_move, send_initial_board};
