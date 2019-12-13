@@ -20,7 +20,7 @@ game_mode = 0
 depth = 10
 consequitive_passes = 0
 opponont_resigns = False
-
+sys.setrecursionlimit(1500)
 client_port = sys.argv[1] if len(sys.argv) > 1 else 7374
 client_name = sys.argv[2] if len(sys.argv) > 2 else 'Ghost'
 init_gui = False if len(sys.argv) > 3 else True
@@ -51,9 +51,16 @@ def get_game_mode_from_gui():
         # print('ai vs human')
         player , opponent = get_player_color_from_gui()
         initial_state= interface.get_initial_board()
-        print(len(initial_state))
+        print("initial Board len",len(initial_state))
         if(len(initial_state)==0):
             pass
+        else: 
+            for move_ in initial_state:
+                if move_[i][2] == '.':
+                    continue
+                game.next_player = gotypes.Player.black if move_[i][2] == '0' else gotypes.Player.white
+                move = goboard.Move(gotypes.Point((int(move_[i][1]),int(move_[i][0]))))
+                game,captures = game.apply_move(move)
         # for i in range(0, len(initial_state):
         #     point =  gotypes.Point(row= int(initial_state[i][1]),col= int(initial_state[i][0]))
         #     move = goboard.Move(point)
@@ -361,7 +368,7 @@ def recommend_move(game_state):
         if game_state.is_valid_move(move):
             break
     new_game_state , prisoners  = game_state.apply_move(move)
-    # print('in main',new_point)
+    print('recommend move function',new_point)
     return new_game_state , new_point
 def compare_state(state1,state2,captures,player):
     c ={ 
@@ -388,15 +395,17 @@ def send_congrats():
     congrats_msg ='Nice Move !!'
     interface.send_congrate(congrats_msg)
 def send_recommended_move(decision,point):
+    # msg = str(decision)
+    # if(decision =='0'):
+    #     msg = msg+'#'+str(point.col)+'-'+str(point.row)
+    # else:
+    #     msg = msg+'#0'
     msg = str(decision)
-    if(decision ==0):
-        msg = msg+'#'+str(point.col)+'-'+str(point.row)
-    else:
-        msg = msg+'#0'
+    msg = msg+'#'+str(point.col)+'-'+str(point.row)
     print("Recommended Move in sendRecmove Func : ",msg)    
     interface.send_recommended_move(msg)
 
-def main():
+def main()
     global consequitive_passes, opponont_resigns, game_mode
     if init_gui:
         game, captures, player, opponent = get_game_mode_from_gui()
@@ -424,7 +433,7 @@ def main():
                 print("Recommended Move is : ",recommended_move)
                 if(result == "gt"):
                     print("Send Recommended move condition in main")
-                    send_recommended_move(decision,recommended_move)
+                    send_recommended_move('0',recommended_move)
                     pass
                 else: 
                     send_congrats()
