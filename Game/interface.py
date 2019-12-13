@@ -41,7 +41,21 @@ def get_initial_board():
             comp_stones = f.read().splitlines()
             for s in comp_stones:
                 stones.append(s.split('-'))
-            f.close()    
+        return stones # 2D list each record --> col, row, color ALL are strings  /// [] if empty
+        # print("initial Board len",len(initial_board))
+        # # if initial_board != 0:
+        # stones = []
+        # if(initial_board.decode('utf-8') == '1'):
+        #     f = open("initial_state.txt",'r')
+        #     moves = f.readlines() 
+        #     print("moves = ", moves)
+        #     stone=[]
+        #     for line in f:
+        #         move=line.strip()
+        #         stone.append(move.split('-'))
+        #     f.close() 
+        # #print("stone = ",stones)    
+        # print("stones len",len(stones))   
         return stones # 2D list each record --> col, row, color ALL are strings  /// [] if empty
 
 def send_ghost_color(color):
