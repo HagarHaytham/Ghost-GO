@@ -102,19 +102,13 @@ async def handle_await_response():
     global current_state, websocket
     msg = await websocket.recv()
     msg = json.loads(msg)
+    print(msg)
     if msg["type"] == "VALID":
         current_state = states["IDLE"]
-        return {
-            'valid': True,
-            'remaning_time': msg["remainingTime"]
-        }
+        return { 'valid': True, 'remaning_time': msg["remainingTime"] }
     elif msg["type"] == "INVALID":
         current_state = states["THINKING"]
-        return {
-            'valid': False,
-            'remaning_time': msg["remainingTime"],
-            'message': msg["message"]
-        }
+        return { 'valid': False, 'remaning_time': msg["remainingTime"], 'message': msg["message"] }
     elif msg["type"] == "END":
         return handle_end(msg)
 
