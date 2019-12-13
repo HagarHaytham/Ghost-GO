@@ -5,9 +5,10 @@ context = zmq.Context()
 push_socket = context.socket(zmq.PUSH)
 pull_socket = context.socket(zmq.PULL)
 
-push_socket.bind("tcp://127.0.0.1:3001")
-pull_socket.connect("tcp://127.0.0.1:3000")
-
+def init():    
+    global push_socket, pull_socket
+    push_socket.bind("tcp://127.0.0.1:3001")
+    pull_socket.connect("tcp://127.0.0.1:3000")
 
 def get_game_mode():
     while(True):

@@ -3,7 +3,11 @@ import asyncio
 import json
 from time import sleep
 from threading import Thread
+import zmq
+import atexit
+import sys
 
+context = game_engine_socket = None
 states = {
     "INIT": 0,
     "READY": 1,
@@ -16,98 +20,82 @@ name = "Ghost"
 url = "ws://localhost:8080"
 
 websocket = None
-my_color = None
 current_state = states["INIT"]
 
-
-def gameState(state, msg=''):
-	pass
-
-async def dummy():
-    await asyncio.sleep(2)
-    return {"type": "pass"}
-
-
-def send_valid(valid, remaning_time, message=""):
-    pass
-
-
-def send_opponent_move(type, X, Y, time):
-    pass
-
-
-def send_score(reason, winner, B_score, B_time, W_score, W_time):
-    pass
-
-
-async def ping_pong():
-    global websocket
-    while True:
-        try:
-            await websocket.send()
-            await asyncio.sleep(1)
-        except Exception as e:
-            print(f"ping pong exception {str(e)}")
-
+restart = False
+connected = False
 
 async def handle_init():
-    global websocket, current_state
+    global websocket, current_state, connected
     websocket = await websockets.connect(url, ping_interval=None)  # connect to server
+    connected = True
     msg = await websocket.recv()
     msg = json.loads(msg)
     if msg["type"].lower() == "name":
         msg = json.dumps({"type": "NAME", "name": name})
         await websocket.send(msg)
         current_state = states["READY"]
+        return
     elif msg["type"] == "END":
         return handle_end(msg)
-    return None
 
 
 async def handle_ready():
-    global current_state, my_color, websocket
+    global current_state, websocket
     print("now handling ready")
     msg = await websocket.recv()
     print("received", msg)
     msg = json.loads(msg)
     if msg["type"] == "START":
-        color = msg["configuration"]["initialState"]["turn"]
-        log_entries = []
-        for log_entry in msg["configuration"]["moveLog"]:
-            entry = {"type": log_entry["move"]["type"], "color": color}
-            if entry["type"] == "place":
-                entry["point"] = log_entry["move"]["point"]
-            log_entries.append(entry)
-            color = "B" if color == "W" else "W"
-        log_entries = [x for x in log_entries if x["type"] != "pass"]
-        if (msg["color"] == msg["configuration"]["initialState"]["turn"] and len(msg["configuration"]["moveLog"]) % 2 == 0) or (msg["color"] != msg["configuration"]["initialState"]["turn"] and len(msg["configuration"]["moveLog"]) % 2 != 0):
-            # TODO: send to integration the color, log_entry and initial_state
-            current_state = states["THINKING"]
-            my_color = msg["color"]
+        initialState = msg['configuration']['initialState']
+        moveLog = msg['configuration']['moveLog']
+        color = msg['color']
+        
+        parameters = {
+            "initialState":initialState,
+            "moveLog":moveLog,
+            "ourColor":color
+        }
+
+        if color == initialState['turn'] and len(moveLog) % 2 == 0 or \
+            color != initialState['turn'] and len(moveLog) % 2 != 0:
+            current_state = states['THINKING']
         else:
-            current_state = states["IDLE"]
-            my_color = "B" if msg["color"] == "W" else "W"
+            current_state = states['IDLE']
+        
+        return parameters
+
     elif msg["type"] == "END":
-        handle_end(msg)
+        return handle_end(msg)
 
 
 def handle_end(msg):
-    global current_state
+    global current_state, restart
+    restart = True
     print("END GAME reason is "+ msg['reason'])
-    send_score(reason=msg['reason'], winner=msg['winner'], B_score=msg['players']["B"]["score"], B_time=msg['players']
-               ["B"]["remainingTime"], W_score=msg['players']["W"]["score"], W_time=msg['players']["W"]["remainingTime"])
+    score = {
+        'reason': msg['reason'],
+        'winner': msg['winner'],
+        'B_score': msg['players']["B"]["score"],
+        'B_remaining_time': msg['players']["B"]["remainingTime"],
+        'W_score': msg['players']["W"]["score"],
+        'W_remaining_time': msg['players']["W"]["remainingTime"]
+    }
     current_state = states["READY"]
+    return score
 
 
-async def handle_thinking():
+async def handle_thinking(parameters):
     global current_state, websocket
-    move = await dummy()  # call thinking logic
-    msg = {"type": "MOVE", "move": {"type": move["type"]}}
-    if move["type"] == "place":
-        msg["move"]["point"] = {"row": move["X"], "column": move["Y"]}
+    
+    move = parameters['move']
+    msg = {"type": "MOVE", "move": move}
+
     msg = json.dumps(msg)
     await websocket.send(msg)
     current_state = states["AWAIT_MV_RES"]
+
+    return
 
 
 async def handle_await_response():
@@ -115,14 +103,20 @@ async def handle_await_response():
     msg = await websocket.recv()
     msg = json.loads(msg)
     if msg["type"] == "VALID":
-        send_valid(valid=True, remaning_time=msg["remainingTime"][my_color])
         current_state = states["IDLE"]
+        return {
+            'valid': True,
+            'remaning_time': msg["remainingTime"]
+        }
     elif msg["type"] == "INVALID":
-        send_valid(
-            valid=False, remaning_time=msg["remainingTime"][my_color], message=msg["message"])
         current_state = states["THINKING"]
+        return {
+            'valid': False,
+            'remaning_time': msg["remainingTime"],
+            'message': msg["message"]
+        }
     elif msg["type"] == "END":
-        handle_end(msg)
+        return handle_end(msg)
 
 
 async def handle_idle():
@@ -130,36 +124,74 @@ async def handle_idle():
     msg = await websocket.recv()
     msg = json.loads(msg)
     if msg["type"] == "MOVE":
-        if msg["move"]["type"] == "place":
-            send_opponent_move(type=msg["move"]["type"], X=msg["move"]["point"]["row"],
-                               Y=msg["move"]["point"]["column"], time=msg["remainingTime"][my_color])
-        else:
-            send_opponent_move(
-                type=msg["move"]["type"], X=0, Y=0, time=msg["remainingTime"][my_color])
         current_state = states["THINKING"]
+        if msg["move"]["type"] == "place":
+            return {
+                'type': msg["move"]["type"],
+                'row': msg["move"]["point"]["row"],
+                'column': msg["move"]["point"]["column"],
+                'remaning_time': msg["remainingTime"]
+            }
+        else:
+            return {
+                'type': msg["move"]["type"],
+                'remaning_time': msg["remainingTime"]
+            }
     elif msg["type"] == "END":
-        handle_end(msg)
+        return handle_end(msg)
 
 
 async def main():
-    global current_state
+    global current_state, restart, connected
     while True:
+        #  Wait for game engine request
+        message = game_engine_socket.recv_json()
+
+        return_value = None
+        print("State: " + str(current_state), message)
         try:
             if current_state == states["INIT"]:
-                await handle_init()
+                return_value = await handle_init()
             elif current_state == states["READY"]:
-                await handle_ready()
+                return_value = await handle_ready()
             elif current_state == states["THINKING"]:
-                await handle_thinking()
+                return_value = await handle_thinking(message)
             elif current_state == states["AWAIT_MV_RES"]:
-                await handle_await_response()
+                return_value = await handle_await_response()
             elif current_state == states["IDLE"]:
-                await handle_idle()
+                return_value = await handle_idle()
         except Exception as e:
+            connected = False
+            restart = True
             print("type error: " + str(e))
             current_state = states["INIT"]
 
+        print(restart, connected, return_value)
+        message = (not restart), connected, return_value
+        #  Send reply back to the game engine
+        game_engine_socket.send_json(message)
+        restart = False
+
+async def ping_pong():
+    global websocket
+    while True:
+        try:
+            await websocket.pong()
+            await asyncio.sleep(1)
+            # print("ping")
+        except Exception as e:
+            pass
+            # print(f"ping pong exception {str(e)}")
+
+def pong():
+    asyncio.run(ping_pong())
 
 if __name__ == "__main__":
+    port = sys.argv[1] if len(sys.argv) > 1 else 7374
+    name = sys.argv[2] if len(sys.argv) > 2 else 'Ghost'
+    context = zmq.Context()
+    game_engine_socket = context.socket(zmq.REP)
+    game_engine_socket.bind("tcp://*:" + str(port))
+
+    Thread(target=pong).start()  # ping pong
     asyncio.run(main())
-    Thread(target=ping_pong).start()  # ping pong

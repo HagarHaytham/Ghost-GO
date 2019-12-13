@@ -31,7 +31,7 @@ def print_move_file(player, move, file):
 
 
 def print_board(board):
-    for row in range(board.num_rows, 0, -1):
+    for row in range(1, board.num_rows + 1):
         bump = " " if row <= 9 else ""
         line = []
         for col in range(1, board.num_cols + 1):
