@@ -1,0 +1,127 @@
+first True
+teeeeeeeeeeeeest <bound method ElevenPlaneEncoder.shape of <elevenplanes.ElevenPlaneEncoder object at 0x000000C6C6791D30>>
+Point(row=16, col=16)
+move  (r 16, c 16)
+prisoners 0
+Point(row=14, col=4)
+move  (r 14, c 4)
+prisoners 0
+Point(row=17, col=16)
+move  (r 17, c 16)
+prisoners 0
+<class 'dlgo.goboard_fast.GameState'>
+teeeeeeeeeeeeest <bound method ElevenPlaneEncoder.shape of <elevenplanes.ElevenPlaneEncoder object at 0x000000C6C9B809E8>>
+Point(row=16, col=16)
+move  (r 16, c 16)
+prisoners 0
+Point(row=14, col=4)
+move  (r 14, c 4)
+prisoners 0
+Point(row=17, col=16)
+move  (r 17, c 16)
+prisoners 0
+<class 'dlgo.goboard_fast.GameState'>
+teeeeeeeeeeeeest <bound method ElevenPlaneEncoder.shape of <elevenplanes.ElevenPlaneEncoder object at 0x000000C6C9A851D0>>
+Point(row=16, col=16)
+move  (r 16, c 16)
+prisoners 0
+Point(row=14, col=4)
+move  (r 14, c 4)
+prisoners 0
+Point(row=17, col=16)
+move  (r 17, c 16)
+prisoners 0
+<class 'dlgo.goboard_fast.GameState'>
+teeeeeeeeeeeeest <bound method ElevenPlaneEncoder.shape of <elevenplanes.ElevenPlaneEncoder object at 0x000000C6C6776978>>
+Point(row=16, col=16)
+move  (r 16, c 16)
+prisoners 0
+Point(row=14, col=4)
+move  (r 14, c 4)
+prisoners 0
+Point(row=17, col=16)
+move  (r 17, c 16)
+prisoners 0
+<class 'dlgo.goboard_fast.GameState'>
+teeeeeeeeeeeeest <bound method ElevenPlaneEncoder.shape of <elevenplanes.ElevenPlaneEncoder object at 0x000000C6C9AFF908>>
+Point(row=16, col=16)
+move  (r 16, c 16)
+prisoners 0
+Point(row=14, col=4)
+move  (r 14, c 4)
+prisoners 0
+Point(row=17, col=16)
+move  (r 17, c 16)
+prisoners 0
+<class 'dlgo.goboard_fast.GameState'>
+teeeeeeeeeeeeest <bound method ElevenPlaneEncoder.shape of <elevenplanes.ElevenPlaneEncoder object at 0x000000C6C9C16780>>
+Point(row=16, col=16)
+move  (r 16, c 16)
+prisoners 0
+Point(row=14, col=4)
+move  (r 14, c 4)
+prisoners 0
+Point(row=17, col=16)
+move  (r 17, c 16)
+prisoners 0
+<class 'dlgo.goboard_fast.GameState'>
+teeeeeeeeeeeeest <bound method ElevenPlaneEncoder.shape of <elevenplanes.ElevenPlaneEncoder object at 0x000000C6C9B75160>>
+Point(row=16, col=16)
+move  (r 16, c 16)
+prisoners 0
+Point(row=14, col=4)
+move  (r 14, c 4)
+prisoners 0
+Point(row=17, col=16)
+move  (r 17, c 16)
+prisoners 0
+<class 'dlgo.goboard_fast.GameState'>
+teeeeeeeeeeeeest <bound method ElevenPlaneEncoder.shape of <elevenplanes.ElevenPlaneEncoder object at 0x000000C6C9A851D0>>
+Point(row=16, col=16)
+move  (r 16, c 16)
+prisoners 0
+Point(row=14, col=4)
+move  (r 14, c 4)
+prisoners 0
+Point(row=17, col=16)
+move  (r 17, c 16)
+prisoners 0
+<class 'dlgo.goboard_fast.GameState'>
+teeeeeeeeeeeeest <bound method ElevenPlaneEncoder.shape of <elevenplanes.ElevenPlaneEncoder object at 0x000000C6C9A73860>>
+Point(row=16, col=16)
+move  (r 16, c 16)
+prisoners 0
+Point(row=14, col=4)
+move  (r 14, c 4)
+prisoners 0
+Point(row=17, col=16)
+move  (r 17, c 16)
+prisoners 0
+<class 'dlgo.goboard_fast.GameState'>
+teeeeeeeeeeeeest <bound method ElevenPlaneEncoder.shape of <elevenplanes.ElevenPlaneEncoder object at 0x000000C6C9C26668>>
+Point(row=16, col=16)
+move  (r 16, c 16)
+prisoners 0
+Point(row=14, col=4)
+move  (r 14, c 4)
+prisoners 0
+Point(row=17, col=16)
+move  (r 17, c 16)
+prisoners 0
+<class 'dlgo.goboard_fast.GameState'>
+after monto carlo
+send_move_to_gui
+sent point  Point(row=14, col=4)
+send_valid_moves_to_gui
+b'1'
+<class 'dlgo.goboard_fast.GameState'>
+<class 'dlgo.goboard_fast.GameState'>
+recommended move  Point(row=4, col=17)
+recommended move  0
+msg 1#0
+captures[opponent] old_captures :  0 0
+<class 'dlgo.goboard_fast.GameState'>
+send_score_to_gui|
+<class 'tuple'>
+scores  361 6.5
+>>>>> SCORE,361#6.5#IDK!
