@@ -30,6 +30,13 @@ def get_opponent_move(): #till now it blocks, in case computations are needed at
         opponent_move = opponent_move.decode('utf-8')
         return opponent_move
 
+def get_initial_state():
+    while(True):#moves NOTE: this wasn't commented but it caused errors :'D.
+        opponent_board = pull_socket.recv()
+        #print(opponent_move)
+        # if opponent_move != 0:
+        opponent_board = opponent_board.decode('utf-8')
+        return opponent_board
 def send_ghost_color(color):
     c = 'COLOR,' + color
     push_socket.send_string(c)
@@ -83,6 +90,7 @@ def send_score(O_score, G_score, reason):
 
 def send_recommended_move(move):
     m = 'REC_MOVE,' + move
+    print("Recommended Move in Interface : ",move 
     push_socket.send_string(m)
 
 def send_congrate(msg): 

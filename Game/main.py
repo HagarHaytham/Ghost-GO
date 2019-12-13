@@ -5,10 +5,10 @@ from dlgo.utils import print_board, print_move , coords_from_point2
 import interface
 import copy 
 from enum import Enum
-from  Game.MCTS import monte_carlo_tree_search
-from Game.dlgo.scoring import compute_game_result
-import Game.client_game as client_game
-import Game.client as client
+from  MCTS import monte_carlo_tree_search
+from dlgo.scoring import compute_game_result
+#import client_game as client_game
+#import client as client
 import time
 import numpy as np
 import elevenplanes
@@ -43,17 +43,16 @@ def get_game_mode_from_gui():
     elif( game_mode == 0 ):
         # print('ai vs human')
         player , opponent = get_player_color_from_gui()
-        # point =  gotypes.Point(row= int(pos[1]),col= int(pos[0]))
-        # move = goboard.Move(point)
-        # # print(">>>> move", move.point)
-        # game , prisoners  = game.apply_move(move)
+        initial_state= interface.get_initial_state().split(",")
+        if(initial_state== -1):
+            pass
+        # for i in range(0, len(initial_state):
+        #     point =  gotypes.Point(row= int(initial_state[i][1]),col= int(initial_state[i][0]))
+        #     move = goboard.Move(point)
+        #     #print(">>>> move", move.point)
+        #     game , prisoners  = game.apply_move(move)
         print(opponent)
-    # elif (game_mode == modes.AIvsAI_test): # trainer test mode start from a certain state
-    #     # game_board = np.zeros((board_size,board_size))
-    #     # fill matrix somehow
-    #     # send_state(game_board)
-    #     # get player color from server
-    #     pass        
+   
     return game , captures , player , opponent
 
 def get_player_color_from_gui():
@@ -73,7 +72,7 @@ def get_opponent_game_from_gui(current_state,captures,opponent):
     global opponont_resigns
     new_game_state= current_state
     point = 0
-    decision = Game.interface.get_opponent_move().split('#')
+    decision = interface.get_opponent_move().split('#')
     if decision[0] == '0' : # play  
         consequitive_passes = 0
         print(decision)
@@ -101,7 +100,7 @@ def send_move_to_gui(decision,point,b_time,w_time,color):
     elif decision == '2': # pass
         consequitive_passes+=1
         move = '2'
-    Game.interface.send_move(move,color,str(b_time),str(w_time))
+    interface.send_move(move,color,str(b_time),str(w_time))
     return  
 
 def send_board_to_gui(decision,board): 
@@ -146,7 +145,7 @@ def send_score_to_gui(game_result,player,reason):
     if( player == '0'):
         O_score = white_score
         G_Score = black_score
-    Game.interface.send_score(O_score,G_Score,reason)
+    interface.send_score(O_score,G_Score,reason)
     return
 
 def READY_configuration(game):
@@ -221,7 +220,7 @@ def THINKING(game):
     send_move_to_gui(decision,play_point,b_time,w_time,player)         
     send_board_to_gui(decision,game.board)   
     if(consequitive_passes == 2):
-        break
+        pass
     end = time.time()
     print(end - start)
     return game
@@ -293,6 +292,7 @@ def send_recommended_move(decision,point):
         msg = msg+'#'+str(point.col)+'-'+str(point.row)
     else:
         msg = msg+'#0'
+    print("Recommended Move in sendRecmove Func : ",msg)    
     interface.send_recommended_move(msg)
 def main():
     global consequitive_passes
@@ -315,8 +315,9 @@ def main():
                 old_captures = copy.copy(captures[opponent])
                 decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
                 result = compare_state(recommended,game,captures,player)
+                print("Recommended Move is : ",recommended_move)
                 if(result == "gt"):
-                    send_recommended_move(decision,point)
+                    send_recommended_move(decision,recommended_move)
                     pass
                 else: 
                     send_congrats()

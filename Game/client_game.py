@@ -1,5 +1,5 @@
-import Game.main 
-import Game.client
+import main 
+import client
 
 def get_state_from_client():
     state,parameters = client.send_state()

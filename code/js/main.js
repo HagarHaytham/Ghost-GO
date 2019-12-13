@@ -791,6 +791,7 @@ function showRecommendedMove(moveType, move){
 
         var row = parseInt(move[1], 10);
         var col = parseInt(move[0], 10);
+        console.log("added stone col: ", col , " row ", row);
         --row;
         --col;
 
