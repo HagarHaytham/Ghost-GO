@@ -1,5 +1,6 @@
 var zmq = require("zeromq");
 var to_game = zmq.socket("push");
+var fs = require('fs');
 to_game.bindSync("tcp://127.0.0.1:3000");
 
 
@@ -35,24 +36,30 @@ function send_initial_board(board){
     //converting the board to a string.
     var l1 = board.length;
     var board_str = "";
+    var msg = "";
     if(l1 == 0)
-        board_str ="-1"; // should send an indicator message here.
+    {
+        msg ="-1"; 
+    }   // should send an indicator message here.
     else
     {
+        msg = "1";
         var l2 = board[0].length;
         for(i = 0 ; i<l1 ;i++)
         {
             board_str += (board[i][0]+"-"+board[i][1]+"-"+board[i][2]+"\n");
 
         }
-    }
-    fs.writeFile("../Game/initial_state.txt",board_str,(err)=>{
+         fs.writeFile("../Game/initial_state.txt",board_str,(err)=>{
         if(err) console.log(err);
         console.log("successfully written into file.");
 
     });
-    console.log(board_str);
-    to_game.send(board_str);
+      console.log(board_str);
+    }
+   
+    
+    to_game.send(msg);
 }
 
 
