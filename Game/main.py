@@ -19,7 +19,7 @@ import atexit
 board_size = 19
 num_rounds = 10
 game_mode = 0
-depth = 10
+depth = 20
 consequitive_passes = 0
 opponont_resigns = False
 sys.setrecursionlimit(1500)
