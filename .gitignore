@@ -1,5 +1,5 @@
 node_modules
 *.pyc
-valid_moves.txt
-update_board.txt
-initial_state.txt
+Game/valid_moves.txt
+Game/update_board.txt
+Game/initial_state.txt
