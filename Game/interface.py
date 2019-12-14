@@ -56,8 +56,12 @@ def send_ghost_color(color):
     c = 'COLOR,' + color
     push_socket.send_string(c)
 
-def send_move(move, color, O_time, G_time):
-    m = 'MOVE,' + move + '#' + color + '#' + O_time + '#' + G_time
+def send_move(move, color, B_time, W_time,our_player):
+    if our_player == '0':
+        time = W_time + '#' + B_time
+    else:
+        time = B_time + '#' + W_time  
+    m = 'MOVE,' + move + '#' + color + '#' + time
     push_socket.send_string(m)
 
 def send_state(state):
@@ -108,5 +112,3 @@ def send_recommended_move(move):
 def send_congrate(msg): 
     g = 'CONGRATULATE,' + msg
     push_socket.send_string(g)
-
-# get_initial_board()
