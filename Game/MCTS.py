@@ -44,7 +44,8 @@ def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth):
     # print('cnn time ',cnn_time)
     # print('move time ',move_time)
     # print('prisoners time ',prisoners_time)
-    return True , best_child(root) 
+    game , captures , play_point =  best_child(root) 
+    return True , game , captures , play_point
  
 def best_child(root):
     best_winning_frac = 0
