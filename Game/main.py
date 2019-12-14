@@ -416,7 +416,7 @@ def send_recommended_move(decision,point):
     print("Recommended Move in sendRecmove Func : ",msg)    
     interface.send_recommended_move(msg)
 
-def main()
+def main():
     global consequitive_passes, opponont_resigns, game_mode
     if init_gui:
         game, captures, player, opponent = get_game_mode_from_gui()
