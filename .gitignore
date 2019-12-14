@@ -1,2 +1,5 @@
 node_modules
 *.pyc
+valid_moves.txt
+update_board.txt
+initial_state.txt
