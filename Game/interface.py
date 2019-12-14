@@ -36,12 +36,20 @@ def get_initial_board():
         initial_board = pull_socket.recv()
         # if initial_board != 0:
         stones = []
-        if(initial_board.decode('utf-8') == '1'):
-            f = open("initial_state.txt",'r')
-            comp_stones = f.read().splitlines()
-            for s in comp_stones:
-                stones.append(s.split('-'))
-            f.close()    
+        if(initial_board.decode('utf-8') == '1'): 
+            with open('initial_state.txt') as f:
+                f.seek(0)
+                first_char = f.read(1) #get the first character
+                while not first_char:
+                    f.seek(0)
+                    first_char = f.read(1)
+                    # print("empty")
+                f.seek(0)
+                comp_stones = f.read().splitlines()
+                # print("comp_stones >> ", comp_stones)
+                for s in comp_stones:
+                    stones.append(s.split('-'))
+                f.close()  
         return stones # 2D list each record --> col, row, color ALL are strings  /// [] if empty
 
 def send_ghost_color(color):
