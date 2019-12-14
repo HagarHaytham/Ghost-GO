@@ -6,7 +6,7 @@ import interface
 import copy 
 from enum import Enum
 from  MCTS import monte_carlo_tree_search
-from dlgo.scoring import compute_game_result
+from dlgo.scoring import compute_game_result , compute_game_result_winner
 import client_game as client
 import time
 import numpy as np
@@ -382,18 +382,22 @@ def recommend_move(game_state):
     print('recommend move function',new_point)
     return new_game_state , new_point
 def compare_state(state1,state2,captures,player):
+    print("compare state: ", state1== state2)
     c ={ 
         gotypes.Player.black : captures['0'],
         gotypes.Player.white : captures['1']
     }
-    game_result1 = compute_game_result(state1,c)
-    game_result2 = compute_game_result(state2,c)
+    game_result1,_score1 = compute_game_result_winner(state1,c)
+    game_result2,_score2 = compute_game_result_winner(state2,c)
+    print("state1 >> ", game_result1[0] , game_result1[1])
+    print("state2 >> ", game_result2[0] , game_result2[1])
     black_score1 = str(game_result1[0])
     white_score1 = str(game_result1[1])
     O_score1 = black_score1
     black_score2 = str(game_result2[0])
     white_score2 = str(game_result2[1])
     O_score2 = black_score2
+    print("type(player) >>", type(player))
     if( player == '0'):
         O_score1 = white_score1
         O_score2 = white_score2
