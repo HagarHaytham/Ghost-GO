@@ -83,6 +83,7 @@ function draw_moves(file_name) // to draw valid moves.
             var tmp = data.split(',');
             var stone_count = (tmp.length-1)/2;
             var valid = new Array(stone_count);
+
             for(i = 0 ; i<stone_count;i++)
             {
                 valid[i] = new Array(2);
@@ -92,6 +93,7 @@ function draw_moves(file_name) // to draw valid moves.
                     // console.log(tmp[j]);
                 }
             }
+            console.log(stone_count);
             gui.validMoves(valid);
             console.log(valid);
             //call gui function here. each row contains x,y.
@@ -136,10 +138,11 @@ function update_board(file_name)
                 for(j = 3*i ; j<3*i+3; j++)
                 {
                     state[i][j%3] = tmp[j];  
-                    console.log(tmp[j]);
+                    //console.log(tmp[j]);
                 }
             }
             //call gui function here. each row contains x,y,color.
+            //console.log(state)
             gui.updateBoard(state)
         } else {
             console.log(err);
@@ -177,5 +180,5 @@ function show_recommended_move(move) // in addition to valid moves, There can be
 }
 function get_ghost_color(color)
 {
-    gui.get_ghost_color(color);
+    gui.getGhostColor(color);
 }
