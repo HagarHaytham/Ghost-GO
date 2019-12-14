@@ -61,9 +61,11 @@ def best_child(root):
 def traverse(node,total_rollouts): 
     picked_child=None
     if(not node.game_state.is_over()):
-        result = get_best_three(node)        
+        result = get_best_three(node) 
+        if(not result):
+            return result, None       
         picked_child = pick_child(node,total_rollouts)  
-    return result,picked_child  
+    return result , picked_child  
   
 def pick_child(node,total_rollouts):
     if(total_rollouts == 0 and len(node.children) > 0):
