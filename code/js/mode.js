@@ -1,4 +1,4 @@
-const interface = require("../interface.js");
+//const interface = require("../interface.js");
 const utilities = require("../js/utilities.js");
 var sound = sessionStorage.getItem('sound');
 const app = new PIXI.Application({
@@ -57,7 +57,7 @@ function setup(){
     aiVsaiButtonRect.on('click', function(event){
         console.log("clicked");
         sessionStorage.setItem("mode", "AIVSAI");
-        interface.send_mode('1');
+        //interface.send_mode('1');
         location.assign("../html/main.html"); 
     
     });
@@ -80,7 +80,7 @@ function setup(){
     aiVshumanButtonRect.buttonMode = true;
     aiVshumanButtonRect.on('click', function(){
         sessionStorage.setItem("mode", "AIVSHuman");
-        interface.send_mode('0');
+        //interface.send_mode('0');
         location.assign("../html/start.html"); 
     });
     app.stage.addChild(aiVshumanButtonRect);
@@ -102,7 +102,7 @@ function setup(){
 
     trainingButtonRect.on('click', function(){
         sessionStorage.setItem("mode", "trainerTest");
-        interface.send_mode('2');
+        //interface.send_mode('2');
         location.assign("../html/main.html"); 
     });
     

@@ -39,6 +39,7 @@ from_game.on("message", function(msg) {
                 break;
             case 'COLOR':
                 get_ghost_color(l[1]);
+                break;
             default:
                 console.log("invalid message code from implementation side." + l[0])
                 break;
