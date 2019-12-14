@@ -63,17 +63,17 @@ def get_game_mode_from_gui():
         if(len(initial_state)==0):
             pass
         else: 
-            for move_ in initial_state:
-                if move_[i][2] == '.':
-                    continue
-                game.next_player = gotypes.Player.black if move_[i][2] == '0' else gotypes.Player.white
-                move = goboard.Move(gotypes.Point((int(move_[i][1]),int(move_[i][0]))))
-                game,captures = game.apply_move(move)
-        # for i in range(0, len(initial_state):
-        #     point =  gotypes.Point(row= int(initial_state[i][1]),col= int(initial_state[i][0]))
-        #     move = goboard.Move(point)
-        #     print(">>>> move", move.point)
-        #     game , prisoners  = game.apply_move(move)
+            # for move_ in initial_state:
+            #     if move_[i][2] == '.':
+            #         continue
+            #     game.next_player = gotypes.Player.black if move_[i][2] == '0' else gotypes.Player.white
+            #     move = goboard.Move(gotypes.Point((int(move_[i][1]),int(move_[i][0]))))
+            #     game,captures = game.apply_move(move)
+            for i in range(0, len(initial_state)):
+                point =  gotypes.Point(row= int(initial_state[i][1]),col= int(initial_state[i][0]))
+                move = goboard.Move(point)
+                print(">>>> move", move.point)
+                game , prisoners  = game.apply_move(move)
         print(opponent)
    
     return game , captures , player , opponent
