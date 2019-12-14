@@ -34,6 +34,7 @@ def get_opponent_move(): #till now it blocks, in case computations are needed at
 def get_initial_board():
     while(True):
         initial_board = pull_socket.recv()
+        print("intefaace.py",initial_board)
         # if initial_board != 0:
         stones = []
         if(initial_board.decode('utf-8') == '1'):

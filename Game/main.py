@@ -19,7 +19,7 @@ import atexit
 board_size = 19
 num_rounds = 10
 game_mode = 0
-depth = 10
+depth = 20
 consequitive_passes = 0
 opponont_resigns = False
 sys.setrecursionlimit(1500)
@@ -415,7 +415,7 @@ def send_recommended_move(decision,point):
     print("Recommended Move in sendRecmove Func : ",msg)    
     interface.send_recommended_move(msg)
 
-def main()
+def main():
     global consequitive_passes, opponont_resigns, game_mode
     if init_gui:
         game, captures, player, opponent = get_game_mode_from_gui()
