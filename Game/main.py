@@ -258,7 +258,9 @@ def THINKING(game, captures):
         player = '0' if game.next_player == gotypes.Player.black else '1'
 
         if moves_count == 0 or True:
-            new_game , new_captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+            result , new_game , new_captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+            if(not result):
+                break
             print(new_captures , play_point)
         else:
             # another option
@@ -376,7 +378,7 @@ def recommend_move(game_state):
     probability_matrix=predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
     new_point = -1
-    while True:
+    for i in range(361):
         max = probability_matrix.max()
         coordinates = np.where(probability_matrix == max)
         row = coordinates[0][0]
@@ -386,9 +388,11 @@ def recommend_move(game_state):
         move = goboard.Move(new_point)
         if game_state.is_valid_move(move):
             break
+    if(i > 361):
+        return False , game_state , -1
     new_game_state , prisoners  = game_state.apply_move(move)
     print('recommend move function',new_point)
-    return new_game_state , new_point
+    return True , new_game_state , new_point
 def compare_state(state1,state2,captures,player):
     print("compare state: ", state1== state2)
     c ={ 
@@ -449,7 +453,9 @@ def main():
             if(not first_game):
                 send_valid_moves_to_gui(game)
                 old_game = copy.deepcopy(game)
-                recommended , recommended_move = recommend_move(old_game)
+                r ,recommended , recommended_move = recommend_move(old_game)
+                if(not r):
+                    break
                 old_captures = copy.copy(captures[opponent])
                 decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
                 result = compare_state(recommended,game,captures,player)
@@ -470,7 +476,9 @@ def main():
                     break
             
             old_captures = copy.copy(captures[player])
-            game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+            result , game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+            if(not result):
+                break
             print('after monto carlo')
             decision = '0'
             b_time = '0'
