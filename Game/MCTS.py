@@ -35,9 +35,7 @@ def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth):
     
     root = MCTS_node(state,None,captures,point)
     for i in range(num_rounds): 
-        result,leaf = traverse(root,i)  
-        if(not result):
-            return False , state ,captures ,point
+        leaf = traverse(root,i)  
         simulation_result , last_node = rollout(leaf,depth)
         backpropagate(root,last_node , simulation_result) 
     # print('encoding time ',encoding_time)
@@ -45,7 +43,7 @@ def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth):
     # print('move time ',move_time)
     # print('prisoners time ',prisoners_time)
     game , captures , play_point =  best_child(root) 
-    return True , game , captures , play_point
+    return game , captures , play_point
  
 def best_child(root):
     best_winning_frac = 0
@@ -62,11 +60,9 @@ def best_child(root):
 def traverse(node,total_rollouts): 
     picked_child=None
     if(not node.game_state.is_over()):
-        result = get_best_three(node) 
-        if(not result):
-            return result, None       
+        get_best_three(node) 
         picked_child = pick_child(node,total_rollouts)  
-    return result , picked_child  
+    return picked_child  
   
 def pick_child(node,total_rollouts):
     if(total_rollouts == 0 and len(node.children) > 0):
@@ -94,7 +90,7 @@ def get_best_three(root):
     probability_matrix = predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
     for i in range(3):
-        for j in range(361):
+        while True:
             max = probability_matrix.max()
             coordinates = np.where(probability_matrix == max)
             row = coordinates[0][0]
@@ -105,8 +101,6 @@ def get_best_three(root):
             #print(new_point)
             if root.game_state.is_valid_move(move):
                 break
-        if(j > 361):
-            return False
         #print('move ',move)
         legal_state , prisoners = root.game_state.apply_move(move) 
         capture = 0
@@ -115,7 +109,6 @@ def get_best_three(root):
         child_captures[player]+=prisoners
         child = MCTS_node(legal_state,root,child_captures,new_point)
         root.children.append(child)
-    return True
     # print(probability_matrix)
 
 def rollout(node,depth):
