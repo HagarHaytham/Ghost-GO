@@ -63,17 +63,17 @@ def get_game_mode_from_gui():
         if(len(initial_state)==0):
             pass
         else: 
-            for move_ in initial_state:
-                if move_[i][2] == '.':
-                    continue
-                game.next_player = gotypes.Player.black if move_[i][2] == '0' else gotypes.Player.white
-                move = goboard.Move(gotypes.Point((int(move_[i][1]),int(move_[i][0]))))
-                game,captures = game.apply_move(move)
-        # for i in range(0, len(initial_state):
-        #     point =  gotypes.Point(row= int(initial_state[i][1]),col= int(initial_state[i][0]))
-        #     move = goboard.Move(point)
-        #     print(">>>> move", move.point)
-        #     game , prisoners  = game.apply_move(move)
+            # for move_ in initial_state:
+            #     if move_[i][2] == '.':
+            #         continue
+            #     game.next_player = gotypes.Player.black if move_[i][2] == '0' else gotypes.Player.white
+            #     move = goboard.Move(gotypes.Point((int(move_[i][1]),int(move_[i][0]))))
+            #     game,captures = game.apply_move(move)
+            for i in range(0, len(initial_state)):
+                point =  gotypes.Point(row= int(initial_state[i][1]),col= int(initial_state[i][0]))
+                move = goboard.Move(point)
+                print(">>>> move", move.point)
+                game , prisoners  = game.apply_move(move)
         print(opponent)
    
     return game , captures , player , opponent
@@ -111,7 +111,7 @@ def get_opponent_game_from_gui(current_state,captures,opponent):
         consequitive_passes+=1
     return decision[0] , new_game_state , captures , point
 
-def send_move_to_gui(decision,point,b_time,w_time,color):
+def send_move_to_gui(decision,point,b_time,w_time,color,our_player='0'):
     print("send_move_to_gui")
     global consequitive_passes
     print('send move', decision, point)
@@ -124,7 +124,7 @@ def send_move_to_gui(decision,point,b_time,w_time,color):
     elif decision == '2': # pass
         consequitive_passes+=1
         move = '2'
-    interface.send_move(move,color,str(b_time),str(w_time))
+    interface.send_move(move,color,str(b_time),str(w_time),our_player)
     return  
 
 def send_board_to_gui(decision,board): 
@@ -347,7 +347,8 @@ def AI_vs_AI():
                         decision = '1' if play_move.is_resign else decision
                         decision = '2' if play_move.is_pass else decision
                         player = '0' if game.next_player.other == gotypes.Player.black else '1'
-                        send_move_to_gui(decision, play_move.point, remainingTime['B'], remainingTime['W'], player)
+                        send_move_to_gui(decision, play_move.point, remainingTime['B'], remainingTime['W'], player, our_player)
+
 
         result = response[1]
         print(result)

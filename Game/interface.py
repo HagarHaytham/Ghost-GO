@@ -37,34 +37,32 @@ def get_initial_board():
         print("intefaace.py",initial_board)
         # if initial_board != 0:
         stones = []
-        if(initial_board.decode('utf-8') == '1'):
-            f = open("initial_state.txt",'r')
-            comp_stones = f.read().splitlines()
-            for s in comp_stones:
-                stones.append(s.split('-'))
-        return stones # 2D list each record --> col, row, color ALL are strings  /// [] if empty
-        # print("initial Board len",len(initial_board))
-        # # if initial_board != 0:
-        # stones = []
-        # if(initial_board.decode('utf-8') == '1'):
-        #     f = open("initial_state.txt",'r')
-        #     moves = f.readlines() 
-        #     print("moves = ", moves)
-        #     stone=[]
-        #     for line in f:
-        #         move=line.strip()
-        #         stone.append(move.split('-'))
-        #     f.close() 
-        # #print("stone = ",stones)    
-        # print("stones len",len(stones))   
+        if(initial_board.decode('utf-8') == '1'): 
+            with open('initial_state.txt') as f:
+                f.seek(0)
+                first_char = f.read(1) #get the first character
+                while not first_char:
+                    f.seek(0)
+                    first_char = f.read(1)
+                    # print("empty")
+                f.seek(0)
+                comp_stones = f.read().splitlines()
+                # print("comp_stones >> ", comp_stones)
+                for s in comp_stones:
+                    stones.append(s.split('-'))
+                f.close()  
         return stones # 2D list each record --> col, row, color ALL are strings  /// [] if empty
 
 def send_ghost_color(color):
     c = 'COLOR,' + color
     push_socket.send_string(c)
 
-def send_move(move, color, O_time, G_time):
-    m = 'MOVE,' + move + '#' + color + '#' + O_time + '#' + G_time
+def send_move(move, color, B_time, W_time,our_player):
+    if our_player == '0':
+        time = W_time + '#' + B_time
+    else:
+        time = B_time + '#' + W_time  
+    m = 'MOVE,' + move + '#' + color + '#' + time
     push_socket.send_string(m)
 
 def send_state(state):
@@ -115,5 +113,3 @@ def send_recommended_move(move):
 def send_congrate(msg): 
     g = 'CONGRATULATE,' + msg
     push_socket.send_string(g)
-
-# get_initial_board()

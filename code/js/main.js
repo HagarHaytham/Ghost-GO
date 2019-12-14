@@ -7,6 +7,8 @@ else interface.send_mode('0');
 
 if(color == "black") interface.send_opponent_color('0');
 else interface.send_opponent_color('1');
+
+var scoreScreen = false
 var my_turn = false;
 var valid_moves = [[-1,-1]];
 var ghost_animate = true;
@@ -222,9 +224,9 @@ function setup(){
     drawBoard();
     //-----------------------TESTING--------------------------
     //drawMove(['5','19'], '0', "14:00", "13:00")
-    //board = [['1','19','0'], ['2','19','1'], ['3','18','1'], ['4','17','0']]
-    //updateBoard(board);
-    //drawState(board);
+    //boardtmp = [['1','19','0'], ['2','19','1'], ['3','18','1'], ['4','17','0']]
+    //updateBoard(boardtmp);
+    //drawState(boardtmp);
     //congratulate("Nice Move")
     //showScore("2500","56100","you Resigned");
     //drawMove(['5','13'], '0', "14:00", "13:00")
@@ -642,7 +644,7 @@ function showScore(O_score,G_score,reason){
     yourTurnStr.visible = false;
     ghost_animate = false;
     blurFilter.blur = 5;
-
+    scoreScreen = true;
     
     const fontStyle1 = new PIXI.TextStyle({
         dropShadow: true,
@@ -673,16 +675,19 @@ function showScore(O_score,G_score,reason){
     myScoreBoard.y = 300
     myScoreBoard.height = 90
     myScoreBoard.width = 200 
+    myScoreBoard.name = "scorescreen"
     app.stage.addChild(myScoreBoard);
 
     var myScoreTxt = new PIXI.Text(G_score,fontStyle2);
     myScoreTxt.x = myScoreBoard.x + myScoreBoard.width /2 - myScoreTxt.width/2;
     myScoreTxt.y = 300
+    myScoreTxt.name = "scorescreen"
     app.stage.addChild(myScoreTxt);
 
     GScoreStr = new PIXI.Text("Ghost Score",fontStyle2);
     GScoreStr.x = myScoreBoard.x + myScoreBoard.width/2 - GScoreStr.width/2;
     GScoreStr.y = 200
+    GScoreStr.name = "scorescreen"
     app.stage.addChild(GScoreStr);
 
 
@@ -691,11 +696,13 @@ function showScore(O_score,G_score,reason){
     opponentScoreBoard.y = 500
     opponentScoreBoard.height = 90
     opponentScoreBoard.width = 200 
+    opponentScoreBoard.name = "scorescreen"
     app.stage.addChild(opponentScoreBoard);
 
     var opponentScoreTxt = new PIXI.Text(O_score,fontStyle2);
     opponentScoreTxt.x = opponentScoreBoard.x + opponentScoreBoard.width /2 - opponentScoreTxt.width/2;
     opponentScoreTxt.y = 500
+    opponentScoreTxt.name = "scorescreen"
     app.stage.addChild(opponentScoreTxt);
 
     if(mode == "AIVSHuman") OScore = "Your Score"
@@ -703,6 +710,7 @@ function showScore(O_score,G_score,reason){
     OScoreStr = new PIXI.Text(OScore, fontStyle2);
     OScoreStr.x = opponentScoreBoard.x + opponentScoreBoard.width/2 - OScoreStr.width/2;
     OScoreStr.y = 400
+    OScoreStr.name = "scorescreen"
     app.stage.addChild(OScoreStr);
 
     msg = "Hard Luck"
@@ -716,6 +724,7 @@ function showScore(O_score,G_score,reason){
         logo.x =  window.innerWidth/2 - GScoreStr.width/2;;
         logo.y = y + 150;
         logo.scale.set(0.5);
+        logo.name = "scorescreen"
         app.stage.addChild(logo);
 
         if(mode != "AIVSHuman") msg = "Congratulations"
@@ -728,11 +737,13 @@ function showScore(O_score,G_score,reason){
     GScoreStr = new PIXI.Text(msg,fontStyle1);
     GScoreStr.x = window.innerWidth/2 - GScoreStr.width/2 - 50;
     GScoreStr.y = y
+    GScoreStr.name = "scorescreen"
     app.stage.addChild(GScoreStr);
 
     reasonStr = new PIXI.Text(reason,fontStyle2);
     reasonStr.x = window.innerWidth/2 - reasonStr.width/2;
     reasonStr.y = y + blockSz*blockNum + 30
+    reasonStr.name = "scorescreen"
     if(mode != "AIVSHuman") app.stage.addChild(reasonStr);
 }
 
@@ -835,6 +846,15 @@ function drawState(state){
 }
 
 function updateBoard(state){
+    if(scoreScreen){
+        ghost_animate = true;
+        blurFilter.blur = 0;
+        utilities.removeChildByName("scorescreen", app)
+        scoreScreen = false;
+        updateGhostTime("15 : 00");
+        updateopponentTime("15 : 00");
+    }
+
     console.log("update board func")
     //remove all stones
     utilities.removeChildByName("stone", app);
