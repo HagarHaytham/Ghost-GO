@@ -71,7 +71,9 @@ function addSoundButton(app){
     soundButtonRect.buttonMode = true;
     var soundTrack = new Howl({
         src: ['../sound/Soundtrack4.mp3'],
-        loop: true
+        loop: true,
+        autoplay:true,
+        html5: true
     });
     soundTrack.play()
 
@@ -94,9 +96,12 @@ function addSoundButton(app){
 }
 
 function playSound(){  
+    console.log("sound")
     var soundTrack = new Howl({
         src: ['../sound/Soundtrack4.mp3'],
-        loop: true
+        loop: true,
+        autoplay:true,
+        html5: true
     });
     soundTrack.play()
 }
