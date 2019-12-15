@@ -1,3 +1,4 @@
+const remote = require('electron').remote;
 const interface = require("../interface.js");
 const utilities = require("../js/utilities.js");
 var color = sessionStorage.getItem('color');
@@ -937,6 +938,34 @@ function addPlayAgainButton(){
     app.stage.addChild(playButton);
 
 }
+/* addexitbtn
+var window = remote.getCurrentWindow();
+       window.close();
+function addPlayAgainButton(){
+    playButton = PIXI.Sprite.fromImage('../images/resign.png');
+    playButton.x = 1200
+    playButton.y = 550
+    playButton.height = 90
+    playButton.width = 200 
+
+    playButtonRect = new PIXI.Graphics();
+    playButtonRect.lineStyle(1, 0xffff);
+    playButtonRect.drawRect(1225,570, 150, 40);
+    playButtonRect.hitArea = new PIXI.Rectangle(1225,570, 150, 40);
+    playButtonRect.interactive = true;
+    playButtonRect.buttonMode = true;
+    if(mode == "AIVSHuman"){
+        playButtonRect.on('click', function(){
+            location.assign("../html/mode.html"); 
+            //close socket#modify
+        });
+    }
+    playButton.visible = false
+    playButtonRect.visible = false
+    app.stage.addChild(playButtonRect);
+    app.stage.addChild(playButton);
+
+}*/
 
 // Listen for window resize events
 window.addEventListener('resize', resize);
