@@ -3,18 +3,18 @@ var zmq = require("zeromq");
 var fs = require('fs');
 var from_game = zmq.socket("pull");
 from_game.connect("tcp://127.0.0.1:3001");
-console.log("GUI from game interface started!");
+//console.log("GUI from game interface started!");
 
 
 
 
-//TO-DO : REPLACE PLACE HOLDERS. 
+//TO-DO : REPLACE PLACE HOLDERS.
 from_game.on("message", function(msg) {
-    
+
         // console.log("work from pull: %s", msg.toString());
         result = msg.toString();
         l = result.split(',');
-        
+
         switch(l[0]){
                 case 'STATE':
                 draw_state('../Game/send_state.txt');
@@ -53,7 +53,7 @@ function draw_state(file_name)
 {
     fs.readFile(file_name, {encoding: 'utf-8'}, function(err,data){
         if (!err) {
-            console.log('received data: ' + data);
+            //console.log('received data: ' + data);
             var tmp = data.split(',');
             var stone_count = (tmp.length-1)/3;
             var state = new Array(stone_count);
@@ -62,8 +62,8 @@ function draw_state(file_name)
                 state[i] = new Array(3);
                 for(j = 3*i ; j<3*i+3; j++)
                 {
-                    state[i][j%3] = tmp[j];  
-                    console.log(tmp[j]);
+                    state[i][j%3] = tmp[j];
+                    //console.log(tmp[j]);
                 }
             }
             //call gui function here. each row contains x,y,color.
@@ -71,7 +71,7 @@ function draw_state(file_name)
         } else {
             console.log(err);
         }
-    })    
+    })
 }
 
 
@@ -90,19 +90,19 @@ function draw_moves(file_name) // to draw valid moves.
                 valid[i] = new Array(2);
                 for(j = 2*i ; j<2*i+2; j++)
                 {
-                    valid[i][j%2] = tmp[j];  
+                    valid[i][j%2] = tmp[j];
                     // console.log(tmp[j]);
                 }
             }
-            console.log(stone_count);
+            //console.log(stone_count);
             gui.validMoves(valid);
-            console.log(valid);
+            //console.log(valid);
             //call gui function here. each row contains x,y.
         } else {
             console.log(err);
         }
     })
-    
+
 }
 
 
@@ -119,7 +119,7 @@ function draw_move(move)
     //gui_func()
     move = tmp_move[1].split('-');
     gui.drawMove(move, tmp_move[2], tmp_move[3], tmp_move[4]);
-    
+
 }
 
 
@@ -129,7 +129,7 @@ function update_board(file_name)
 {
     fs.readFile(file_name, {encoding: 'utf-8'}, function(err,data){
         if (!err) {
-            console.log('received data: ' + data);
+            //console.log('received data: ' + data);
             var tmp = data.split(',');
             var stone_count = (tmp.length-1)/3;
             var state = new Array(stone_count);
@@ -138,7 +138,7 @@ function update_board(file_name)
                 state[i] = new Array(3);
                 for(j = 3*i ; j<3*i+3; j++)
                 {
-                    state[i][j%3] = tmp[j];  
+                    state[i][j%3] = tmp[j];
                     //console.log(tmp[j]);
                 }
             }
@@ -148,30 +148,30 @@ function update_board(file_name)
         } else {
             console.log(err);
         }
-    })    
+    })
 }
 
 function show_score(score)
 {
-    console.log('SCORE: '+score);
-    from_game.close();
+    //console.log('SCORE: '+score);
+    // from_game.close();
     var tmp_score = score.split('#');
     //tmp_score[0] : O_Score.
     //tmp_score[1] : G_ Score.
     //tmo_score[2] : Reason.
     gui.showScore(tmp_score[0], tmp_score[1], tmp_score[2]);
-    
+
 }
 
 function congratulate(msg)
 {
-    console.log("CONGRATULATING:"+msg)
+    //console.log("CONGRATULATING:"+msg)
     gui.congratulate(msg);
 }
 function show_recommended_move(move) // in addition to valid moves, There can be a specific recommended move.
 {
 
-    console.log('Recommended Moves:'+ move);
+    //console.log('Recommended Moves:'+ move);
     var tmp_move = move.split('#');
     //tmp_move[0] : move_type.
     // tmp_move[1] : move_position.

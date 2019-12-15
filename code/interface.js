@@ -5,12 +5,12 @@ to_game.bindSync("tcp://127.0.0.1:3000");
 
 
 
-console.log("GUI interface started!");
+//console.log("GUI interface started!");
 var oppo_mode = 0;
 
 // white : 1 , black : 0
 function send_opponent_color(color){
-    console.log("interface: color: ", color)
+   // console.log("interface: color: ", color)
     to_game.send(color);
 }
 
@@ -31,7 +31,7 @@ function send_mode(mode){
 }
 
 function send_initial_board(board){
-    console.log("send_initial_board ", board);
+    //console.log("send_initial_board ", board);
     //converting the board to a string.
     var l1 = board.length;
     var board_str = "";
@@ -49,9 +49,9 @@ function send_initial_board(board){
         }
          fs.writeFile("../Game/initial_state.txt",board_str,(err)=>{
         if(err) console.log(err);
-		else console.log("successfully written into file.");
+		//else console.log("successfully written into file.");
     });
-      console.log(board_str);
+      //console.log(board_str);
     }
     to_game.send(msg);
 }

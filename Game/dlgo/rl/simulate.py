@@ -74,7 +74,7 @@ def simulate_game(black_player, white_player, model_index = -1, game_index = -1)
         game_file.close()
 
     game_result,_ = scoring.compute_game_result(game,captures)
-    print(game_result)
+    # print(game_result)
 
     return GameRecord(
         moves=moves,
@@ -93,7 +93,7 @@ def experience_simulation(num_games, agent1, agent2,with_experience = True, mode
 
     color1 = Player.black
     for game_index in range(num_games):
-        print('Game ', game_index)
+        # print('Game ', game_index)
         if with_experience:
             collector1.begin_episode()
             agent1.set_collector(collector1)

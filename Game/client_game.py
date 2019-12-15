@@ -22,18 +22,18 @@ def init(port=7374, name='Ghost'):
 
 def handle_init():
     global connected
-    print("init")
+    # print("init")
     response = send_to_client({})
     connected = response[0]
     return response
 
 def handle_ready():
-    print("ready")
+    # print("ready")
     return send_to_client({})
 
 def handle_thinking(move):
-    print("thinking")
-    print('thinking', move.point)
+    # print("thinking")
+    # print('thinking', move.point)
     move_type = 'place'
     move_type = 'pass' if move.is_pass else move_type
     move_type = 'resign' if move.is_resign else move_type
@@ -48,20 +48,20 @@ def handle_thinking(move):
     return send_to_client(parameters)
 
 def handle_await_response():
-    print("await_response")
+    # print("await_response")
     return send_to_client({})
 
 def handle_idle():
-    print("idle")
+    # print("idle")
     return send_to_client({})
 
 def send_to_client(parameters):
     global connected
-    print('send')
+    # print('send')
     client_socket.send_json(parameters)
     #  Get the reply.
     message = client_socket.recv_json()
-    print(message)
+    # print(message)
     success = message[0]
     connected = message[1]
     payload = message[2]

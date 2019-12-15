@@ -27,11 +27,11 @@ def main():
     winner,score = game.winner(captures)
 
     if winner == gotypes.Player.black:
-        print("Black is the WINNER!!!!")
+        # print("Black is the WINNER!!!!")
     else:
-        print("White is the WINNER!!!!")
+        # print("White is the WINNER!!!!")
 
-    print('Black:', score[gotypes.Player.black] ,'\tWhite:', score[gotypes.Player.white])
+    # print('Black:', score[gotypes.Player.black] ,'\tWhite:', score[gotypes.Player.white])
 
 if __name__ == '__main__':
     main()

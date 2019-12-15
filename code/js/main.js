@@ -84,7 +84,7 @@ var loader = new PIXI.Loader();
 loader.add(['../images/mainbg.jpg','../images/Ghost Matter.jpg', '../images/ooh.png',
             "../images/sound.png", "../images/mute.png", '../images/pass.png',
             '../images/resign.png', '../images/timer.png', '../images/boardcartoon.png',
-            "../images/white.png", "../images/black.png", "../images/red.png", '../images/score.png', '../images/dab.png']);
+            "../images/white.png", "../images/black.png", "../images/red.png", '../images/score.png', '../images/dab.png', '../images/done.png']);
 loader.once('complete',setup);
 loader.load();
 
@@ -231,8 +231,8 @@ function setup(){
     if(initialState == true && mode == "AIVSHuman") addInitialState(); //test
     addTimer();
     drawBoard();
-    addPlayAgainButton();
-    addExitButton();
+    //addPlayAgainButton();
+    //addExitButton();
     //-----------------------TESTING--------------------------
     //drawMove(['5','19'], '0', "14:00", "13:00")
     //boardtmp = [['1','19','0'], ['2','19','1'], ['3','18','1'], ['4','17','0']]
@@ -249,6 +249,8 @@ function setup(){
     //showRecommendedMove('2',['1','19']); //pass
     //getGhostColor("1");
     //validMoves([['1','19']])
+    //updateGhostTime("815548");
+    //updateopponentTime("95556")
 }
 
 function addInitialState(){
@@ -265,7 +267,7 @@ function addInitialState(){
     msg1Txt.name = "initial";
     app.stage.addChild(msg1Txt);
 
-    const doneButton = PIXI.Sprite.fromImage('../images/pass.png');
+    const doneButton = PIXI.Sprite.fromImage('../images/done.png');
     doneButton.x = msg1Txt.x - 50
     doneButton.y = 300
     doneButton.height = 90
@@ -279,7 +281,7 @@ function addInitialState(){
     doneButtonRect.interactive = true;
     doneButtonRect.buttonMode = true;
     doneButtonRect.name = "initial"
-
+    
     app.stage.addChild(doneButtonRect)
     app.stage.addChild(doneButton)
     
@@ -292,7 +294,7 @@ function addInitialState(){
         else{
             sendInitialBoard(initialBorad)
             initialState = false;
-            console.log("after initial state")
+            //console.log("after initial state")
             utilities.removeChildByName("initial", app)
             passButton.visible = true
             passButtonRect.visible = true
@@ -401,7 +403,7 @@ function inGrid(clickX, clickY){
     const flexibility = 10;
     var clickXX = Math.floor(clickX);
     var clickYY = Math.floor(clickY);
-    console.log("x: ", clickX, "y ", clickY);
+    //console.log("x: ", clickX, "y ", clickY);
     clickXX -= x;
     clickYY -= y;
     if(clickXX + flexibility < 0 || clickYY + flexibility < 0) return false;
@@ -411,7 +413,7 @@ function inGrid(clickX, clickY){
 
 
 function onClick(event){
-    console.log("board on click");
+    //console.log("board on click");
     if(!my_turn && !initialState) return;
     var clickPosX = event.data.global.x ;
     var clickPosY = event.data.global.y ;
@@ -440,7 +442,7 @@ function onClick(event){
         ++row;
         var move = [col.toString(), row.toString()];
         //check it //modify//indexOf != -1
-        console.log("move ", move [0], " y ", move[1])
+        //console.log("move ", move [0], " y ", move[1])
         
         if(initialState){
             if(initialStateColor == "White" ){
@@ -453,7 +455,7 @@ function onClick(event){
             } 
             
             if(!utilities.isItemInArray(initialBorad, move)){
-                console.log("isn't in item")
+                //console.log("isn't in item")
                 initialBorad.push(move)
                 stone.name = "stone"
                 stone.filters = [blurFilter];
@@ -462,8 +464,8 @@ function onClick(event){
             return;
 
         }
-        console.log(utilities.isItemInArray(valid_moves, [-1,-1]));
-        console.log(utilities.isItemInArray(valid_moves, move));
+        //console.log(utilities.isItemInArray(valid_moves, [-1,-1]));
+        //console.log(utilities.isItemInArray(valid_moves, move));
         if(utilities.isItemInArray(valid_moves, [-1,-1]) || utilities.isItemInArray(valid_moves, move)){
             //modify //Assume return null if not found
             utilities.removeChildByName("red", app)
@@ -475,7 +477,7 @@ function onClick(event){
             my_turn = false;
             yourTurnStr.visible = false;
             interface.send_opponent_move("0", move); 
-            console.log("move x ",  move[0] , " y ", move[1]);
+            //console.log("move x ",  move[0] , " y ", move[1]);
             stone.filters = [blurFilter];
             stone.name = "stone"
             app.stage.addChild(stone);
@@ -601,7 +603,7 @@ function validMoves(moves){
 
 function drawMove(move, tmpColorNum, GTime, OTime){
     var tmpColor;
-    console.log("move x ", move[0], " y ", move[1])
+    //console.log("move x ", move[0], " y ", move[1])
     
     if(mode == "AIVSHuman"){
         if(GTime != "color"){
@@ -661,14 +663,14 @@ function showScore(O_score,G_score,reason){
     blurFilter.blur = 5;
     scoreScreen = true;
     blurFilter2.blur = 5
-
-    if(mode == "AIVSHuman"){
+    //undo for exit, playAgain btns
+    /*if(mode == "AIVSHuman"){
         playButton.visible = true
         playButtonRect.visible = true
             
         exitButton.visible = true
         exitButtonRect.visible = true
-    } 
+    } */
     
     const fontStyle1 = new PIXI.TextStyle({
         dropShadow: true,
@@ -834,7 +836,7 @@ function showRecommendedMove(moveType, move){
 
         var row = parseInt(move[1], 10);
         var col = parseInt(move[0], 10);
-        console.log("added stone col: ", col , " row ", row);
+        //console.log("added stone col: ", col , " row ", row);
         --row;
         --col;
 
@@ -888,17 +890,27 @@ function updateBoard(state){
         scoreScreen = false;     
     }
 
-    console.log("update board func")
+    //console.log("update board func")
     //remove all stones
     utilities.removeChildByName("stone", app);
     drawState(state)
 }
 
 function updateGhostTime(remainingtime){
+    time = parseInt(remainingtime, 10);
+    sec = Math.floor(time/1000);
+    min = Math.floor(sec/60);
+    sec = Math.floor(sec%60);
+    remainingtime = min.toString() + " : " + sec.toString()
     GCountingTxt.text = remainingtime;
 }
 
 function updateopponentTime(remainingtime){
+    time = parseInt(remainingtime, 10);
+    sec = Math.floor(time/1000);
+    min = Math.floor(sec/60);
+    sec = Math.floor(sec%60);
+    remainingtime = min.toString() + " : " + sec.toString()
     OCountingTxt.text = remainingtime;
 }
 

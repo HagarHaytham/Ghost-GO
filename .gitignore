@@ -3,3 +3,7 @@ node_modules
 Game/valid_moves.txt
 Game/update_board.txt
 Game/initial_state.txt
+Game/__pycache__/*
+Game/dlgo/__pycache__/*
+Game/dlgo/agent/__pycache__/*
+

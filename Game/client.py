@@ -17,7 +17,7 @@ async def blocking_to_async(func, *args):
         )
     })
     return_val = tuple(element.result() for element in tuple(result[0]))
-    print(return_val)
+    # print(return_val)
     return return_val[0] if len(return_val) == 1 else return_val
 
 context = game_engine_socket = None
@@ -58,9 +58,9 @@ async def handle_init():
 
 async def handle_ready():
     global current_state, websocket
-    print("now handling ready")
+    # print("now handling ready")
     msg = await websocket.recv()
-    print("received", msg)
+    # print("received", msg)
     msg = json.loads(msg)
     if msg["type"] == "START":
 
@@ -68,18 +68,15 @@ async def handle_ready():
         moveLog = msg['configuration']['moveLog']
         color = msg["configuration"]["initialState"]["turn"]
 
-        if msg["color"] == initialState['turn'] and len(moveLog) % 2 == 0 or \
-            msg["color"] != initialState['turn'] and len(moveLog) % 2 != 0:
+        if msg["color"] == initialState['turn'] and len(moveLog) % 2 == 0 or msg["color"] != initialState['turn'] and len(moveLog) % 2 != 0:
             current_state = states['THINKING']
-            my_color = msg["color"]
         else:
-            my_color = "B" if msg["color"] == "W" else "W"
             current_state = states['IDLE']
 
         parameters = {
             "initialState":initialState,
             "moveLog":moveLog,
-            "ourColor":my_color
+            "ourColor":msg["color"]
         }
 
         return parameters
@@ -91,7 +88,7 @@ async def handle_ready():
 def handle_end(msg):
     global current_state, restart
     restart = True
-    print("END GAME reason is "+ msg['reason'])
+    # print("END GAME reason is "+ msg['reason'])
     score = {
         'reason': msg['reason'],
         'winner': msg['winner'],
@@ -123,7 +120,7 @@ async def handle_await_response():
     global current_state, websocket
     msg = await websocket.recv()
     msg = json.loads(msg)
-    print(msg)
+    # print(msg)
     if msg["type"] == "VALID":
         current_state = states["IDLE"]
         return { 'valid': True, 'remaning_time': msg["remainingTime"] }
@@ -164,7 +161,7 @@ async def main():
         #  = game_engine_socket.recv_json()
 
         return_value = None
-        print("State: " + str(current_state), message)
+        # print("State: " + str(current_state), message)
         try:
             if current_state == states["INIT"]:
                 return_value = await handle_init()
@@ -179,10 +176,10 @@ async def main():
         except Exception as e:
             connected = False
             restart = True
-            print("type error: " + str(e))
+            # print("type error: " + str(e))
             current_state = states["INIT"]
 
-        print(restart, connected, return_value)
+        # print(restart, connected, return_value)
         message = (not restart), connected, return_value
         #  Send reply back to the game engine
         game_engine_socket.send_json(message)
@@ -196,10 +193,10 @@ async def ping_pong():
         try:
             await websocket.pong()
             await asyncio.sleep(0.5)
-            # print("ping")
+            # # print("ping")
         except Exception as e:
             pass
-            # print(f"ping pong exception {str(e)}")
+            # # print(f"ping pong exception {str(e)}")
 
 def pong():
     asyncio.run(ping_pong())

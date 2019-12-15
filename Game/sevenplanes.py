@@ -44,12 +44,12 @@ class SevenPlaneEncoder():
         TotalCount += 1
         
         if TotalCount == 100:
-            print('encode', TotalTime)
-            print('zeros', ZerosTime)
-            print('GoString', GoStringTime)
-            print('violate', ViolateTime)
-            print('DeepTime', DeepTime['time'])
-            print()
+            # print('encode', TotalTime)
+            # print('zeros', ZerosTime)
+            # print('GoString', GoStringTime)
+            # print('violate', ViolateTime)
+            # print('DeepTime', DeepTime['time'])
+            # print()
             TotalCount = 0
             TotalTime = 0
             GoStringTime = 0
