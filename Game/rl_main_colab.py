@@ -28,18 +28,18 @@ for _ in range(10):
 
     while True:
         for bucket in range(no_games // no_games_in_bucket):
-            print(no_games // no_games_in_bucket)
-            print(bucket)
+            # print(no_games // no_games_in_bucket)
+            # print(bucket)
             train(model_index = current_index, model = model, no_self_games = no_games_in_bucket, save_experience = save_experience, save_games = save_games, epsilon = epsilon, wave_index = wave_index)
 
         state = ""
         if is_baba_voss(model1 = model, model2 = old_model, no_trials = no_trials, wins_ratio = wins_ratio, save_experience = save_experience):
         #     # save the model
-            print('Here we go')
+            # print('Here we go')
             state = "W"
             break;
         else:
-            print('Try Harder')
+            # print('Try Harder')
             state = "L"
 
         model.save('models/ElevenPlanes_smallarch_model_epoch_' + str(current_index + 1) + '.h5')

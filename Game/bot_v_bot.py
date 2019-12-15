@@ -20,7 +20,7 @@ def main():
     while not game.is_over():
         # time.sleep(1)
         
-        print(chr(27) + "[2J")
+        # print(chr(27) + "[2J")
         print_board(game.board)
         bot_move = bots[game.next_player].select_move(game)
         print_move(game.next_player, bot_move)
@@ -35,11 +35,11 @@ def main():
     winner,score = game.winner(captures)
 
     if winner == gotypes.Player.black:
-        print("Black is the WINNER!!!!")
+        # print("Black is the WINNER!!!!")
     else:
-        print("White is the WINNER!!!!")
+        # print("White is the WINNER!!!!")
 
-    print('Black:', score[gotypes.Player.black] ,'\tWhite:', score[gotypes.Player.white])
+    # print('Black:', score[gotypes.Player.black] ,'\tWhite:', score[gotypes.Player.white])
 
 if __name__ == '__main__':
     main()

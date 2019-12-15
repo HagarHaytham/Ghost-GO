@@ -38,10 +38,10 @@ def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth):
         leaf = traverse(root,i)  
         simulation_result , last_node = rollout(leaf,depth)
         backpropagate(root,last_node , simulation_result) 
-    # print('encoding time ',encoding_time)
-    # print('cnn time ',cnn_time)
-    # print('move time ',move_time)
-    # print('prisoners time ',prisoners_time)
+    # # print('encoding time ',encoding_time)
+    # # print('cnn time ',cnn_time)
+    # # print('move time ',move_time)
+    # # print('prisoners time ',prisoners_time)
     game , captures , play_point =  best_child(root) 
     return game , captures , play_point
  
@@ -66,9 +66,9 @@ def traverse(node,total_rollouts):
   
 def pick_child(node,total_rollouts):
     if(total_rollouts == 0 and len(node.children) > 0):
-        # print('children = ',len(node.children))
+        # # print('children = ',len(node.children))
         index = random.randint(0,len(node.children)-1)
-        # print(index)
+        # # print(index)
         return node.children[index]
     current_value=0
     picked_child=node.children[0]
@@ -81,11 +81,11 @@ def pick_child(node,total_rollouts):
 
 def get_best_three(root):
     state = elevenplanes.ElevenPlaneEncoder((19,19))
-    #print("teeeeeeeeeeeeest",state.shape)
+    ## print("teeeeeeeeeeeeest",state.shape)
     state = state.encode(root.game_state)
-    #print(state.shape)
+    ## print(state.shape)
     state = np.expand_dims(state,axis=0)
-    #print(state.shape)
+    ## print(state.shape)
 
     probability_matrix = predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
@@ -98,18 +98,18 @@ def get_best_three(root):
             probability_matrix[row][col]= 0
             new_point = gotypes.Point( row=row+1,col=col+1)
             move = goboard.Move(new_point)
-            #print(new_point)
+            ## print(new_point)
             if root.game_state.is_valid_move(move):
                 break
-        #print('move ',move)
+        ## print('move ',move)
         legal_state , prisoners = root.game_state.apply_move(move) 
         capture = 0
-        #print('prisoners',prisoners)
+        ## print('prisoners',prisoners)
         child_captures = copy.copy(root.captures)    
         child_captures[player]+=prisoners
         child = MCTS_node(legal_state,root,child_captures,new_point)
         root.children.append(child)
-    # print(probability_matrix)
+    # # print(probability_matrix)
 
 def rollout(node,depth):
     game_state = node.game_state
@@ -164,7 +164,7 @@ def rollout(node,depth):
 
 
     last_captures=copy.copy(parent.captures)
-    # print(last_captures)
+    # # print(last_captures)
     game_captures = {
         gotypes.Player.black : last_captures['0'],
         gotypes.Player.white : last_captures['1']
@@ -180,7 +180,7 @@ def backpropagate(root,node, result):
     
     if node == root :
         return 
-    # print(result)
+    # # print(result)
     node.record_win(result)  # update stats
     backpropagate(root,node.parent,result) 
 

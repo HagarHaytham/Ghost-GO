@@ -26,7 +26,7 @@ def get_opponent_color():
 def get_opponent_move(): #till now it blocks, in case computations are needed at this time, open a thread
     while(True):
         opponent_move = pull_socket.recv()
-        print("opponent_move : ",opponent_move)
+        # print("opponent_move : ",opponent_move)
         # if opponent_move != 0:
         opponent_move = opponent_move.decode('utf-8')
         return opponent_move
@@ -34,7 +34,7 @@ def get_opponent_move(): #till now it blocks, in case computations are needed at
 def get_initial_board():
     while(True):
         initial_board = pull_socket.recv()
-        print("intefaace.py",initial_board)
+        # print("intefaace.py",initial_board)
         # if initial_board != 0:
         stones = []
         if(initial_board.decode('utf-8') == '1'): 
@@ -44,10 +44,10 @@ def get_initial_board():
                 while not first_char:
                     f.seek(0)
                     first_char = f.read(1)
-                    # print("empty")
+                    # # print("empty")
                 f.seek(0)
                 comp_stones = f.read().splitlines()
-                # print("comp_stones >> ", comp_stones)
+                # # print("comp_stones >> ", comp_stones)
                 for s in comp_stones:
                     stones.append(s.split('-'))
                 f.close()  
@@ -86,16 +86,16 @@ def update_board(state):
         f.write(str(state[i][1])+',')   #y
         f.write(str(state[i][2])+',')   #color
     f.close()
-    print("Hi")
+    # print("Hi")
     push_socket.send_string(s)
-    print("Bye")
+    # print("Bye")
 
 def send_valid_moves(vaild_moves):
-    print(len(vaild_moves))
+    # print(len(vaild_moves))
     v = 'VALID'
     f = open("valid_moves.txt",'w')
     for i in range (len(vaild_moves)):
-        # print(vaild_moves[i][0],vaild_moves[i][1])
+        # # print(vaild_moves[i][0],vaild_moves[i][1])
         f.write(str(vaild_moves[i][0])+',') #x
         f.write(str(vaild_moves[i][1])+',') #y
     f.close()
@@ -109,7 +109,7 @@ def send_score(O_score, G_score, reason):
 
 def send_recommended_move(move):
     m = 'REC_MOVE,' + move
-    print("Recommended Move in Interface : ",move) 
+    # print("Recommended Move in Interface : ",move) 
     push_socket.send_string(m)
 
 def send_congrate(msg): 
