@@ -134,7 +134,8 @@ def rollout(node,depth):
         t2 =time.time()        
         t3 = time.time()
         new_point = 0
-        move = agent.select_move(game_state)
+        moves = agent.select_move(game_state)
+        move = moves[0]
         #print('move ',move)
         if(not move.is_play):
             break
