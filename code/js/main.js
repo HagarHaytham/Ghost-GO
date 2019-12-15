@@ -84,7 +84,7 @@ var loader = new PIXI.Loader();
 loader.add(['../images/mainbg.jpg','../images/Ghost Matter.jpg', '../images/ooh.png',
             "../images/sound.png", "../images/mute.png", '../images/pass.png',
             '../images/resign.png', '../images/timer.png', '../images/boardcartoon.png',
-            "../images/white.png", "../images/black.png", "../images/red.png", '../images/score.png', '../images/dab.png']);
+            "../images/white.png", "../images/black.png", "../images/red.png", '../images/score.png', '../images/dab.png', '../images/done.png']);
 loader.once('complete',setup);
 loader.load();
 
@@ -267,7 +267,7 @@ function addInitialState(){
     msg1Txt.name = "initial";
     app.stage.addChild(msg1Txt);
 
-    const doneButton = PIXI.Sprite.fromImage('../images/pass.png');
+    const doneButton = PIXI.Sprite.fromImage('../images/done.png');
     doneButton.x = msg1Txt.x - 50
     doneButton.y = 300
     doneButton.height = 90
@@ -281,7 +281,7 @@ function addInitialState(){
     doneButtonRect.interactive = true;
     doneButtonRect.buttonMode = true;
     doneButtonRect.name = "initial"
-
+    
     app.stage.addChild(doneButtonRect)
     app.stage.addChild(doneButton)
     
