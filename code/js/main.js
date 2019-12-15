@@ -8,6 +8,7 @@ else interface.send_mode('0');
 if(color == "black") interface.send_opponent_color('0');
 else interface.send_opponent_color('1');
 
+var LastMove_pass = true
 var scoreScreen = false
 var my_turn = false;
 var valid_moves = [[-1,-1]];
@@ -22,6 +23,9 @@ const x = 450;
 const y = 100;
 var blurFilter = new PIXI.filters.BlurFilter();
 blurFilter.blur = 0;
+
+var blurFilter2= new PIXI.filters.BlurFilter();
+blurFilter2.blur = 0;
 if(color == "black") my_turn = true;
 
 //console.log("index, color: ", color);
@@ -165,6 +169,7 @@ function setup(){
 
             my_turn = false;
             yourTurnStr.visible = false;
+            LastMove_pass = true;
             interface.send_opponent_move("2", []);
         });
     }
@@ -202,6 +207,7 @@ function setup(){
             var congratulateStr = app.stage.getChildByName("congratulate");
             if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
 
+            LastMove_pass = true;
             my_turn = false;
             yourTurnStr.visible = false;
             interface.send_opponent_move("1", []);
@@ -466,6 +472,8 @@ function onClick(event){
             stone.filters = [blurFilter];
             stone.name = "stone"
             app.stage.addChild(stone);
+
+            LastMove_pass = false;
         }
         
         else{
@@ -644,6 +652,7 @@ function showScore(O_score,G_score,reason){
     yourTurnStr.visible = false;
     ghost_animate = false;
     blurFilter.blur = 5;
+    blurFilter2.blur = 5;
     scoreScreen = true;
     
     const fontStyle1 = new PIXI.TextStyle({
@@ -777,13 +786,14 @@ function showRecommendedMove(moveType, move){
     var alerted = 0;
     blurFilter.blur = 5;
     var lastMove = app.stage.getChildAt(app.stage.children.length-1);
-    app.stage.removeChildAt(app.stage.children.length-1); 
+    if(!LastMove_pass) app.stage.removeChildAt(app.stage.children.length-1); 
     
     fontStyle2 = utilities.getFontStyle(30);
     msg1Txt = new PIXI.Text("Recommended Move",fontStyle2);
     msg1Txt.x = x/2 - msg1Txt.width/2;
     msg1Txt.y = 200
     msg1Txt.name = "alert1";
+    msg1Txt.filters = [blurFilter2];
     app.stage.addChild(msg1Txt);
 
     msg2Txt = new PIXI.Text("Click here to Continue",fontStyle2);
@@ -792,6 +802,7 @@ function showRecommendedMove(moveType, move){
     msg2Txt.name = "alert2";
     msg2Txt.interactive = true;
     msg2Txt.buttonMode = true;
+    msg2Txt.filters = [blurFilter2];
     app.stage.addChild(msg2Txt);
 
     msg2Txt.on("click",function(){
@@ -800,7 +811,7 @@ function showRecommendedMove(moveType, move){
         utilities.removeChildByName("alert1",app);
         utilities.removeChildByName("alert2",app);
         utilities.removeChildByName("green",app);
-        app.stage.addChild(lastMove);
+        if(!LastMove_pass) app.stage.addChild(lastMove);
     });
 
     if (moveType == '0'){
@@ -824,6 +835,7 @@ function showRecommendedMove(moveType, move){
         stone.height = 25;
         stone.width = 25;
         stone.name = "green"
+        stone.filters = [blurFilter2];
         app.stage.addChild(stone);
     }
     else{
@@ -834,6 +846,7 @@ function showRecommendedMove(moveType, move){
         msg3Txt.x = x + (blockNum*blockSz)/2 - msg3Txt.width/2;
         msg3Txt.y = 200
         msg3Txt.name = "green"
+        msg3Txt.filters = [blurFilter2];
         app.stage.addChild(msg3Txt);    
     }
 }
@@ -849,6 +862,7 @@ function updateBoard(state){
     if(scoreScreen){
         ghost_animate = true;
         blurFilter.blur = 0;
+        blurFilter2.blur = 0;
         utilities.removeChildByName("scorescreen", app)
         scoreScreen = false;
         updateGhostTime("15 : 00");
