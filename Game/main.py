@@ -145,7 +145,7 @@ def send_board_to_gui(decision,board):
             for j in range(1,20):
                 stone = gotypes.Point(row= i,col= j)
                 color = board.get(stone)
-                if( color != None):
+                if( color is not None):
                     c='0'
                     if color == gotypes.Player.white :
                         c ='1'
@@ -259,12 +259,15 @@ def THINKING(game, captures):
         player = '0' if game.next_player == gotypes.Player.black else '1'
 
         if moves_count == 0 or True:
-            new_game , new_captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+            move_result , new_game , new_captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth, len(game.legal_moves()-2))
             # print(new_captures , play_point)
         else:
             # another option
             pass
-        decision = 0
+        if(move_result):
+            decision = 0
+        else:
+            decision = 1
         b_time = 0
         w_time = 0
         moves_count += 1
@@ -377,7 +380,7 @@ def recommend_move(game_state):
     probability_matrix=predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
     new_point = -1
-    while True:
+    for j in range(361):
         max = probability_matrix.max()
         coordinates = np.where(probability_matrix == max)
         row = coordinates[0][0]
@@ -387,9 +390,11 @@ def recommend_move(game_state):
         move = goboard.Move(new_point)
         if game_state.is_valid_move(move):
             break
+    if(j == 361):
+        return False , game_state , new_point
     new_game_state , prisoners  = game_state.apply_move(move)
     # print('recommend move function',new_point)
-    return new_game_state , new_point
+    return True , new_game_state , new_point
 def compare_state(state1,state2,captures,player):
     # print("compare state: ", state1== state2)
     c ={ 
@@ -452,17 +457,19 @@ def main():
                     break
                 send_valid_moves_to_gui(game)
                 old_game = copy.deepcopy(game)
-                recommended , recommended_move = recommend_move(old_game)
+                recommend_result , recommended , recommended_move = recommend_move(old_game)
+                
                 old_captures = copy.copy(captures[opponent])
                 decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
-                result = compare_state(recommended,game,captures,player)
-                # print("Recommended Move is : ",recommended_move)
-                if(result == "gt"):
-                    # print("Send Recommended move condition in main")
-                    send_recommended_move('0',recommended_move)
-                    pass
-                else: 
-                    send_congrats()
+                if(recommend_result):
+                    result = compare_state(recommended,game,captures,player)
+                    # print("Recommended Move is : ",recommended_move)
+                    if(result == "gt"):
+                        # print("Send Recommended move condition in main")
+                        send_recommended_move('0',recommended_move)
+                        pass
+                    else: 
+                        send_congrats()
                 # print("captures[opponent] old_captures : ", captures[opponent], old_captures)
                 if( captures[opponent] > old_captures):
                     # print('opponent captures')
@@ -474,9 +481,12 @@ def main():
             if(len(game.legal_moves()) == 2):
                 break            
             old_captures = copy.copy(captures[player])
-            game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
-            # print('after monto carlo')
-            decision = '0'
+            move_result , game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth,len(game.legal_moves())-2)
+            print('after monto carlo')
+            if(move_result):
+                decision = '0'
+            else:
+                decision = '1'
             b_time = '0'
             w_time = '0'
             send_move_to_gui(decision,play_point,b_time,w_time,player)  
