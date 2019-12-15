@@ -52,6 +52,8 @@ var passButton
 var passButtonRect
 var resignButtonRect
 var resignButton
+var playButton
+var playButtonRect
 //--------------Timer-------------------
 const timerStyle = new PIXI.TextStyle({
     fontFamily: "\"Comic Sans MS\", cursive, sans-serif",
@@ -228,16 +230,19 @@ function setup(){
     if(initialState == true && mode == "AIVSHuman") addInitialState(); //test
     addTimer();
     drawBoard();
+    addPlayAgainButton();
     //-----------------------TESTING--------------------------
     //drawMove(['5','19'], '0', "14:00", "13:00")
     //boardtmp = [['1','19','0'], ['2','19','1'], ['3','18','1'], ['4','17','0']]
     //updateBoard(boardtmp);
     //drawState(boardtmp);
     //congratulate("Nice Move")
-    //showScore("2500","56100","you Resigned");
+    
     //drawMove(['5','13'], '0', "14:00", "13:00")
     //drawMove(['6','18'], '1', "13:00", "12:00")
     //showRecommendedMove('0',['1','18']); //place
+    //showScore("2500","56100","you Resigned");
+    //updateBoard(boardtmp)
     //showRecommendedMove('1',['1','19']); //resign
     //showRecommendedMove('2',['1','19']); //pass
     //getGhostColor("1");
@@ -652,8 +657,13 @@ function showScore(O_score,G_score,reason){
     yourTurnStr.visible = false;
     ghost_animate = false;
     blurFilter.blur = 5;
-    blurFilter2.blur = 5;
     scoreScreen = true;
+    blurFilter2.blur = 5
+
+    if(mode == "AIVSHuman"){
+        playButton.visible = true
+        playButtonRect.visible = true
+    } 
     
     const fontStyle1 = new PIXI.TextStyle({
         dropShadow: true,
@@ -864,9 +874,13 @@ function updateBoard(state){
         blurFilter.blur = 0;
         blurFilter2.blur = 0;
         utilities.removeChildByName("scorescreen", app)
-        scoreScreen = false;
         updateGhostTime("15 : 00");
-        updateopponentTime("15 : 00");
+        updateopponentTime("15 : 00");  
+        alerted = 1;
+        utilities.removeChildByName("alert1",app);
+        utilities.removeChildByName("alert2",app);
+        utilities.removeChildByName("green",app); 
+        scoreScreen = false;     
     }
 
     console.log("update board func")
@@ -896,6 +910,31 @@ function getGhostColor(AIColor){
 
 function sendInitialBoard(board){
     interface.send_initial_board(board)
+}
+
+function addPlayAgainButton(){
+    playButton = PIXI.Sprite.fromImage('../images/resign.png');
+    playButton.x = 1200
+    playButton.y = 550
+    playButton.height = 90
+    playButton.width = 200 
+
+    playButtonRect = new PIXI.Graphics();
+    playButtonRect.lineStyle(1, 0xffff);
+    playButtonRect.drawRect(1225,570, 150, 40);
+    playButtonRect.hitArea = new PIXI.Rectangle(1225,570, 150, 40);
+    playButtonRect.interactive = true;
+    playButtonRect.buttonMode = true;
+    if(mode == "AIVSHuman"){
+        playButtonRect.on('click', function(){
+            location.assign("../html/mode.html"); 
+            //close socket#modify
+        });
+    }
+    playButton.visible = false
+    playButtonRect.visible = false
+    app.stage.addChild(playButtonRect);
+    app.stage.addChild(playButton);
 
 }
 
