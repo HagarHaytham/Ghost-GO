@@ -94,7 +94,7 @@ def get_game_mode_from_gui():
                 game.next_player = next_player
                 game,_ = game.apply_move(move)
                 if(prisoners[0] > 0):
-                    c[turn]+=prisoners[0]
+                    captures[turn]+=prisoners[0]
                     send_board_to_gui(0,game.board)
         # print(opponent)
    
@@ -395,6 +395,7 @@ def recommend_move(game_state):
     #print('move ',move)
     if(not move.is_play):
         return False , game_state,new_point
+    new_point = move.point
     new_game_state , prisoners  = game_state.apply_move(move)
     # print('recommend move function',new_point)
     return True , new_game_state , new_point
