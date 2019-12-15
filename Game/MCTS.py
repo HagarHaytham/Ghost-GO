@@ -73,9 +73,9 @@ def traverse(node,total_rollouts,available_moves):
   
 def pick_child(node,total_rollouts):
     if(total_rollouts == 0 and len(node.children) > 0):
-        # print('children = ',len(node.children))
+        # # print('children = ',len(node.children))
         index = random.randint(0,len(node.children)-1)
-        # print(index)
+        # # print(index)
         return node.children[index]
     current_value=0
     picked_child=node.children[0]
@@ -88,15 +88,17 @@ def pick_child(node,total_rollouts):
 
 def get_best_three(root,available_moves):
     state = elevenplanes.ElevenPlaneEncoder((19,19))
-    #print("teeeeeeeeeeeeest",state.shape)
+    ## print("teeeeeeeeeeeeest",state.shape)
     state = state.encode(root.game_state)
-    #print(state.shape)
+    ## print(state.shape)
     state = np.expand_dims(state,axis=0)
-    #print(state.shape)
+    ## print(state.shape)
 
     probability_matrix = predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
     num_moves = 3
+    if(available_moves  == 0):
+        return False
     if(available_moves < num_moves):
         num_moves = available_moves
     for i in range(available_moves):
@@ -108,7 +110,7 @@ def get_best_three(root,available_moves):
             probability_matrix[row][col]= -1
             new_point = gotypes.Point( row=row+1,col=col+1)
             move = goboard.Move(new_point)
-            #print(new_point)
+            ## print(new_point)
             if root.game_state.is_valid_move(move):
                 break
         if(j == 361):
@@ -116,7 +118,7 @@ def get_best_three(root,available_moves):
         #print('move ',move)
         legal_state , prisoners = root.game_state.apply_move(move) 
         capture = 0
-        #print('prisoners',prisoners)
+        ## print('prisoners',prisoners)
         child_captures = copy.copy(root.captures)    
         child_captures[player]+=prisoners
         child = MCTS_node(legal_state,root,child_captures,new_point)
@@ -177,7 +179,7 @@ def rollout(node,depth):
 
 
     last_captures=copy.copy(parent.captures)
-    # print(last_captures)
+    # # print(last_captures)
     game_captures = {
         gotypes.Player.black : last_captures['0'],
         gotypes.Player.white : last_captures['1']
@@ -193,7 +195,7 @@ def backpropagate(root,node, result):
     
     if node == root :
         return 
-    # print(result)
+    # # print(result)
     node.record_win(result)  # update stats
     backpropagate(root,node.parent,result) 
 

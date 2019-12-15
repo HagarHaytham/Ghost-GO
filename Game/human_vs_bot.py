@@ -17,7 +17,7 @@ def main():
     bot = naive.RandomBot()
 
     while not game.is_over():
-        print(chr(27) + "[2J")
+        # print(chr(27) + "[2J")
         print_board(game.board)
         
         if game.next_player == gotypes.Player.black:
@@ -41,11 +41,11 @@ def main():
     winner,score = game.winner(captures)
 
     if winner == gotypes.Player.black:
-        print("Black is the WINNER!!!!")
+        # print("Black is the WINNER!!!!")
     else:
-        print("White is the WINNER!!!!")
+        # print("White is the WINNER!!!!")
 
-    print('Black:', score[gotypes.Player.black] ,'\tWhite:', score[gotypes.Player.white])
+    # print('Black:', score[gotypes.Player.black] ,'\tWhite:', score[gotypes.Player.white])
 
 
 if __name__ == '__main__':

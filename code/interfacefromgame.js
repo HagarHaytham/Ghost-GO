@@ -8,13 +8,13 @@ console.log("GUI from game interface started!");
 
 
 
-//TO-DO : REPLACE PLACE HOLDERS. 
+//TO-DO : REPLACE PLACE HOLDERS.
 from_game.on("message", function(msg) {
-    
+
         // console.log("work from pull: %s", msg.toString());
         result = msg.toString();
         l = result.split(',');
-        
+
         switch(l[0]){
                 case 'STATE':
                 draw_state('../Game/send_state.txt');
@@ -62,7 +62,7 @@ function draw_state(file_name)
                 state[i] = new Array(3);
                 for(j = 3*i ; j<3*i+3; j++)
                 {
-                    state[i][j%3] = tmp[j];  
+                    state[i][j%3] = tmp[j];
                     console.log(tmp[j]);
                 }
             }
@@ -71,7 +71,7 @@ function draw_state(file_name)
         } else {
             console.log(err);
         }
-    })    
+    })
 }
 
 
@@ -90,7 +90,7 @@ function draw_moves(file_name) // to draw valid moves.
                 valid[i] = new Array(2);
                 for(j = 2*i ; j<2*i+2; j++)
                 {
-                    valid[i][j%2] = tmp[j];  
+                    valid[i][j%2] = tmp[j];
                     // console.log(tmp[j]);
                 }
             }
@@ -102,7 +102,7 @@ function draw_moves(file_name) // to draw valid moves.
             console.log(err);
         }
     })
-    
+
 }
 
 
@@ -119,7 +119,7 @@ function draw_move(move)
     //gui_func()
     move = tmp_move[1].split('-');
     gui.drawMove(move, tmp_move[2], tmp_move[3], tmp_move[4]);
-    
+
 }
 
 
@@ -138,7 +138,7 @@ function update_board(file_name)
                 state[i] = new Array(3);
                 for(j = 3*i ; j<3*i+3; j++)
                 {
-                    state[i][j%3] = tmp[j];  
+                    state[i][j%3] = tmp[j];
                     //console.log(tmp[j]);
                 }
             }
@@ -148,19 +148,19 @@ function update_board(file_name)
         } else {
             console.log(err);
         }
-    })    
+    })
 }
 
 function show_score(score)
 {
     console.log('SCORE: '+score);
-    from_game.close();
+    // from_game.close();
     var tmp_score = score.split('#');
     //tmp_score[0] : O_Score.
     //tmp_score[1] : G_ Score.
     //tmo_score[2] : Reason.
     gui.showScore(tmp_score[0], tmp_score[1], tmp_score[2]);
-    
+
 }
 
 function congratulate(msg)
