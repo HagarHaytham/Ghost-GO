@@ -1,3 +1,4 @@
+const remote = require('electron').remote;
 const interface = require("../interface.js");
 const utilities = require("../js/utilities.js");
 var color = sessionStorage.getItem('color');
@@ -8,6 +9,7 @@ else interface.send_mode('0');
 if(color == "black") interface.send_opponent_color('0');
 else interface.send_opponent_color('1');
 
+var LastMove_pass = true
 var scoreScreen = false
 var my_turn = false;
 var valid_moves = [[-1,-1]];
@@ -22,6 +24,9 @@ const x = 450;
 const y = 100;
 var blurFilter = new PIXI.filters.BlurFilter();
 blurFilter.blur = 0;
+
+var blurFilter2= new PIXI.filters.BlurFilter();
+blurFilter2.blur = 0;
 if(color == "black") my_turn = true;
 
 //console.log("index, color: ", color);
@@ -48,6 +53,8 @@ var passButton
 var passButtonRect
 var resignButtonRect
 var resignButton
+var playButton
+var playButtonRect
 //--------------Timer-------------------
 const timerStyle = new PIXI.TextStyle({
     fontFamily: "\"Comic Sans MS\", cursive, sans-serif",
@@ -165,6 +172,7 @@ function setup(){
 
             my_turn = false;
             yourTurnStr.visible = false;
+            LastMove_pass = true;
             interface.send_opponent_move("2", []);
         });
     }
@@ -202,6 +210,7 @@ function setup(){
             var congratulateStr = app.stage.getChildByName("congratulate");
             if(congratulateStr != null)  app.stage.removeChild(congratulateStr);
 
+            LastMove_pass = true;
             my_turn = false;
             yourTurnStr.visible = false;
             interface.send_opponent_move("1", []);
@@ -222,16 +231,20 @@ function setup(){
     if(initialState == true && mode == "AIVSHuman") addInitialState(); //test
     addTimer();
     drawBoard();
+    addPlayAgainButton();
+    addExitButton();
     //-----------------------TESTING--------------------------
     //drawMove(['5','19'], '0', "14:00", "13:00")
     //boardtmp = [['1','19','0'], ['2','19','1'], ['3','18','1'], ['4','17','0']]
     //updateBoard(boardtmp);
     //drawState(boardtmp);
     //congratulate("Nice Move")
-    //showScore("2500","56100","you Resigned");
+    
     //drawMove(['5','13'], '0', "14:00", "13:00")
     //drawMove(['6','18'], '1', "13:00", "12:00")
     //showRecommendedMove('0',['1','18']); //place
+    //showScore("2500","56100","you Resigned");
+    //updateBoard(boardtmp)
     //showRecommendedMove('1',['1','19']); //resign
     //showRecommendedMove('2',['1','19']); //pass
     //getGhostColor("1");
@@ -466,6 +479,8 @@ function onClick(event){
             stone.filters = [blurFilter];
             stone.name = "stone"
             app.stage.addChild(stone);
+
+            LastMove_pass = false;
         }
         
         else{
@@ -645,6 +660,15 @@ function showScore(O_score,G_score,reason){
     ghost_animate = false;
     blurFilter.blur = 5;
     scoreScreen = true;
+    blurFilter2.blur = 5
+
+    if(mode == "AIVSHuman"){
+        playButton.visible = true
+        playButtonRect.visible = true
+            
+        exitButton.visible = true
+        exitButtonRect.visible = true
+    } 
     
     const fontStyle1 = new PIXI.TextStyle({
         dropShadow: true,
@@ -777,13 +801,14 @@ function showRecommendedMove(moveType, move){
     var alerted = 0;
     blurFilter.blur = 5;
     var lastMove = app.stage.getChildAt(app.stage.children.length-1);
-    app.stage.removeChildAt(app.stage.children.length-1); 
+    if(!LastMove_pass) app.stage.removeChildAt(app.stage.children.length-1); 
     
     fontStyle2 = utilities.getFontStyle(30);
     msg1Txt = new PIXI.Text("Recommended Move",fontStyle2);
     msg1Txt.x = x/2 - msg1Txt.width/2;
     msg1Txt.y = 200
     msg1Txt.name = "alert1";
+    msg1Txt.filters = [blurFilter2];
     app.stage.addChild(msg1Txt);
 
     msg2Txt = new PIXI.Text("Click here to Continue",fontStyle2);
@@ -792,6 +817,7 @@ function showRecommendedMove(moveType, move){
     msg2Txt.name = "alert2";
     msg2Txt.interactive = true;
     msg2Txt.buttonMode = true;
+    msg2Txt.filters = [blurFilter2];
     app.stage.addChild(msg2Txt);
 
     msg2Txt.on("click",function(){
@@ -800,7 +826,7 @@ function showRecommendedMove(moveType, move){
         utilities.removeChildByName("alert1",app);
         utilities.removeChildByName("alert2",app);
         utilities.removeChildByName("green",app);
-        app.stage.addChild(lastMove);
+        if(!LastMove_pass) app.stage.addChild(lastMove);
     });
 
     if (moveType == '0'){
@@ -824,6 +850,7 @@ function showRecommendedMove(moveType, move){
         stone.height = 25;
         stone.width = 25;
         stone.name = "green"
+        stone.filters = [blurFilter2];
         app.stage.addChild(stone);
     }
     else{
@@ -834,6 +861,7 @@ function showRecommendedMove(moveType, move){
         msg3Txt.x = x + (blockNum*blockSz)/2 - msg3Txt.width/2;
         msg3Txt.y = 200
         msg3Txt.name = "green"
+        msg3Txt.filters = [blurFilter2];
         app.stage.addChild(msg3Txt);    
     }
 }
@@ -849,10 +877,15 @@ function updateBoard(state){
     if(scoreScreen){
         ghost_animate = true;
         blurFilter.blur = 0;
+        blurFilter2.blur = 0;
         utilities.removeChildByName("scorescreen", app)
-        scoreScreen = false;
         updateGhostTime("15 : 00");
-        updateopponentTime("15 : 00");
+        updateopponentTime("15 : 00");  
+        alerted = 1;
+        utilities.removeChildByName("alert1",app);
+        utilities.removeChildByName("alert2",app);
+        utilities.removeChildByName("green",app); 
+        scoreScreen = false;     
     }
 
     console.log("update board func")
@@ -882,6 +915,58 @@ function getGhostColor(AIColor){
 
 function sendInitialBoard(board){
     interface.send_initial_board(board)
+}
+
+function addPlayAgainButton(){
+    playButton = PIXI.Sprite.fromImage('../images/resign.png');
+    playButton.x = 1200
+    playButton.y = 550
+    playButton.height = 90
+    playButton.width = 200 
+
+    playButtonRect = new PIXI.Graphics();
+    playButtonRect.lineStyle(1, 0xffff);
+    playButtonRect.drawRect(1225,570, 150, 40);
+    playButtonRect.hitArea = new PIXI.Rectangle(1225,570, 150, 40);
+    playButtonRect.interactive = true;
+    playButtonRect.buttonMode = true;
+    if(mode == "AIVSHuman"){
+        playButtonRect.on('click', function(){
+            location.assign("../html/mode.html"); 
+            //close socket#modify
+        });
+    }
+    playButton.visible = false
+    playButtonRect.visible = false
+    app.stage.addChild(playButtonRect);
+    app.stage.addChild(playButton);
+
+}
+ 
+function addExitButton(){
+    exitButton = PIXI.Sprite.fromImage('../images/pass.png');
+    exitButton.x = 1200
+    exitButton.y = 650
+    exitButton.height = 90
+    exitButton.width = 200 
+
+    exitButtonRect = new PIXI.Graphics();
+    exitButtonRect.lineStyle(1, 0xffff);
+    exitButtonRect.drawRect(1225,670, 150, 40);
+    exitButtonRect.hitArea = new PIXI.Rectangle(1225,670, 150, 40);
+    exitButtonRect.interactive = true;
+    exitButtonRect.buttonMode = true;
+
+    exitButtonRect.on('click', function(){
+        var window = remote.getCurrentWindow();
+        window.close(); 
+        //close socket#modify
+    });
+    
+    exitButton.visible = false
+    exitButtonRect.visible = false
+    app.stage.addChild(exitButtonRect);
+    app.stage.addChild(exitButton);
 
 }
 
