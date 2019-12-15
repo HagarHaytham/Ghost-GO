@@ -97,14 +97,15 @@ def get_best_three(root,available_moves):
     probability_matrix = predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
     num_moves = 3
-    print("available_moves >> ", available_moves)
+    # print("available_moves >> ", available_moves)
     if(available_moves  == 0):
         return False
     if(available_moves < num_moves):
         num_moves = available_moves
     for i in range(num_moves):
+        # print("i >> ", i)
         for j in range(361):
-            print("j >> ", j)
+            # print("j >> ", j)
             max = probability_matrix.max()
             coordinates = np.where(probability_matrix == max)
             row = coordinates[0][0]
@@ -126,7 +127,7 @@ def get_best_three(root,available_moves):
         child = MCTS_node(legal_state,root,child_captures,new_point)
         root.children.append(child)
     # print(probability_matrix)
-        return True
+    return True
 def rollout(node,depth):
     game_state = node.game_state
     parent = node
