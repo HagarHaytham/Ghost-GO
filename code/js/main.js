@@ -232,6 +232,7 @@ function setup(){
     addTimer();
     drawBoard();
     addPlayAgainButton();
+    addExitButton();
     //-----------------------TESTING--------------------------
     //drawMove(['5','19'], '0', "14:00", "13:00")
     //boardtmp = [['1','19','0'], ['2','19','1'], ['3','18','1'], ['4','17','0']]
@@ -664,6 +665,9 @@ function showScore(O_score,G_score,reason){
     if(mode == "AIVSHuman"){
         playButton.visible = true
         playButtonRect.visible = true
+            
+        exitButton.visible = true
+        exitButtonRect.visible = true
     } 
     
     const fontStyle1 = new PIXI.TextStyle({
@@ -938,34 +942,33 @@ function addPlayAgainButton(){
     app.stage.addChild(playButton);
 
 }
-/* addexitbtn
-var window = remote.getCurrentWindow();
-       window.close();
-function addPlayAgainButton(){
-    playButton = PIXI.Sprite.fromImage('../images/resign.png');
-    playButton.x = 1200
-    playButton.y = 550
-    playButton.height = 90
-    playButton.width = 200 
+ 
+function addExitButton(){
+    exitButton = PIXI.Sprite.fromImage('../images/pass.png');
+    exitButton.x = 1200
+    exitButton.y = 650
+    exitButton.height = 90
+    exitButton.width = 200 
 
-    playButtonRect = new PIXI.Graphics();
-    playButtonRect.lineStyle(1, 0xffff);
-    playButtonRect.drawRect(1225,570, 150, 40);
-    playButtonRect.hitArea = new PIXI.Rectangle(1225,570, 150, 40);
-    playButtonRect.interactive = true;
-    playButtonRect.buttonMode = true;
-    if(mode == "AIVSHuman"){
-        playButtonRect.on('click', function(){
-            location.assign("../html/mode.html"); 
-            //close socket#modify
-        });
-    }
-    playButton.visible = false
-    playButtonRect.visible = false
-    app.stage.addChild(playButtonRect);
-    app.stage.addChild(playButton);
+    exitButtonRect = new PIXI.Graphics();
+    exitButtonRect.lineStyle(1, 0xffff);
+    exitButtonRect.drawRect(1225,670, 150, 40);
+    exitButtonRect.hitArea = new PIXI.Rectangle(1225,670, 150, 40);
+    exitButtonRect.interactive = true;
+    exitButtonRect.buttonMode = true;
 
-}*/
+    exitButtonRect.on('click', function(){
+        var window = remote.getCurrentWindow();
+        window.close(); 
+        //close socket#modify
+    });
+    
+    exitButton.visible = false
+    exitButtonRect.visible = false
+    app.stage.addChild(exitButtonRect);
+    app.stage.addChild(exitButton);
+
+}
 
 // Listen for window resize events
 window.addEventListener('resize', resize);
