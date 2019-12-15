@@ -20,7 +20,7 @@ encoding_time=0
 cnn_time=0
 move_time=0
 prisoners_time=0
-def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth): 
+def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth,available_moves): 
     global player
     global encoding_time
     global move_time
@@ -34,16 +34,21 @@ def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth):
     player = color
     
     root = MCTS_node(state,None,captures,point)
+    game =state
+    play_point = point
     for i in range(num_rounds): 
-        leaf = traverse(root,i)  
+        result ,leaf = traverse(root,i,available_moves)  
+        if(not result):
+            break
         simulation_result , last_node = rollout(leaf,depth)
         backpropagate(root,last_node , simulation_result) 
     # print('encoding time ',encoding_time)
     # print('cnn time ',cnn_time)
     # print('move time ',move_time)
     # print('prisoners time ',prisoners_time)
-    game , captures , play_point =  best_child(root) 
-    return game , captures , play_point
+    if( result ):
+        game , captures , play_point =  best_child(root)
+    return result , game , captures , play_point
  
 def best_child(root):
     best_winning_frac = 0
@@ -57,12 +62,14 @@ def best_child(root):
     return root.children[best_pick].game_state , root.children[best_pick].captures,root.children[best_pick].point
     
       
-def traverse(node,total_rollouts): 
+def traverse(node,total_rollouts,available_moves): 
     picked_child=None
     if(not node.game_state.is_over()):
-        get_best_three(node) 
+        result = get_best_three(node,available_moves) 
+        if(not result):
+            return False ,None
         picked_child = pick_child(node,total_rollouts)  
-    return picked_child  
+    return True ,picked_child  
   
 def pick_child(node,total_rollouts):
     if(total_rollouts == 0 and len(node.children) > 0):
@@ -79,7 +86,7 @@ def pick_child(node,total_rollouts):
             picked_child = child
     return picked_child
 
-def get_best_three(root):
+def get_best_three(root,available_moves):
     state = elevenplanes.ElevenPlaneEncoder((19,19))
     #print("teeeeeeeeeeeeest",state.shape)
     state = state.encode(root.game_state)
@@ -89,18 +96,23 @@ def get_best_three(root):
 
     probability_matrix = predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
-    for i in range(3):
-        while True:
+    num_moves = 3
+    if(available_moves < num_moves):
+        num_moves = available_moves
+    for i in range(available_moves):
+        for j in range(361):
             max = probability_matrix.max()
             coordinates = np.where(probability_matrix == max)
             row = coordinates[0][0]
             col = coordinates[1][0]
-            probability_matrix[row][col]= 0
+            probability_matrix[row][col]= -1
             new_point = gotypes.Point( row=row+1,col=col+1)
             move = goboard.Move(new_point)
             #print(new_point)
             if root.game_state.is_valid_move(move):
                 break
+        if(j == 361):
+            return False
         #print('move ',move)
         legal_state , prisoners = root.game_state.apply_move(move) 
         capture = 0
@@ -110,7 +122,7 @@ def get_best_three(root):
         child = MCTS_node(legal_state,root,child_captures,new_point)
         root.children.append(child)
     # print(probability_matrix)
-
+        return True
 def rollout(node,depth):
     game_state = node.game_state
     parent = node
@@ -133,7 +145,7 @@ def rollout(node,depth):
         
         t3 = time.time()
         new_point = 0
-        while True:
+        for j in  range(361) :
             max = probability_matrix.max()
             coordinates = np.where(probability_matrix == max)
             row = coordinates[0][0]
@@ -143,7 +155,8 @@ def rollout(node,depth):
             move = goboard.Move(new_point)
             if game_state.is_valid_move(move):
                 break
-       
+        if( j == 361):
+            break
         new_game_state , prisoners  = game_state.apply_move(move)
         
         t4 =time.time()

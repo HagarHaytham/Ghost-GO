@@ -473,9 +473,12 @@ def main():
             if(len(game.legal_moves()) == 2):
                 break            
             old_captures = copy.copy(captures[player])
-            game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+            result , game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth,len(game.legal_moves()))
             print('after monto carlo')
-            decision = '0'
+            if(result):
+                decision = '0'
+            else:
+                decision = '1'
             b_time = '0'
             w_time = '0'
             send_move_to_gui(decision,play_point,b_time,w_time,player)  
