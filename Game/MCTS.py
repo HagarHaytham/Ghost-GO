@@ -95,7 +95,9 @@ def get_best_three(root,available_moves):
     ## print(state.shape)
 
     probability_matrix = predict.model.predict(state)[0]
+    print("probability_matrix >> ", probability_matrix)
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
+    print("probability_matrix >> ", probability_matrix)
     num_moves = 3
     # print("available_moves >> ", available_moves)
     if(available_moves  == 0):
