@@ -6,4 +6,8 @@ Game/initial_state.txt
 Game/__pycache__/*
 Game/dlgo/__pycache__/*
 Game/dlgo/agent/__pycache__/*
+Model/data/*
+Model/__pycache__/*
+Model/dataset/*
+
 
