@@ -103,7 +103,7 @@ function setup(){
     whiteButtonRect.interactive = true;
 
     whiteButtonRect.on('click', function(){
-        console.log("click white")
+        //console.log("click white")
         sessionStorage.setItem("color", "white");
       //  interface.send_opponent_color('1');
         location.assign("../html/main.html"); 

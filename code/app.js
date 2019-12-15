@@ -36,7 +36,7 @@ function  createWindow(){
         win.show();
 
         globalShortcut.register('f5', function() {
-		    console.log('f5 is pressed')
+		    //console.log('f5 is pressed')
 		    win.reload()
   })
   
