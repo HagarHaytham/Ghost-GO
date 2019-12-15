@@ -381,7 +381,7 @@ def recommend_move(game_state):
     global agent
     global encoder
     new_point = -1
-    move = agent.predict(game_state)
+    move = agent.select_move(game_state)
     #print('move ',move)
     if(not move.is_play):
         return False , game_state,new_point

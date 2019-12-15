@@ -91,7 +91,7 @@ class PolicyAgent(Agent):
             if len(moves) == nmoves:
                 break
         # No legal, non-self-destructive moves less.
-        for i in range(nmoves - len(moves))
+        for i in range(nmoves - len(moves)):
             moves.append(goboard.Move.pass_turn())
         # return goboard.Move.pass_turn()
 

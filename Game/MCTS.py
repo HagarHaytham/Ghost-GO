@@ -99,7 +99,7 @@ def get_best_three(root,available_moves):
         return False
     if(available_moves < num_moves):
         num_moves = available_moves
-    moves = agent.predict(root.game_state,num_moves)
+    moves = agent.select_move(root.game_state,num_moves)
     i = 0 
     for move in moves:
         print('move ',move)
@@ -108,6 +108,7 @@ def get_best_three(root,available_moves):
                 return False
             else:
                 continue
+        i+=1
         temp = copy.deepcopy(root.game_state)
         legal_state , prisoners = temp.apply_move(move) 
         child_captures = copy.copy(root.captures)    
@@ -133,7 +134,7 @@ def rollout(node,depth):
         t2 =time.time()        
         t3 = time.time()
         new_point = 0
-        move = agent.predict(game_state)
+        move = agent.select_move(game_state)
         #print('move ',move)
         if(not move.is_play):
             break
