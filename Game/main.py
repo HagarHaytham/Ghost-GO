@@ -108,7 +108,7 @@ def get_opponent_game_from_gui(current_state,captures,opponent):
     decision = interface.get_opponent_move().split('#')
     if decision[0] == '0' : # play  
         consequitive_passes = 0
-        # print(decision)
+        print("decision ", decision)
         pos = decision[1].split('-')
         point =  gotypes.Point(row= int(pos[1]),col= int(pos[0]))
         move = goboard.Move(point)
@@ -456,9 +456,9 @@ def main():
                 if(len(game.legal_moves()) == 2):
                     break
                 send_valid_moves_to_gui(game)
-                old_game = copy.deepcopy(game)
+                old_game = copy.deepcopy(game) 
                 recommend_result , recommended , recommended_move = recommend_move(old_game)
-                
+                print("recommend_result >> ", recommend_result)
                 old_captures = copy.copy(captures[opponent])
                 decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
                 if(recommend_result):

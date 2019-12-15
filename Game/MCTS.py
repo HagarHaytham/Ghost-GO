@@ -97,17 +97,19 @@ def get_best_three(root,available_moves):
     probability_matrix = predict.model.predict(state)[0]
     probability_matrix = np.reshape(probability_matrix, (-1, 19))
     num_moves = 3
+    print("available_moves >> ", available_moves)
     if(available_moves  == 0):
         return False
     if(available_moves < num_moves):
         num_moves = available_moves
-    for i in range(available_moves):
+    for i in range(num_moves):
         for j in range(361):
+            print("j >> ", j)
             max = probability_matrix.max()
             coordinates = np.where(probability_matrix == max)
             row = coordinates[0][0]
             col = coordinates[1][0]
-            probability_matrix[row][col]= -1
+            probability_matrix[row][col]= 0
             new_point = gotypes.Point( row=row+1,col=col+1)
             move = goboard.Move(new_point)
             ## print(new_point)
