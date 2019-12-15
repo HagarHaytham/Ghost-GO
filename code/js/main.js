@@ -231,8 +231,8 @@ function setup(){
     if(initialState == true && mode == "AIVSHuman") addInitialState(); //test
     addTimer();
     drawBoard();
-    addPlayAgainButton();
-    addExitButton();
+    //addPlayAgainButton();
+    //addExitButton();
     //-----------------------TESTING--------------------------
     //drawMove(['5','19'], '0', "14:00", "13:00")
     //boardtmp = [['1','19','0'], ['2','19','1'], ['3','18','1'], ['4','17','0']]
@@ -663,14 +663,14 @@ function showScore(O_score,G_score,reason){
     blurFilter.blur = 5;
     scoreScreen = true;
     blurFilter2.blur = 5
-
-    if(mode == "AIVSHuman"){
+    //undo for exit, playAgain btns
+    /*if(mode == "AIVSHuman"){
         playButton.visible = true
         playButtonRect.visible = true
             
         exitButton.visible = true
         exitButtonRect.visible = true
-    } 
+    } */
     
     const fontStyle1 = new PIXI.TextStyle({
         dropShadow: true,
