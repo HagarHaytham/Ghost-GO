@@ -23,10 +23,18 @@ depth = 20
 consequitive_passes = 0
 opponont_resigns = False
 sys.setrecursionlimit(1500)
-client_port = sys.argv[1] if len(sys.argv) > 1 else 7374
-client_name = sys.argv[2] if len(sys.argv) > 2 else 'Ghost'
-init_gui = False if len(sys.argv) > 3 else True
-client.init(client_port, client_name)
+
+client_port = [Input[Input.rfind('=') + 1: ] for Input in sys.argv if Input[:Input.rfind('=')] == 'port']
+client_port = client_port[0] if len(client_port) > 0 else 7374
+client_name = [Input[Input.rfind('=') + 1: ] for Input in sys.argv if Input[:Input.rfind('=')] == 'name']
+client_name = client_name[0] if len(client_name) > 0 else 'Ghost'
+
+server_url = [Input[Input.rfind('=') + 1: ] for Input in sys.argv if Input[:Input.rfind('=')] == 'server_url']
+server_url = server_url[0] if len(server_url) > 0 else "ws://localhost:8080"
+
+init_gui = 'gui' in sys.argv
+
+client.init(server_url=server_url, port=client_port, name=client_name)
 if init_gui:
     interface.init()
     gui_process = subprocess.Popen('pushd ..\\code && npm start && popd', shell=True)

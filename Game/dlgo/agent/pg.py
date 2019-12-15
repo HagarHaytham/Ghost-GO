@@ -50,7 +50,7 @@ class PolicyAgent(Agent):
     def set_collector(self, collector):
         self._collector = collector
 
-    def select_move(self, game_state):
+    def select_move(self, game_state, nmoves=1):
         num_moves = self._encoder.board_width * self._encoder.board_height
 
         board_tensor = self._encoder.encode(game_state)
@@ -73,6 +73,8 @@ class PolicyAgent(Agent):
         candidates = np.arange(num_moves)
         ranked_moves = np.random.choice(
             candidates, num_moves, replace=False, p=move_probs)
+
+        moves = []
         for point_idx in ranked_moves:
             point = self._encoder.decode_point_index(point_idx)
             if game_state.is_valid_move(goboard.Move.play(point)) and \
@@ -84,9 +86,19 @@ class PolicyAgent(Agent):
                         state=board_tensor,
                         action=point_idx
                     )
-                return goboard.Move.play(point)
+                moves.append(goboard.Move.play(point))
+                # return goboard.Move.play(point)
+            if len(moves) == nmoves:
+                break
         # No legal, non-self-destructive moves less.
-        return goboard.Move.pass_turn()
+        for i in range(nmoves - len(moves))
+            moves.append(goboard.Move.pass_turn())
+        # return goboard.Move.pass_turn()
+
+        if nmoves == 1:
+            return moves[0]
+        else:
+            return moves
 
     def serialize(self, h5file):
         h5file.create_group('encoder')
