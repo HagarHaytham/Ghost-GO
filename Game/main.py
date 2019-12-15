@@ -29,12 +29,12 @@ init_gui = False if len(sys.argv) > 3 else True
 client.init(client_port, client_name)
 if init_gui:
     interface.init()
-    # gui_process = subprocess.Popen('pushd ..\\code && npm start && popd', shell=True)
+    gui_process = subprocess.Popen('pushd ..\\code && npm start && popd', shell=True)
 
-    # def exit_handler():
-    #     gui_process.kill()
+    def exit_handler():
+        gui_process.kill()
 
-    # atexit.register(exit_handler)
+    atexit.register(exit_handler)
 
 class modes(Enum): #check ENUM
    AIvsAI=0
@@ -79,7 +79,8 @@ def get_game_mode_from_gui():
                 if(initial_state[i][2] == '1'):
                     next_player = gotypes.Player.white
                     turn = '1'
-                game.board.place_stone(next_player, move.point, prisoners)
+                game.next_player = next_player
+                game,_ = game.apply_move(move)
                 if(prisoners[0] > 0):
                     c[turn]+=prisoners[0]
                     send_board_to_gui(0,game.board)

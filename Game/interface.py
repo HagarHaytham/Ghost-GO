@@ -76,8 +76,8 @@ def send_state(state):
     push_socket.send_string(s)
 
 def update_board(state):
-    if state == []:
-        return
+    # if state == []:
+    #     return
     s = 'UPDATE'
     #write state in file
     f = open("update_board.txt",'w')
@@ -86,7 +86,9 @@ def update_board(state):
         f.write(str(state[i][1])+',')   #y
         f.write(str(state[i][2])+',')   #color
     f.close()
+    print("Hi")
     push_socket.send_string(s)
+    print("Bye")
 
 def send_valid_moves(vaild_moves):
     print(len(vaild_moves))
@@ -102,8 +104,8 @@ def send_valid_moves(vaild_moves):
 def send_score(O_score, G_score, reason):
     s = 'SCORE,' + O_score + '#' + G_score + '#' + reason
     push_socket.send_string(s)
-    push_socket.close()
-    pull_socket.close()
+    # push_socket.close()
+    # pull_socket.close()
 
 def send_recommended_move(move):
     m = 'REC_MOVE,' + move
