@@ -144,7 +144,7 @@ def send_board_to_gui(decision,board):
             for j in range(1,20):
                 stone = gotypes.Point(row= i,col= j)
                 color = board.get(stone)
-                if( color != None):
+                if( color is not None):
                     c='0'
                     if color == gotypes.Player.white :
                         c ='1'
