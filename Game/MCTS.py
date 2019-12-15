@@ -83,7 +83,7 @@ def pick_child(node,total_rollouts):
         return node.children[index]
     current_value=0
     picked_child=node.children[0]
-    temperature = 3
+    temperature = 2
     for child in node.children:
         new_value =child.win_counts[player] + temperature * math.sqrt(math.log(total_rollouts)/(child.num_rollouts))
         if(new_value > current_value ):
@@ -93,7 +93,7 @@ def pick_child(node,total_rollouts):
 def get_best_three(root,available_moves):
     global agent 
     global encoder
-    num_moves = 5
+    num_moves = 3
     if(available_moves  == 0):
         return False
     if(available_moves < num_moves):
