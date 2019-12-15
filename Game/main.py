@@ -79,7 +79,8 @@ def get_game_mode_from_gui():
                 if(initial_state[i][2] == '1'):
                     next_player = gotypes.Player.white
                     turn = '1'
-                game.board.place_stone(next_player, move.point, prisoners)
+                game.next_player = next_player
+                game,_ = game.apply_move(move)
                 if(prisoners[0] > 0):
                     c[turn]+=prisoners[0]
                     send_board_to_gui(0,game.board)
