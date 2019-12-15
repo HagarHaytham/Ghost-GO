@@ -20,19 +20,23 @@ encoding_time=0
 cnn_time=0
 move_time=0
 prisoners_time=0
-def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth,available_moves): 
+agent = None
+encoder = None
+def monte_carlo_tree_search(main_agent,main_encoder,state,point,color,num_rounds,captures,depth,available_moves): 
     global player
     global encoding_time
     global move_time
     global cnn_time
     global prisoners_time
-    
+    global agent
+    global encoder
     encoding_time=0
     cnn_time=0
     move_time=0
     prisoners_time=0
     player = color
-    
+    agent = main_agent
+    encoder = main_encoder
     root = MCTS_node(state,None,captures,point)
     game =state
     play_point = point
@@ -67,7 +71,7 @@ def traverse(node,total_rollouts,available_moves):
     if(not node.game_state.is_over()):
         result = get_best_three(node,available_moves) 
         if(not result):
-            return False ,None
+            return False , None
         picked_child = pick_child(node,total_rollouts)  
     return True ,picked_child  
   
@@ -87,35 +91,18 @@ def pick_child(node,total_rollouts):
     return picked_child
 
 def get_best_three(root,available_moves):
-    state = elevenplanes.ElevenPlaneEncoder((19,19))
-    ## print("teeeeeeeeeeeeest",state.shape)
-    state = state.encode(root.game_state)
-    ## print(state.shape)
-    state = np.expand_dims(state,axis=0)
-    ## print(state.shape)
-
-    probability_matrix = predict.model.predict(state)[0]
-    probability_matrix = np.reshape(probability_matrix, (-1, 19))
+    global agent 
+    global encoder
     num_moves = 3
     if(available_moves  == 0):
         return False
     if(available_moves < num_moves):
         num_moves = available_moves
-    for i in range(available_moves):
-        for j in range(361):
-            max = probability_matrix.max()
-            coordinates = np.where(probability_matrix == max)
-            row = coordinates[0][0]
-            col = coordinates[1][0]
-            probability_matrix[row][col]= -1
-            new_point = gotypes.Point( row=row+1,col=col+1)
-            move = goboard.Move(new_point)
-            ## print(new_point)
-            if root.game_state.is_valid_move(move):
-                break
-        if(j == 361):
+    for i in range(num_moves):
+        move = agent.predict(root.game_state)
+        print('move ',move)
+        if(not move.is_play):
             return False
-        #print('move ',move)
         legal_state , prisoners = root.game_state.apply_move(move) 
         capture = 0
         ## print('prisoners',prisoners)
@@ -124,11 +111,13 @@ def get_best_three(root,available_moves):
         child = MCTS_node(legal_state,root,child_captures,new_point)
         root.children.append(child)
     # print(probability_matrix)
-        return True
+    return True
 def rollout(node,depth):
     game_state = node.game_state
     parent = node
     j=0
+    global agent
+    global encoder    
     global encoding_time
     global move_time
     global cnn_time
@@ -147,17 +136,9 @@ def rollout(node,depth):
         
         t3 = time.time()
         new_point = 0
-        for j in  range(361) :
-            max = probability_matrix.max()
-            coordinates = np.where(probability_matrix == max)
-            row = coordinates[0][0]
-            col = coordinates[1][0]
-            probability_matrix[row][col]= 0
-            new_point = gotypes.Point( row=row+1,col=col+1)
-            move = goboard.Move(new_point)
-            if game_state.is_valid_move(move):
-                break
-        if( j == 361):
+        move = agent.predict(game_state)
+        #print('move ',move)
+        if(not move.is_play):
             break
         new_game_state , prisoners  = game_state.apply_move(move)
         
@@ -169,7 +150,7 @@ def rollout(node,depth):
         t5 = time.time()
         new_node = MCTS_node(new_game_state,parent,child_captures,new_point)
         # check if game is over
-        game_state = new_game_state
+        game_state = copy.deepcopy(new_game_state)
         parent = new_node
         encoding_time +=(t2-t1)
         cnn_time+=(t3-t2)

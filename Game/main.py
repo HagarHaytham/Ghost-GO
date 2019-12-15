@@ -15,8 +15,11 @@ import predict
 import sys
 import subprocess
 import atexit
+from dlgo.agent.pg import PolicyAgent as Agent
 #intializations
 board_size = 19
+agent = None
+encoder =None
 num_rounds = 10
 game_mode = 0
 depth = 20
@@ -245,7 +248,8 @@ def READY_configuration(game):
     return game, captures, remainingTime, ourColor
 
 def THINKING(game, captures):
-    
+    global agent
+    global encoder
     played = False
     remaining_time = None
     captures = {
@@ -259,7 +263,7 @@ def THINKING(game, captures):
         player = '0' if game.next_player == gotypes.Player.black else '1'
 
         if moves_count == 0 or True:
-            move_result , new_game , new_captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth, len(game.legal_moves()-2))
+            move_result , new_game , new_captures , play_point = monte_carlo_tree_search(agent,encoder, game,point,player,num_rounds,captures,depth, len(game.legal_moves()-2))
             # print(new_captures , play_point)
         else:
             # another option
@@ -374,24 +378,13 @@ def AI_vs_AI():
         time.sleep(5)
             
 def recommend_move(game_state):
-    state = elevenplanes.ElevenPlaneEncoder((19,19))
-    state = state.encode(game_state)
-    state = np.expand_dims(state,axis=0)
-    probability_matrix=predict.model.predict(state)[0]
-    probability_matrix = np.reshape(probability_matrix, (-1, 19))
+    global agent
+    global encoder
     new_point = -1
-    for j in range(361):
-        max = probability_matrix.max()
-        coordinates = np.where(probability_matrix == max)
-        row = coordinates[0][0]
-        col = coordinates[1][0]
-        probability_matrix[row][col]= 0
-        new_point = gotypes.Point( row=row+1,col=col+1)
-        move = goboard.Move(new_point)
-        if game_state.is_valid_move(move):
-            break
-    if(j == 361):
-        return False , game_state , new_point
+    move = agent.predict(game_state)
+    #print('move ',move)
+    if(not move.is_play):
+        return False , game_state,new_point
     new_game_state , prisoners  = game_state.apply_move(move)
     # print('recommend move function',new_point)
     return True , new_game_state , new_point
@@ -435,7 +428,11 @@ def send_recommended_move(decision,point):
     interface.send_recommended_move(msg)
 
 def main():
-    global consequitive_passes, opponont_resigns, game_mode
+    global consequitive_passes, opponont_resigns, game_mode , agent , encoder
+    model = load_model('models\ElevenPlanes_smallarch_model_epoch.h5')
+    encoder = elevenplanes.ElevenPlaneEncoder((19,19))
+    agent = Agent(model, encoder)
+
     if init_gui:
         game, captures, player, opponent = get_game_mode_from_gui()
         first_game = False
@@ -460,7 +457,7 @@ def main():
                 recommend_result , recommended , recommended_move = recommend_move(old_game)
                 
                 old_captures = copy.copy(captures[opponent])
-                decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
+                decision , game , captures , point  =  get_opponent_game_from_gui(agent,encoder,game,captures,opponent)
                 if(recommend_result):
                     result = compare_state(recommended,game,captures,player)
                     # print("Recommended Move is : ",recommended_move)
