@@ -70,7 +70,7 @@ function addSoundButton(app){
     soundButtonRect.interactive = true;
     soundButtonRect.buttonMode = true;
     var soundTrack = new Howl({
-        src: ['../sound/Soundtrack4.mp3'],
+        src: ['../sound/Soundtrack.mp3'],
         loop: true,
         autoplay:true,
         html5: true
@@ -98,7 +98,7 @@ function addSoundButton(app){
 function playSound(){  
     console.log("sound")
     var soundTrack = new Howl({
-        src: ['../sound/Soundtrack4.mp3'],
+        src: ['../sound/Soundtrack.mp3'],
         loop: true,
         autoplay:true,
         html5: true
