@@ -203,8 +203,10 @@ def pong():
 
 
 if __name__ == "__main__":
-    port = sys.argv[1] if len(sys.argv) > 1 else 7374
-    name = sys.argv[2] if len(sys.argv) > 2 else 'Ghost'
+    url = sys.argv[1] if len(sys.argv) > 1 else url
+    port = sys.argv[2] if len(sys.argv) > 2 else 7374
+    name = sys.argv[3] if len(sys.argv) > 3 else 'Ghost'
+    
     context = zmq.Context()
     game_engine_socket = context.socket(zmq.REP)
     game_engine_socket.bind("tcp://*:" + str(port))

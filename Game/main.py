@@ -15,18 +15,30 @@ import predict
 import sys
 import subprocess
 import atexit
+from dlgo.agent.pg import PolicyAgent as Agent
+from keras.models import load_model
 #intializations
 board_size = 19
+agent = None
+encoder =None
 num_rounds = 10
 game_mode = 0
 depth = 20
 consequitive_passes = 0
 opponont_resigns = False
-sys.setrecursionlimit(1500)
-client_port = sys.argv[1] if len(sys.argv) > 1 else 7374
-client_name = sys.argv[2] if len(sys.argv) > 2 else 'Ghost'
-init_gui = False if len(sys.argv) > 3 else True
-client.init(client_port, client_name)
+sys.setrecursionlimit(10000)
+
+client_port = [Input[Input.rfind('=') + 1: ] for Input in sys.argv if Input[:Input.rfind('=')] == 'port']
+client_port = client_port[0] if len(client_port) > 0 else 7374
+client_name = [Input[Input.rfind('=') + 1: ] for Input in sys.argv if Input[:Input.rfind('=')] == 'name']
+client_name = client_name[0] if len(client_name) > 0 else 'Ghost'
+
+server_url = [Input[Input.rfind('=') + 1: ] for Input in sys.argv if Input[:Input.rfind('=')] == 'server_url']
+server_url = server_url[0] if len(server_url) > 0 else "ws://localhost:8080"
+
+init_gui = 'gui' in sys.argv
+
+client.init(server_url=server_url, port=client_port, name=client_name)
 if init_gui:
     interface.init()
     gui_process = subprocess.Popen('pushd ..\\code && npm start && popd', shell=True)
@@ -82,7 +94,7 @@ def get_game_mode_from_gui():
                 game.next_player = next_player
                 game,_ = game.apply_move(move)
                 if(prisoners[0] > 0):
-                    captures[turn]+=prisoners[0]
+                    c[turn]+=prisoners[0]
                     send_board_to_gui(0,game.board)
         # print(opponent)
    
@@ -108,7 +120,7 @@ def get_opponent_game_from_gui(current_state,captures,opponent):
     decision = interface.get_opponent_move().split('#')
     if decision[0] == '0' : # play  
         consequitive_passes = 0
-        # print("decision ", decision)
+        # print(decision)
         pos = decision[1].split('-')
         point =  gotypes.Point(row= int(pos[1]),col= int(pos[0]))
         move = goboard.Move(point)
@@ -245,7 +257,8 @@ def READY_configuration(game):
     return game, captures, remainingTime, ourColor
 
 def THINKING(game, captures):
-    
+    global agent
+    global encoder
     played = False
     remaining_time = None
     captures = {
@@ -259,7 +272,7 @@ def THINKING(game, captures):
         player = '0' if game.next_player == gotypes.Player.black else '1'
 
         if moves_count == 0 or True:
-            move_result , new_game , new_captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth, len(game.legal_moves()-2))
+            move_result , new_game , new_captures , play_point = monte_carlo_tree_search(agent,encoder, game,point,player,num_rounds,captures,depth, len(game.legal_moves())-2)
             # print(new_captures , play_point)
         else:
             # another option
@@ -374,24 +387,14 @@ def AI_vs_AI():
         time.sleep(5)
             
 def recommend_move(game_state):
-    state = elevenplanes.ElevenPlaneEncoder((19,19))
-    state = state.encode(game_state)
-    state = np.expand_dims(state,axis=0)
-    probability_matrix=predict.model.predict(state)[0]
-    probability_matrix = np.reshape(probability_matrix, (-1, 19))
+    global agent
+    global encoder
     new_point = -1
-    for j in range(361):
-        max = probability_matrix.max()
-        coordinates = np.where(probability_matrix == max)
-        row = coordinates[0][0]
-        col = coordinates[1][0]
-        probability_matrix[row][col]= 0
-        new_point = gotypes.Point( row=row+1,col=col+1)
-        move = goboard.Move(new_point)
-        if game_state.is_valid_move(move):
-            break
-    if(j == 361):
-        return False , game_state , new_point
+    moves = agent.select_move(game_state)
+    move = moves[0]
+    #print('move ',move)
+    if(not move.is_play):
+        return False , game_state,new_point
     new_game_state , prisoners  = game_state.apply_move(move)
     # print('recommend move function',new_point)
     return True , new_game_state , new_point
@@ -435,7 +438,11 @@ def send_recommended_move(decision,point):
     interface.send_recommended_move(msg)
 
 def main():
-    global consequitive_passes, opponont_resigns, game_mode
+    global consequitive_passes, opponont_resigns, game_mode , agent , encoder
+    model = load_model('models\ElevenPlanes_smallarch_model_epoch.h5')
+    encoder = elevenplanes.ElevenPlaneEncoder((19,19))
+    agent = Agent(model, encoder)
+
     if init_gui:
         game, captures, player, opponent = get_game_mode_from_gui()
         first_game = False
@@ -456,8 +463,9 @@ def main():
                 if(len(game.legal_moves()) == 2):
                     break
                 send_valid_moves_to_gui(game)
-                old_game = copy.deepcopy(game) 
+                old_game = copy.deepcopy(game)
                 recommend_result , recommended , recommended_move = recommend_move(old_game)
+                
                 old_captures = copy.copy(captures[opponent])
                 decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
                 if(recommend_result):
@@ -469,6 +477,8 @@ def main():
                         pass
                     else: 
                         send_congrats()
+                else:
+                        send_recommended_move('1','#0-0')
                 # print("captures[opponent] old_captures : ", captures[opponent], old_captures)
                 if( captures[opponent] > old_captures):
                     # print('opponent captures')
@@ -480,7 +490,7 @@ def main():
             if(len(game.legal_moves()) == 2):
                 break            
             old_captures = copy.copy(captures[player])
-            move_result , game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth,len(game.legal_moves())-2)
+            move_result , game , captures , play_point = monte_carlo_tree_search(agent,encoder,game,point,player,num_rounds,captures,depth,len(game.legal_moves())-2)
             print('after monto carlo')
             if(move_result):
                 decision = '0'
