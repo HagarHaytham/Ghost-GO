@@ -96,7 +96,7 @@ function addSoundButton(app){
 }
 
 function playSound(){  
-    console.log("sound")
+    //console.log("sound")
     var soundTrack = new Howl({
         src: ['../sound/Soundtrack.mp3'],
         loop: true,

@@ -25,7 +25,7 @@ function  createWindow(){
        }));
 
        //cursorlog //comment //modify
-       win.webContents.openDevTools();
+    //    win.webContents.openDevTools();
    
         win.on('closed', () => { 
           win=null
@@ -36,7 +36,7 @@ function  createWindow(){
         win.show();
 
         globalShortcut.register('f5', function() {
-		    console.log('f5 is pressed')
+		    //console.log('f5 is pressed')
 		    win.reload()
   })
   

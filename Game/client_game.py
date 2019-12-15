@@ -5,7 +5,7 @@ import atexit
 context = client_socket = None
 connected = False
 
-def init(port=7374, name='Ghost'):
+def init(server_url = "ws://localhost:8080", port=7374, name='Ghost'):
     global context, client_socket
 
     context = zmq.Context()
@@ -13,7 +13,7 @@ def init(port=7374, name='Ghost'):
     client_socket = context.socket(zmq.REQ)
     client_socket.connect("tcp://localhost:" + str(port))
     
-    client_process = subprocess.Popen("python client.py " + str(port) + ' ' + name)
+    client_process = subprocess.Popen("python client.py " + server_url + ' ' + str(port) + ' ' + name)
 
     def exit_handler():
         client_process.kill()

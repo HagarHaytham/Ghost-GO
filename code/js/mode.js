@@ -55,7 +55,7 @@ function setup(){
     aiVsaiButtonRect.buttonMode = true;
     
     aiVsaiButtonRect.on('click', function(event){
-        console.log("clicked");
+        //console.log("clicked");
         sessionStorage.setItem("mode", "AIVSAI");
         //interface.send_mode('1');
         location.assign("../html/main.html"); 

@@ -457,7 +457,7 @@ def main():
                 recommend_result , recommended , recommended_move = recommend_move(old_game)
                 
                 old_captures = copy.copy(captures[opponent])
-                decision , game , captures , point  =  get_opponent_game_from_gui(agent,encoder,game,captures,opponent)
+                decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
                 if(recommend_result):
                     result = compare_state(recommended,game,captures,player)
                     # print("Recommended Move is : ",recommended_move)
@@ -467,6 +467,8 @@ def main():
                         pass
                     else: 
                         send_congrats()
+                else:
+                        send_recommended_move('1','#0-0')
                 # print("captures[opponent] old_captures : ", captures[opponent], old_captures)
                 if( captures[opponent] > old_captures):
                     # print('opponent captures')
@@ -478,7 +480,7 @@ def main():
             if(len(game.legal_moves()) == 2):
                 break            
             old_captures = copy.copy(captures[player])
-            move_result , game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth,len(game.legal_moves())-2)
+            move_result , game , captures , play_point = monte_carlo_tree_search(agent,encoder,game,point,player,num_rounds,captures,depth,len(game.legal_moves())-2)
             print('after monto carlo')
             if(move_result):
                 decision = '0'

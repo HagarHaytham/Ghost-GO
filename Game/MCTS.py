@@ -94,21 +94,25 @@ def get_best_three(root,available_moves):
     global agent 
     global encoder
     num_moves = 3
+    # print("available_moves >> ", available_moves)
     if(available_moves  == 0):
         return False
     if(available_moves < num_moves):
         num_moves = available_moves
-    for i in range(num_moves):
-        move = agent.predict(root.game_state)
+    moves = agent.predict(root.game_state,num_moves)
+    i = 0 
+    for move in moves:
         print('move ',move)
         if(not move.is_play):
-            return False
-        legal_state , prisoners = root.game_state.apply_move(move) 
-        capture = 0
-        ## print('prisoners',prisoners)
+            if(i == 0):
+                return False
+            else:
+                continue
+        temp = copy.deepcopy(root.game_state)
+        legal_state , prisoners = temp.apply_move(move) 
         child_captures = copy.copy(root.captures)    
         child_captures[player]+=prisoners
-        child = MCTS_node(legal_state,root,child_captures,new_point)
+        child = MCTS_node(legal_state,root,child_captures,move.point)
         root.children.append(child)
     # print(probability_matrix)
     return True
@@ -126,14 +130,7 @@ def rollout(node,depth):
     while not game_state.is_over() and j < depth:
         j+=1
         t1=time.time()
-        state = elevenplanes.ElevenPlaneEncoder((19,19))
-        state = state.encode(game_state)
-        t2 =time.time()
-        state = np.expand_dims(state,axis=0)
-        
-        probability_matrix=predict.model.predict(state)[0]
-        probability_matrix = np.reshape(probability_matrix, (-1, 19))
-        
+        t2 =time.time()        
         t3 = time.time()
         new_point = 0
         move = agent.predict(game_state)
@@ -180,3 +177,4 @@ def backpropagate(root,node, result):
     node.record_win(result)  # update stats
     backpropagate(root,node.parent,result) 
 
+    
