@@ -743,11 +743,13 @@ function showScore(O_score,G_score,reason){
     app.stage.addChild(OScoreStr);
 
     msg = "Hard Luck"
-    if(G_score < O_score){
+    G_score_int = parseFloat(G_score);
+    O_score_int = parseFloat(O_score);
+    if(G_score_int < O_score_int){
         // //modify //add image//z3lan
         if(mode == "AIVSHuman") msg = "Congratulations"
     } 
-    else if (G_score > O_score){
+    else if (G_score_int > O_score_int){
         
         const logo = PIXI.Sprite.fromImage('../images/dab.png');
         logo.x =  window.innerWidth/2 - GScoreStr.width/2;;
@@ -758,7 +760,7 @@ function showScore(O_score,G_score,reason){
 
         if(mode != "AIVSHuman") msg = "Congratulations"
     }
-    else if(G_score == O_score){
+    else if(G_score_int == O_score_int){
         // //modify //add image
         msg = "Tie"
     } 
