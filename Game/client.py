@@ -68,18 +68,15 @@ async def handle_ready():
         moveLog = msg['configuration']['moveLog']
         color = msg["configuration"]["initialState"]["turn"]
 
-        if msg["color"] == initialState['turn'] and len(moveLog) % 2 == 0 or \
-            msg["color"] != initialState['turn'] and len(moveLog) % 2 != 0:
+        if msg["color"] == initialState['turn'] and len(moveLog) % 2 == 0 or msg["color"] != initialState['turn'] and len(moveLog) % 2 != 0:
             current_state = states['THINKING']
-            my_color = msg["color"]
         else:
-            my_color = "B" if msg["color"] == "W" else "W"
             current_state = states['IDLE']
 
         parameters = {
             "initialState":initialState,
             "moveLog":moveLog,
-            "ourColor":my_color
+            "ourColor":msg["color"]
         }
 
         return parameters
