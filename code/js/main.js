@@ -249,6 +249,8 @@ function setup(){
     //showRecommendedMove('2',['1','19']); //pass
     //getGhostColor("1");
     //validMoves([['1','19']])
+    //updateGhostTime("815548");
+    //updateopponentTime("95556")
 }
 
 function addInitialState(){
@@ -895,10 +897,20 @@ function updateBoard(state){
 }
 
 function updateGhostTime(remainingtime){
+    time = parseInt(remainingtime, 10);
+    sec = Math.floor(time/1000);
+    min = Math.floor(sec/60);
+    sec = Math.floor(sec%60);
+    remainingtime = min.toString() + " : " + sec.toString()
     GCountingTxt.text = remainingtime;
 }
 
 function updateopponentTime(remainingtime){
+    time = parseInt(remainingtime, 10);
+    sec = Math.floor(time/1000);
+    min = Math.floor(sec/60);
+    sec = Math.floor(sec%60);
+    remainingtime = min.toString() + " : " + sec.toString()
     OCountingTxt.text = remainingtime;
 }
 
