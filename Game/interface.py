@@ -76,8 +76,8 @@ def send_state(state):
     push_socket.send_string(s)
 
 def update_board(state):
-    if state == []:
-        return
+    # if state == []:
+    #     return
     s = 'UPDATE'
     #write state in file
     f = open("update_board.txt",'w')

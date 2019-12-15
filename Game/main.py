@@ -29,12 +29,12 @@ init_gui = False if len(sys.argv) > 3 else True
 client.init(client_port, client_name)
 if init_gui:
     interface.init()
-    # gui_process = subprocess.Popen('pushd ..\\code && npm start && popd', shell=True)
+    gui_process = subprocess.Popen('pushd ..\\code && npm start && popd', shell=True)
 
-    # def exit_handler():
-    #     gui_process.kill()
+    def exit_handler():
+        gui_process.kill()
 
-    # atexit.register(exit_handler)
+    atexit.register(exit_handler)
 
 class modes(Enum): #check ENUM
    AIvsAI=0
