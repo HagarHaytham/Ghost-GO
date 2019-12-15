@@ -343,8 +343,8 @@ function addTimer(){
 
 //--------------------------------TIMER-------------------------------------
     var seconds = 899;
-    var remainTime = "15 : 00"; //test
-    var countingText = new PIXI.Text(remainTime,timerStyle);
+    var remainTimeTmp = "15 : 00"; //test
+    var countingText = new PIXI.Text(remainTimeTmp,timerStyle);
     countingText . x = 1200;
     countingText.y = 175;
     countingText.filters = [blurFilter];
@@ -365,16 +365,19 @@ function addTimer(){
             my_turn = false;
             yourTurnStr.visible = false;
             interface.send_opponent_move("1", []);
-            remainTime = "TIME OUT";
+            remainTimeTmp = "TIME OUT";
             countingText . x = 1150;
         } 
         else{
-            if(seconds < 10) remainSeconds = "0" + remainSeconds;
-            if(min < 10) min = "0" + min;
-            remainTime = min + " : " + remainSeconds;
+            var remainSecondsStr = remainSeconds.toString()
+            var minStr = min.toString()
+            if(remainSeconds < 10) remainSecondsStr = "0" + remainSecondsStr;
+            console.log("remainSeconds",remainSecondsStr)
+            if(min < 10) minStr = "0" + minStr;
+            remainTimeTmp = minStr + " : " + remainSecondsStr;
             seconds -= 1;
         }
-        countingText.text = remainTime;
+        countingText.text = remainTimeTmp;
     }
 }
 
@@ -740,11 +743,13 @@ function showScore(O_score,G_score,reason){
     app.stage.addChild(OScoreStr);
 
     msg = "Hard Luck"
-    if(G_score < O_score){
+    G_score_int = parseFloat(G_score);
+    O_score_int = parseFloat(O_score);
+    if(G_score_int < O_score_int){
         // //modify //add image//z3lan
         if(mode == "AIVSHuman") msg = "Congratulations"
     } 
-    else if (G_score > O_score){
+    else if (G_score_int > O_score_int){
         
         const logo = PIXI.Sprite.fromImage('../images/dab.png');
         logo.x =  window.innerWidth/2 - GScoreStr.width/2;;
@@ -755,7 +760,7 @@ function showScore(O_score,G_score,reason){
 
         if(mode != "AIVSHuman") msg = "Congratulations"
     }
-    else if(G_score == O_score){
+    else if(G_score_int == O_score_int){
         // //modify //add image
         msg = "Tie"
     } 
@@ -802,8 +807,11 @@ function congratulate(msg){
 function showRecommendedMove(moveType, move){
     var alerted = 0;
     blurFilter.blur = 5;
-    var lastMove = app.stage.getChildAt(app.stage.children.length-1);
-    if(!LastMove_pass) app.stage.removeChildAt(app.stage.children.length-1); 
+    var lastMove
+    if(!LastMove_pass) {
+         lastMove= app.stage.getChildAt(app.stage.children.length-1);
+         app.stage.removeChildAt(app.stage.children.length-1); 
+    }
     
     fontStyle2 = utilities.getFontStyle(30);
     msg1Txt = new PIXI.Text("Recommended Move",fontStyle2);
@@ -901,7 +909,11 @@ function updateGhostTime(remainingtime){
     sec = Math.floor(time/1000);
     min = Math.floor(sec/60);
     sec = Math.floor(sec%60);
-    remainingtime = min.toString() + " : " + sec.toString()
+    var minStr = min.toString()
+    var secStr = sec.toString()
+    if(min < 10) minStr = "0" + minStr
+    if(sec < 10) secStr = "0" + secStr
+    remainingtime = minStr + " : " + secStr
     GCountingTxt.text = remainingtime;
 }
 
@@ -910,7 +922,11 @@ function updateopponentTime(remainingtime){
     sec = Math.floor(time/1000);
     min = Math.floor(sec/60);
     sec = Math.floor(sec%60);
-    remainingtime = min.toString() + " : " + sec.toString()
+    var minStr = min.toString()
+    var secStr = sec.toString()
+    if(min < 10) minStr = "0" + minStr
+    if(sec < 10) secStr = "0" + secStr
+    remainingtime = minStr + " : " + secStr
     OCountingTxt.text = remainingtime;
 }
 
