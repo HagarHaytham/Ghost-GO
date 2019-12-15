@@ -26,7 +26,7 @@ game_mode = 0
 depth = 20
 consequitive_passes = 0
 opponont_resigns = False
-sys.setrecursionlimit(1500)
+sys.setrecursionlimit(10000)
 
 client_port = [Input[Input.rfind('=') + 1: ] for Input in sys.argv if Input[:Input.rfind('=')] == 'port']
 client_port = client_port[0] if len(client_port) > 0 else 7374
@@ -272,7 +272,7 @@ def THINKING(game, captures):
         player = '0' if game.next_player == gotypes.Player.black else '1'
 
         if moves_count == 0 or True:
-            move_result , new_game , new_captures , play_point = monte_carlo_tree_search(agent,encoder, game,point,player,num_rounds,captures,depth, len(game.legal_moves()-2))
+            move_result , new_game , new_captures , play_point = monte_carlo_tree_search(agent,encoder, game,point,player,num_rounds,captures,depth, len(game.legal_moves())-2)
             # print(new_captures , play_point)
         else:
             # another option
