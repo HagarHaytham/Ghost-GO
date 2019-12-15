@@ -95,10 +95,7 @@ class PolicyAgent(Agent):
             moves.append(goboard.Move.pass_turn())
         # return goboard.Move.pass_turn()
 
-        if nmoves == 1:
-            return moves[0]
-        else:
-            return moves
+        return moves
 
     def serialize(self, h5file):
         h5file.create_group('encoder')
