@@ -40,17 +40,17 @@ def monte_carlo_tree_search(main_agent,main_encoder,state,point,color,num_rounds
     root = MCTS_node(state,None,captures,point)
     game =state
     play_point = point
-    for i in range(num_rounds): 
-        result ,leaf = traverse(root,i,available_moves)  
-        if(not result):
-            break
-        simulation_result , last_node = rollout(leaf,depth)
-        backpropagate(root,last_node , simulation_result) 
-    # print('encoding time ',encoding_time)
-    # print('cnn time ',cnn_time)
-    # print('move time ',move_time)
-    # print('prisoners time ',prisoners_time)
-    if( result ):
+    result = get_best_three(root,available_moves) 
+    if not result:
+        for i in range(num_rounds): #num_rounds  and not result
+            leaf = traverse(root,i,available_moves)  
+            simulation_result , last_node = rollout(leaf,depth)
+            backpropagate(root,last_node , simulation_result) 
+        # print('encoding time ',encoding_time)
+        # print('cnn time ',cnn_time)
+        # print('move time ',move_time)
+        # print('prisoners time ',prisoners_time)
+    if(result):
         game , captures , play_point =  best_child(root)
     return result , game , captures , play_point
  
@@ -69,11 +69,8 @@ def best_child(root):
 def traverse(node,total_rollouts,available_moves): 
     picked_child=None
     if(not node.game_state.is_over()):
-        result = get_best_three(node,available_moves) 
-        if(not result):
-            return False , None
         picked_child = pick_child(node,total_rollouts)  
-    return True ,picked_child  
+    return picked_child  
   
 def pick_child(node,total_rollouts):
     if(total_rollouts == 0 and len(node.children) > 0):
@@ -83,7 +80,7 @@ def pick_child(node,total_rollouts):
         return node.children[index]
     current_value=0
     picked_child=node.children[0]
-    temperature = 2
+    temperature=2
     for child in node.children:
         new_value =child.win_counts[player] + temperature * math.sqrt(math.log(total_rollouts)/(child.num_rollouts))
         if(new_value > current_value ):
@@ -94,6 +91,7 @@ def get_best_three(root,available_moves):
     global agent 
     global encoder
     num_moves = 3
+    # print("available_moves >> ", available_moves)
     if(available_moves  == 0):
         return False
     if(available_moves < num_moves):
@@ -137,7 +135,7 @@ def rollout(node,depth):
         moves = agent.select_move(game_state)
         move = moves[0]
         #print('move ',move)
-        if(not move.is_play):
+        if(not moves.is_play):
             break
         new_game_state , prisoners  = game_state.apply_move(move)
         
