@@ -15,15 +15,11 @@ import predict
 import sys
 import subprocess
 import atexit
-from dlgo.agent.pg import PolicyAgent as Agent
-from keras.models import load_model
 #intializations
 board_size = 19
-agent = None
-encoder =None
-num_rounds = 10
+num_rounds = 1
 game_mode = 0
-depth = 20
+depth = 1
 consequitive_passes = 0
 opponont_resigns = False
 sys.setrecursionlimit(10000)
@@ -157,7 +153,7 @@ def send_board_to_gui(decision,board):
             for j in range(1,20):
                 stone = gotypes.Point(row= i,col= j)
                 color = board.get(stone)
-                if( color is not None):
+                if( color != None):
                     c='0'
                     if color == gotypes.Player.white :
                         c ='1'
@@ -257,8 +253,7 @@ def READY_configuration(game):
     return game, captures, remainingTime, ourColor
 
 def THINKING(game, captures):
-    global agent
-    global encoder
+    
     played = False
     remaining_time = None
     captures = {
@@ -272,20 +267,18 @@ def THINKING(game, captures):
         player = '0' if game.next_player == gotypes.Player.black else '1'
 
         if moves_count == 0 or True:
-            move_result , new_game , new_captures , play_point = monte_carlo_tree_search(agent,encoder, game,point,player,num_rounds,captures,depth, len(game.legal_moves())-2)
+            new_game , new_captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
             # print(new_captures , play_point)
         else:
             # another option
             pass
-        if(move_result):
-            decision = 0
-        else:
-            decision = 1
+        decision = 0
         b_time = 0
         w_time = 0
         moves_count += 1
         
-        play_move = goboard.Move(play_point)
+        is_pass = play_point is None
+        play_move = goboard.Move(play_point, is_pass=is_pass)
         client.handle_thinking(play_move)
 
         response = client.handle_await_response()
@@ -345,7 +338,7 @@ def AI_vs_AI():
                 send_board_to_gui('0', game.board)
                 send_ghost_color_to_gui(our_player)
 
-            while not game.is_over():
+            while True:
                 print_board(game.board)
                 old_captures = copy.copy(captures)
                 if game.next_player == ourColor:
@@ -387,17 +380,25 @@ def AI_vs_AI():
         time.sleep(5)
             
 def recommend_move(game_state):
-    global agent
-    global encoder
+    state = elevenplanes.ElevenPlaneEncoder((19,19))
+    state = state.encode(game_state)
+    state = np.expand_dims(state,axis=0)
+    probability_matrix=predict.model.predict(state)[0]
+    probability_matrix = np.reshape(probability_matrix, (-1, 19))
     new_point = -1
-    moves = agent.select_move(game_state)
-    move = moves[0]
-    #print('move ',move)
-    if(not move.is_play):
-        return False , game_state,new_point
+    while True:
+        max = probability_matrix.max()
+        coordinates = np.where(probability_matrix == max)
+        row = coordinates[0][0]
+        col = coordinates[1][0]
+        probability_matrix[row][col]= 0
+        new_point = gotypes.Point( row=row+1,col=col+1)
+        move = goboard.Move(new_point)
+        if game_state.is_valid_move(move):
+            break
     new_game_state , prisoners  = game_state.apply_move(move)
     # print('recommend move function',new_point)
-    return True , new_game_state , new_point
+    return new_game_state , new_point
 def compare_state(state1,state2,captures,player):
     # print("compare state: ", state1== state2)
     c ={ 
@@ -438,11 +439,7 @@ def send_recommended_move(decision,point):
     interface.send_recommended_move(msg)
 
 def main():
-    global consequitive_passes, opponont_resigns, game_mode , agent , encoder
-    model = load_model('models\ElevenPlanes_smallarch_model_epoch.h5')
-    encoder = elevenplanes.ElevenPlaneEncoder((19,19))
-    agent = Agent(model, encoder)
-
+    global consequitive_passes, opponont_resigns, game_mode
     if init_gui:
         game, captures, player, opponent = get_game_mode_from_gui()
         first_game = False
@@ -464,21 +461,17 @@ def main():
                     break
                 send_valid_moves_to_gui(game)
                 old_game = copy.deepcopy(game)
-                recommend_result , recommended , recommended_move = recommend_move(old_game)
-                
+                recommended , recommended_move = recommend_move(old_game)
                 old_captures = copy.copy(captures[opponent])
                 decision , game , captures , point  =  get_opponent_game_from_gui(game,captures,opponent)
-                if(recommend_result):
-                    result = compare_state(recommended,game,captures,player)
-                    # print("Recommended Move is : ",recommended_move)
-                    if(result == "gt"):
-                        # print("Send Recommended move condition in main")
-                        send_recommended_move('0',recommended_move)
-                        pass
-                    else: 
-                        send_congrats()
-                else:
-                        send_recommended_move('1','#0-0')
+                result = compare_state(recommended,game,captures,player)
+                # print("Recommended Move is : ",recommended_move)
+                if(result == "gt"):
+                    # print("Send Recommended move condition in main")
+                    send_recommended_move('0',recommended_move)
+                    pass
+                else: 
+                    send_congrats()
                 # print("captures[opponent] old_captures : ", captures[opponent], old_captures)
                 if( captures[opponent] > old_captures):
                     # print('opponent captures')
@@ -490,12 +483,9 @@ def main():
             if(len(game.legal_moves()) == 2):
                 break            
             old_captures = copy.copy(captures[player])
-            move_result , game , captures , play_point = monte_carlo_tree_search(agent,encoder,game,point,player,num_rounds,captures,depth,len(game.legal_moves())-2)
-            print('after monto carlo')
-            if(move_result):
-                decision = '0'
-            else:
-                decision = '1'
+            game , captures , play_point = monte_carlo_tree_search( game,point,player,num_rounds,captures,depth)
+            # print('after monto carlo')
+            decision = '0'
             b_time = '0'
             w_time = '0'
             send_move_to_gui(decision,play_point,b_time,w_time,player)  

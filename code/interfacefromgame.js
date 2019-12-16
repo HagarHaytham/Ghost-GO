@@ -118,7 +118,7 @@ function draw_move(move)
     //tmp_coord[0] : x , tmp_coord[1] = y.
     //gui_func()
     move = tmp_move[1].split('-');
-    gui.drawMove(move, tmp_move[2], tmp_move[3], tmp_move[4]);
+    gui.drawMove(move, tmp_move[2], tmp_move[4], tmp_move[3]);
 
 }
 

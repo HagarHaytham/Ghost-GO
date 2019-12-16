@@ -5,6 +5,7 @@ Created on Fri Oct 25 18:38:17 2019
 @author: reham
 """
 from dlgo.gotypes import Player
+import copy
 class MCTS_node():
     def __init__(self, game_state, parent,captures,point):
         self.game_state = game_state

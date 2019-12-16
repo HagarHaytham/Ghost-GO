@@ -159,7 +159,7 @@ async def main():
         #  Wait for game engine request
         message = await blocking_to_async(game_engine_socket.recv_json)
         #  = game_engine_socket.recv_json()
-
+        print('send', message)
         return_value = None
         # print("State: " + str(current_state), message)
         try:
@@ -179,7 +179,7 @@ async def main():
             # print("type error: " + str(e))
             current_state = states["INIT"]
 
-        # print(restart, connected, return_value)
+        print('received', return_value, (not restart), connected)
         message = (not restart), connected, return_value
         #  Send reply back to the game engine
         game_engine_socket.send_json(message)

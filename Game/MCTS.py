@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Oct 25 18:39:09 2019
-
 @author: reham
 """
 import elevenplanes
@@ -15,44 +14,41 @@ from dlgo import gotypes
 from dlgo.utils import print_board, print_move , point_from_coords
 from MCTS_node import MCTS_node
 import time
+from dlgo.agent.pg import PolicyAgent as Agent
+from keras.models import load_model
 player = 0
 encoding_time=0
 cnn_time=0
 move_time=0
 prisoners_time=0
-agent = None
-encoder = None
-def monte_carlo_tree_search(main_agent,main_encoder,state,point,color,num_rounds,captures,depth,available_moves): 
+
+model = load_model('models\ElevenPlanes_smallarch_model_epoch.h5')
+encoder = elevenplanes.ElevenPlaneEncoder((19,19))
+agent = Agent(model, encoder)
+def monte_carlo_tree_search(state,point,color,num_rounds,captures,depth): 
     global player
     global encoding_time
     global move_time
     global cnn_time
     global prisoners_time
-    global agent
-    global encoder
+    
     encoding_time=0
     cnn_time=0
     move_time=0
     prisoners_time=0
     player = color
-    agent = main_agent
-    encoder = main_encoder
+    
     root = MCTS_node(state,None,captures,point)
-    game =state
-    play_point = point
-    for i in range(num_rounds): 
-        result ,leaf = traverse(root,i,available_moves)  
-        if(not result):
-            break
+    for i in range(num_rounds):
+        leaf = traverse(root,i)  
         simulation_result , last_node = rollout(leaf,depth)
         backpropagate(root,last_node , simulation_result) 
-    # print('encoding time ',encoding_time)
-    # print('cnn time ',cnn_time)
-    # print('move time ',move_time)
-    # print('prisoners time ',prisoners_time)
-    if( result ):
-        game , captures , play_point =  best_child(root)
-    return result , game , captures , play_point
+    # # print('encoding time ',encoding_time)
+    # # print('cnn time ',cnn_time)
+    # # print('move time ',move_time)
+    # # print('prisoners time ',prisoners_time)
+    game , captures , play_point =  best_child(root) 
+    return game , captures , play_point
  
 def best_child(root):
     best_winning_frac = 0
@@ -66,14 +62,12 @@ def best_child(root):
     return root.children[best_pick].game_state , root.children[best_pick].captures,root.children[best_pick].point
     
       
-def traverse(node,total_rollouts,available_moves): 
+def traverse(node,total_rollouts): 
     picked_child=None
     if(not node.game_state.is_over()):
-        result = get_best_three(node,available_moves) 
-        if(not result):
-            return False , None
+        get_best_three(node) 
         picked_child = pick_child(node,total_rollouts)  
-    return True ,picked_child  
+    return picked_child  
   
 def pick_child(node,total_rollouts):
     if(total_rollouts == 0 and len(node.children) > 0):
@@ -90,39 +84,21 @@ def pick_child(node,total_rollouts):
             picked_child = child
     return picked_child
 
-def get_best_three(root,available_moves):
-    global agent 
-    global encoder
-    num_moves = 3
-    # print("available_moves >> ", available_moves)
-    if(available_moves  == 0):
-        return False
-    if(available_moves < num_moves):
-        num_moves = available_moves
-    moves = agent.select_move(root.game_state,num_moves)
-    i = 0 
+def get_best_three(root):
+
+    moves = agent.select_move(root.game_state, 3)
     for move in moves:
-        print('move ',move)
-        if(not move.is_play):
-            if(i == 0):
-                return False
-            else:
-                continue
-        i+=1
-        temp = copy.deepcopy(root.game_state)
-        legal_state , prisoners = temp.apply_move(move) 
-        child_captures = copy.copy(root.captures)    
+        legal_state , prisoners = root.game_state.apply_move(move) 
+        child_captures = copy.copy(root.captures)  
         child_captures[player]+=prisoners
         child = MCTS_node(legal_state,root,child_captures,move.point)
         root.children.append(child)
-    # print(probability_matrix)
-    return True
+
+
 def rollout(node,depth):
     game_state = node.game_state
     parent = node
     j=0
-    global agent
-    global encoder    
     global encoding_time
     global move_time
     global cnn_time
@@ -130,32 +106,18 @@ def rollout(node,depth):
     prisoners =0 
     while not game_state.is_over() and j < depth:
         j+=1
-        t1=time.time()
-        t2 =time.time()        
-        t3 = time.time()
-        new_point = 0
-        moves = agent.select_move(game_state)
-        move = moves[0]
-        #print('move ',move)
-        if(not move.is_play):
-            break
+
+        move = agent.select_move(game_state)[0]
+
         new_game_state , prisoners  = game_state.apply_move(move)
-        
-        t4 =time.time()
-        capture = 0 
+
         child_captures = copy.copy(parent.captures)    
         child_captures[player]+=prisoners
         
-        t5 = time.time()
-        new_node = MCTS_node(new_game_state,parent,child_captures,new_point)
-        # check if game is over
-        game_state = copy.deepcopy(new_game_state)
+        new_node = MCTS_node(new_game_state,parent,child_captures,move.point)
+        
+        game_state = new_game_state
         parent = new_node
-        encoding_time +=(t2-t1)
-        cnn_time+=(t3-t2)
-        move_time+=(t4-t3)
-        prisoners_time+=(t5-t4)
-    # evaluate game state
 
 
     last_captures=copy.copy(parent.captures)
@@ -178,5 +140,3 @@ def backpropagate(root,node, result):
     # # print(result)
     node.record_win(result)  # update stats
     backpropagate(root,node.parent,result) 
-
-    
