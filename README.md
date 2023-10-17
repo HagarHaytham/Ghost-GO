@@ -1,19 +1,22 @@
 # Ghost-GO
 
-## Pre-requistes 
-1- pip install keras
-2- pip install tensorflow
-3- pip install zmq
-4- pip install websockets
-5- npm install 
+## Pre-requistes
 
-## Steps to run Human vs AI mode 
+<ol>
+  <li><code>pip install keras</code></li>
+  <li><code>pip install tensorflow
+</code></li>
+  <li><code>pip install zmq
+</code></li>
+  <li><code>pip install websockets
+</code></li>
+  <li><code>npm install
+</code></li>
+</ol>
 
-open the terminal in game folder and write: 
-
-python main.py
-
-open the terminal in code folder and write: 
-
-npm start 
+## Steps to run Human vs AI mode
+<ol>
+  <li>open the terminal in game folder and write <code>python main.py</code></li>
+  <li>open the terminal in code folder and write <code>npm start</code></li>
+</ol>
 
